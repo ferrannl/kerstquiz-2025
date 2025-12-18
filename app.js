@@ -12,27 +12,97 @@ const PLAYERS = [
 // =====================================================
 // ❓ VRAGEN – ALLEEN MULTIPLE CHOICE + UITLEG
 // =====================================================
+// =====================================================
 const QUESTIONS = [
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
-    image: "",
+    image: "", // optioneel: "kerstboom.jpg"
     antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
     correctIndex: 0,
     uitleg:
-`Kerstboomverkopers verkopen anno 2013 voornamelijk:
-- de fijnspar (Picea abies)
-- de Nordmann-spar (Abies nordmanniana)
-- de Servische spar (Picea omorika)
-- de blauwspar (Picea pungens)
-- de fraserspar (Abies fraseri)`
+`Kerstboomverkopers verkopen:
+- de fijnspar
+- de Nordmann-spar
+- de Servische spar
+- de blauwspar
+- de fraserspar`
   },
+
   {
-    vraag: "Welke planeet is dit?",
-    image: "mars.jpg",
-    antwoorden: ["Mars", "Jupiter", "Venus", "Saturnus"],
-    correctIndex: 0,
-    uitleg: "Dit is Mars. Je ziet hier een bekende foto met o.a. Valles Marineris."
-  }
+    vraag: "Wie is dit?",
+    image: "mosterd.jpg",
+    antwoorden: ["Messi", "Ronaldo", "Richard", "Kaj"],
+    correctIndex: 2,
+    uitleg: "Richard met mosterd op zijn knie."
+  },
+  
+  {
+    vraag: "Wie is dit?",
+    image: "eenoma.jpg",
+    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
+    correctIndex: 2,
+    uitleg: "Een oma kan goed dansen"
+  },
+
+    {
+    vraag: "Welke voetbalclub is dit?",
+    image: "juventus.jpg",
+    antwoorden: ["Ajax", "Juventus", "FC Barcalona", "Real Madrid"],
+    correctIndex: 1,
+    uitleg: "Dit is Juventus, een van de oudste voetbalclubs van Italië."
+  },
+
+    {
+    vraag: "Welke voetbalclub is dit?",
+    image: "fcutrecht.jpg",
+    antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcalona"],
+    correctIndex: 1,
+    uitleg: "Dit is FC UUUUUUUUUUtrecht"
+  },
+
+  
+    {
+    vraag: "Wie is dit?",
+    image: "creeper.jpg",
+    antwoorden: ["Mario", "Sonic", "Pikachu", "Creeper"],
+    correctIndex: 3,
+    uitleg: "Dit is een Creeper uit Minecraft. PAS OP! Hij kan exploderen"
+  },
+  
+    {
+    vraag: "Wie is dit?",
+    image: "chimp.jpg",
+    antwoorden: ["tralalero tralala", "chimpanzini bananini", "Henk Zegelaar", "Bokito"],
+    correctIndex: 1,
+    uitleg: "Dit is chimpanzini bananini een welbekend AI gegenereerd plaatje"
+  },
+
+      {
+    vraag: "Wie is dit?",
+    image: "haai.jpg",
+    antwoorden: ["Reagea Shark", "Sharktale", "Tralalero tralala", "Jaws"],
+    correctIndex: 2,
+    uitleg: "Dit is Tralalero tralala een welbekend AI gegenereerd plaatje"
+  },
+
+        {
+    vraag: "In welke film speelde deze knaap? (Zac Efron)",
+    image: "haar.jpg",
+    antwoorden: ["Harry Potter", "High School Musical", "Grease", "Jaws"],
+    correctIndex: 1,
+    uitleg: "Dit is chimpanzini bananini een welbekend AI gegenereerd plaatje"
+  },
+
+        {
+    vraag: "In welke film speelde deze man?",
+    image: "haar.jpg",
+    antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
+    correctIndex: 3,
+    uitleg: "Aan het einde van de eerste spongebob film red David Hasstleoff Spongebob en Patrik door ze met zijn borst af te vuren naar de bodem van de zee, richting Bikinibroek"
+  },
+
+
+  
 ];
 
 // =====================================================
