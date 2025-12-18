@@ -33,7 +33,7 @@ const QUESTIONS = [
   {
     vraag: "Wie is het oudste?",
     image: "oud.jpg",
-    antwoorden: ["Luuk", "één oma", "Richard", "Kaj"],
+    antwoorden: ["Luuk", "Ilonka", "Richard", "Kaj"],
     correctIndex: 1,
     uitleg: "één oma is het oudste."
   },
