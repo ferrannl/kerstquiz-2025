@@ -12,10 +12,6 @@ const PLAYERS = [
 // =====================================================
 // ❓ VRAGEN – MULTIPLE CHOICE + UITLEG (OPGESCHOOND)
 // =====================================================
-// - Syntax gefixt (template strings / braces)
-// - “De rekening is €53,00” verwijderd (dubbel/raar)
-// - “Wie is het jongste” correctIndex gefixt naar Luuk
-// =====================================================
 const QUESTIONS = [
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
@@ -134,7 +130,6 @@ const $ = (id) => document.getElementById(id);
 
 let currentPlayer = null;
 let idx = 0;
-// per vraag: {answered:boolean, correct:boolean, selectedIndex:number|null}
 let state = QUESTIONS.map(() => ({ answered:false, correct:false, selectedIndex:null }));
 
 // Views
@@ -159,10 +154,15 @@ const feedbackBody = $("feedbackBody");
 const prevBtn = $("prevBtn");
 const nextBtn = $("nextBtn");
 
+// Your profile (quiz)
+const youImg  = $("youImg");
+const youName = $("youName");
+
+// Result
+const playAgainBtn = $("playAgainBtn");
+
 // =====================================================
-// 🔍 IMAGE VALIDATION (best effort)
-// - Preload alle images die je gebruikt
-// - On error: console warning + placeholder in UI
+// 🔍 IMAGE VALIDATION (best effort in browser)
 // =====================================================
 const missingImages = new Set();
 
@@ -186,7 +186,6 @@ async function validateImages(){
   QUESTIONS.forEach(q => q.image && unique.add(q.image));
   unique.add("fam.jpg");
 
-  // preload alles
   for(const src of unique){
     // eslint-disable-next-line no-await-in-loop
     await preloadImage(src);
@@ -196,23 +195,6 @@ async function validateImages(){
     console.warn(`[QUIZ] Ontbrekende afbeeldingen (${missingImages.size}):`, [...missingImages]);
   }
 }
-
-// Render spelerskeuze
-PLAYERS.forEach(p => {
-  const d = document.createElement("div");
-  d.className = "player";
-  d.innerHTML = `
-    <img src="${p.photo}" alt="${p.name}">
-    <span>${p.name}</span>
-  `;
-  d.onclick = () => {
-    document.querySelectorAll(".player").forEach(x => x.classList.remove("selected"));
-    d.classList.add("selected");
-    currentPlayer = p;
-    startBtn.disabled = false;
-  };
-  playersEl.appendChild(d);
-});
 
 function show(view){
   [playerView, quizView, resultView].forEach(v => v.classList.remove("active"));
@@ -234,9 +216,7 @@ function escapeHtml(str){
     .replaceAll("'", "&#039;");
 }
 
-// ✨ UITLEG FORMATTER
-// - ondersteunt bullets (regels die beginnen met "- ")
-// - ondersteunt lege regels voor paragrafen
+// ✨ UITLEG FORMATTER (bullets + paragrafen)
 function formatUitleg(uitleg){
   if(!uitleg) return "<p>Geen extra uitleg bij deze vraag.</p>";
 
@@ -249,7 +229,8 @@ function formatUitleg(uitleg){
 
   const flushParagraph = () => {
     if(currentParagraph.length){
-      blocks.push(`<p>${escapeHtml(currentParagraph.join(" ")).replaceAll("**","")}</p>`);
+      const text = currentParagraph.join(" ").replaceAll("**", "");
+      blocks.push(`<p>${escapeHtml(text)}</p>`);
       currentParagraph = [];
     }
   };
@@ -277,7 +258,6 @@ function formatUitleg(uitleg){
       continue;
     }
 
-    // normale tekstregel
     flushList();
     currentParagraph.push(trimmed);
   }
@@ -285,8 +265,6 @@ function formatUitleg(uitleg){
   flushList();
   flushParagraph();
 
-  // Kleine bonus: als iemand **bold** typte, strippen we dat (simpel)
-  // (Je kunt dit later upgraden naar echte markdown als je wil.)
   return blocks.join("");
 }
 
@@ -381,7 +359,6 @@ function renderQuiz(){
 
   updateStats();
 
-  // als al beantwoord: laat feedback zien
   if(s.answered){
     showFeedback(s.correct, q);
   }
@@ -395,7 +372,7 @@ function renderResult(){
 
   $("resultSummary").textContent = `${currentPlayer.name}, je had ${good} goed en ${bad} fout 🎄`;
 
-  // Toon medespelers alleen op het eind
+  // medespelers op eind
   const othersEnd = $("othersEnd");
   othersEnd.innerHTML = "";
 
@@ -409,6 +386,23 @@ function renderResult(){
     othersEnd.appendChild(d);
   });
 }
+
+// Render spelerskeuze
+PLAYERS.forEach(p => {
+  const d = document.createElement("div");
+  d.className = "player";
+  d.innerHTML = `
+    <img src="${p.photo}" alt="${p.name}">
+    <span>${p.name}</span>
+  `;
+  d.onclick = () => {
+    document.querySelectorAll(".player").forEach(x => x.classList.remove("selected"));
+    d.classList.add("selected");
+    currentPlayer = p;
+    startBtn.disabled = false;
+  };
+  playersEl.appendChild(d);
+});
 
 // Controls
 nextBtn.onclick = () => {
@@ -426,9 +420,22 @@ prevBtn.onclick = () => {
 startBtn.onclick = () => {
   idx = 0;
   state = QUESTIONS.map(() => ({ answered:false, correct:false, selectedIndex:null }));
+
+  // zet "jij speelt als" kaart
+  youImg.src = currentPlayer.photo;
+  youName.textContent = currentPlayer.name;
+
   updateStats();
   renderQuiz();
 };
 
-// Start: validate images once (best effort)
+playAgainBtn.onclick = () => {
+  // terug naar spelerkeuze
+  currentPlayer = null;
+  startBtn.disabled = true;
+  document.querySelectorAll(".player").forEach(x => x.classList.remove("selected"));
+  show(playerView);
+};
+
+// Start: validate images once
 validateImages();

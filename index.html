@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🎄 De Grote Kerstquiz 🎁</title>
+  <title>🎄 De grote van der Venne Kerst Quiz! 🎁</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,7 +16,7 @@
       <!-- HEADER -->
       <header class="topbar">
         <h1 class="title">
-          🎄 De Grote Kerstquiz 🎁<br>
+          🎄 De grote van der Venne Kerst Quiz! 🎁<br>
           <span>Wie weet het meest deze kerst?</span>
         </h1>
       </header>
@@ -25,6 +25,11 @@
       <section class="view active" id="playerView">
         <h2>Wie ben jij?</h2>
         <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
+
+        <!-- FAMILIE FOTO (BEGIN) -->
+        <div class="familyHero" aria-label="Familiefoto begin">
+          <img class="familyPhoto big" src="fam.jpg" alt="Familie">
+        </div>
 
         <div class="players" id="players"></div>
 
@@ -37,10 +42,22 @@
 
       <!-- QUIZ -->
       <section class="view" id="quizView">
-        <div class="stats">
-          Vraag <b id="statQ">—</b> |
-          Goed <b id="statGood">0</b> |
-          Fout <b id="statBad">0</b>
+
+        <!-- JOUW PROFIEL ALTIJD ZICHTBAAR -->
+        <div class="quizTopRow">
+          <div class="youCard" id="youCard" aria-label="Jouw speler">
+            <img id="youImg" src="" alt="Jouw foto">
+            <div class="youMeta">
+              <div class="youLabel">Jij speelt als</div>
+              <div class="youName" id="youName">—</div>
+            </div>
+          </div>
+
+          <div class="stats">
+            Vraag <b id="statQ">—</b> |
+            Goed <b id="statGood">0</b> |
+            Fout <b id="statBad">0</b>
+          </div>
         </div>
 
         <div class="grid">
@@ -76,13 +93,20 @@
 
         <div class="shareBox">
           <h3>DEEL DE SCORE MET JE MEDESPELERS! WIE HAD ER HET MEESTE GOED!?</h3>
+          <p class="subtitle" style="margin: 8px 0 18px;">Laat iedereen om de beurt spelen 😄</p>
+
           <div class="othersEnd" id="othersEnd"></div>
 
-          <!-- NIEUWE SPELER verwijderd -->
-          <div class="familyWrap" aria-label="Familiefoto">
-            <img class="familyPhoto" src="fam.jpg" alt="Familie">
+          <!-- FAMILIE FOTO (EIND) -->
+          <div class="familyWrap" aria-label="Familiefoto einde">
+            <img class="familyPhoto big" src="fam.jpg" alt="Familie">
             <div class="familyHint">📸 Maak een foto/screenshot van je score en stuur ‘m in de groepsapp 😄</div>
           </div>
+
+          <!-- NIEUWE SPELER is weg -->
+          <button class="btnPrimary bigBtn" id="playAgainBtn" type="button">
+            IEMAND ANDERS LATEN SPELEN
+          </button>
         </div>
       </section>
 

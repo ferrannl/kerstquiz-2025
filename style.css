@@ -88,6 +88,21 @@ body{
   opacity:.95;
 }
 
+/* FAMILY HERO */
+.familyHero{
+  max-width: 950px;
+  margin: 0 auto 22px;
+}
+.familyPhoto{
+  width: min(980px, 100%);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.35);
+}
+.familyPhoto.big{
+  width: min(980px, 100%);
+}
+
 /* PLAYER SELECT */
 .players{
   display:grid;
@@ -123,10 +138,49 @@ body{
   font-weight:800;
 }
 
+/* QUIZ TOP ROW (YOU + STATS) */
+.quizTopRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:16px;
+}
+@media (max-width: 900px){
+  .quizTopRow{
+    flex-direction:column;
+    align-items:stretch;
+  }
+}
+
+.youCard{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:18px;
+  background: rgba(0,0,0,0.20);
+  border:1px solid rgba(255,255,255,0.12);
+  width: fit-content;
+  max-width: 100%;
+}
+@media (max-width: 900px){
+  .youCard{ width: 100%; justify-content:center; }
+}
+.youCard img{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.30);
+}
+.youMeta{ text-align:left; }
+.youLabel{ font-size:14px; opacity:.85; }
+.youName{ font-size:20px; font-weight:900; }
+
 /* QUIZ */
 .stats{
   font-size:20px;
-  margin-bottom:16px;
 }
 
 .grid{
@@ -290,19 +344,14 @@ body{
   font-weight:800;
 }
 
-/* FAMILY PHOTO */
+/* FAMILY END */
 .familyWrap{
   margin-top: 10px;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:10px;
-}
-.familyPhoto{
-  width: min(860px, 100%);
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  margin-bottom: 16px;
 }
 .familyHint{
   font-size: 16px;
