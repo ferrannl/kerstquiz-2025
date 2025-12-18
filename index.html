@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="nl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🎄 De Grote Kerstquiz 🎁</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         </h1>
       </header>
 
-      <!-- SELECT PLAYER -->
+      <!-- PLAYER SELECT -->
       <section class="view active" id="playerView">
         <h2>Wie ben jij?</h2>
         <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
@@ -35,6 +35,10 @@
 
       <!-- QUIZ -->
       <section class="view" id="quizView">
+
+        <!-- MEDESPELERS -->
+        <div class="othersBar" id="othersBar"></div>
+
         <div class="stats">
           Vraag <b id="statQ">—</b> |
           Goed <b id="statGood">0</b> |
@@ -60,6 +64,7 @@
       <section class="view" id="resultView">
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
+
         <button class="btnPrimary bigBtn" onclick="location.reload()">
           NIEUWE SPELER
         </button>
