@@ -1,5 +1,5 @@
 // =====================================================
-// ✅ DIT IS HET ENIGE DAT JE MOET AANPASSEN
+// ✅ HET ENIGE DAT JE MOET AANPASSEN VOOR NIEUWE VRAGEN
 // =====================================================
 const QUESTIONS = [
   {
@@ -28,16 +28,11 @@ const QUESTIONS = [
 const $ = id => document.getElementById(id);
 
 let idx = 0;
-let state = QUESTIONS.map(()=>({answered:false,correct:false,user:""}));
+let state = QUESTIONS.map(()=>({answered:false,correct:false}));
 
-const intro = $("introView");
-const quiz  = $("quizView");
-const result= $("resultView");
-
-const statQ = $("statQ");
-const statGood = $("statGood");
-const statBad = $("statBad");
-const statScore = $("statScore");
+const intro  = $("introView");
+const quiz   = $("quizView");
+const result = $("resultView");
 
 function show(view){
   [intro,quiz,result].forEach(v=>v.classList.remove("active"));
@@ -47,63 +42,66 @@ function show(view){
 function updateStats(){
   const good = state.filter(s=>s.correct).length;
   const bad  = state.filter(s=>s.answered&&!s.correct).length;
-  statQ.textContent = `${idx+1}/${QUESTIONS.length}`;
-  statGood.textContent = good;
-  statBad.textContent = bad;
-  statScore.textContent = Math.round((good/Math.max(1,good+bad))*100)+"%";
+  $("statQ").textContent = `${idx+1}/${QUESTIONS.length}`;
+  $("statGood").textContent = good;
+  $("statBad").textContent = bad;
+  $("statScore").textContent =
+    Math.round((good/Math.max(1,good+bad))*100) + "%";
 }
 
 function render(){
-  if(idx>=QUESTIONS.length){
+  if(idx >= QUESTIONS.length){
     show(result);
     $("resultSummary").textContent =
-      `Goed: ${state.filter(s=>s.correct).length}, Fout: ${state.filter(s=>s.answered&&!s.correct).length}`;
+      `Goed: ${state.filter(s=>s.correct).length} – Fout: ${state.filter(s=>s.answered&&!s.correct).length}`;
     return;
   }
 
   show(quiz);
+
   const q = QUESTIONS[idx];
   $("qNr").textContent = `Vraag ${idx+1}`;
   $("qText").textContent = q.vraag;
-
-  const imgWrap = $("imgWrap");
-  imgWrap.innerHTML = q.image ? `<img src="${q.image}">` : "";
+  $("imgWrap").innerHTML = q.image ? `<img src="${q.image}">` : "";
 
   const answers = $("answers");
   answers.innerHTML = "";
 
-  if(q.type==="mc"){
+  if(q.type === "mc"){
     q.antwoorden.forEach((a,i)=>{
       const b = document.createElement("button");
       b.textContent = a;
-      b.onclick=()=>{
-        state[idx]={answered:true,correct:i===q.correctIndex,user:a};
+      b.onclick = () => {
+        state[idx] = {answered:true, correct:i===q.correctIndex};
         idx++;
         updateStats();
         render();
       };
       answers.appendChild(b);
     });
-  }else{
-    const input=document.createElement("input");
-    const b=document.createElement("button");
-    b.textContent="OK";
-    b.onclick=()=>{
-      const ok=input.value.toLowerCase().trim()===q.correctText;
-      state[idx]={answered:true,correct:ok,user:input.value};
+  } else {
+    const input = document.createElement("input");
+    const b = document.createElement("button");
+    input.placeholder = "Typ je antwoord";
+    b.textContent = "OK";
+
+    b.onclick = () => {
+      const ok = input.value.trim().toLowerCase() === q.correctText;
+      state[idx] = {answered:true, correct:ok};
       idx++;
       updateStats();
       render();
     };
+
     answers.append(input,b);
   }
 }
 
-$("startBtn").onclick=()=>{
-  idx=0;
-  state = QUESTIONS.map(()=>({answered:false,correct:false,user:""}));
+$("startBtn").onclick = () => {
+  idx = 0;
+  state = QUESTIONS.map(()=>({answered:false,correct:false}));
   updateStats();
   render();
 };
 
-$("restartBtn").onclick=()=>location.reload();
+$("restartBtn").onclick = () => location.reload();
