@@ -89,14 +89,11 @@ body{
   opacity:.95;
 }
 
-/* =========================
-   FAMILY FOTO (KLEINER!)
-   ========================= */
+/* FAMILY FOTO (KLEINER) */
 .familyHero{
   max-width: 620px;
   margin: 0 auto 22px;
 }
-
 .familyPhoto{
   width: min(520px, 92%);
   max-height: 340px;
@@ -105,7 +102,6 @@ body{
   border: 1px solid rgba(255,255,255,0.14);
   box-shadow: 0 10px 28px rgba(0,0,0,0.30);
 }
-
 .familyPhoto.big{
   width: min(560px, 92%);
 }
@@ -118,7 +114,6 @@ body{
   max-width:900px;
   margin:0 auto 24px;
 }
-
 .player{
   display:flex;
   align-items:center;
@@ -145,7 +140,7 @@ body{
   font-weight:800;
 }
 
-/* QUIZ TOP ROW (YOU + STATS) */
+/* QUIZ TOP ROW */
 .quizTopRow{
   display:flex;
   align-items:center;
@@ -181,7 +176,6 @@ body{
 .youLabel{font-size:14px;opacity:.85}
 .youName{font-size:20px;font-weight:900}
 
-/* QUIZ */
 .stats{font-size:20px}
 
 .grid{
@@ -233,35 +227,26 @@ body{
   border: 1px solid rgba(255,255,255,.14);
 }
 .answerBtn:hover{transform:translateY(-1px)}
-/* Maak disabled antwoorden juist goed leesbaar */
+
+/* Disabled antwoorden blijven leesbaar */
 .answerBtn:disabled{
-  opacity: 1;              /* NIET dimmen */
+  opacity: 1;
   cursor: default;
   filter: none;
   transform:none;
 }
-
-/* Niet-gekozen antwoorden: subtiel maar leesbaar */
 .answerBtn:disabled:not(.correct):not(.wrong){
   background: rgba(255,255,255,.06);
   border-color: rgba(255,255,255,.14);
   color: rgba(234,240,255,.92);
 }
-
-/* Gekozen fout: iets duidelijker */
 .answerBtn.wrong{
   background: rgba(255,77,109,.16);
   border-color: rgba(255,77,109,.70);
 }
-
-/* Juiste: iets duidelijker */
 .answerBtn.correct{
   background: rgba(40,209,124,.18);
   border-color: rgba(40,209,124,.70);
-}
-
-.answerBtn:disabled:hover{
-  transform: none;
 }
 
 /* FEEDBACK */
@@ -300,23 +285,17 @@ body{
 }
 
 /* BUTTONS */
-button, a.btnPrimary, a.btnGhost{
+button{
   font-size:22px;
   padding:16px 26px;
   border-radius:22px;
   border:none;
   cursor:pointer;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
 }
 .bigBtn{
   font-size:26px;
   padding:20px 40px;
 }
-
 .btnPrimary{
   background:linear-gradient(135deg,var(--accent),#ff6b7a);
   color:white;
@@ -329,11 +308,7 @@ button, a.btnPrimary, a.btnGhost{
 }
 button:disabled{opacity:.55; cursor:not-allowed}
 
-/* =========================
-   ✅ RESULT / END SCREEN FIX
-   ========================= */
-
-/* Xmas hero blok */
+/* RESULT */
 .xmasHero{
   max-width: 980px;
   margin: 14px auto 22px;
@@ -342,7 +317,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   background: rgba(0,0,0,0.22);
   border: 1px solid rgba(255,255,255,0.12);
 }
-
 .xmasPhoto{
   width: min(820px, 100%);
   max-height: 440px;
@@ -353,17 +327,15 @@ button:disabled{opacity:.55; cursor:not-allowed}
   display:block;
   margin: 0 auto 14px;
 }
-
 .xmasActions{
   display:flex;
   flex-wrap:wrap;
   gap:12px;
   justify-content:center;
   align-items:center;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 
-/* Share box */
 .shareBox{
   margin: 18px auto 0;
   max-width: 980px;
@@ -381,7 +353,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   max-width:900px;
   margin:14px auto 18px;
 }
-
 .otherCard{
   display:flex;
   align-items:center;
@@ -391,7 +362,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   background: rgba(0,0,0,0.20);
   border:1px solid rgba(255,255,255,0.10);
 }
-
 .otherCard img{
   width:54px;
   height:54px;
@@ -407,7 +377,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   align-items:center;
   gap:12px;
 }
-
 .familyHint{
   font-size: 16px;
   opacity: .92;
@@ -418,12 +387,10 @@ button:disabled{opacity:.55; cursor:not-allowed}
   width: min(560px, 92%);
 }
 
-/* Diploma wrapper + card */
 .diplomaWrap{
   max-width: 980px;
   margin: 18px auto 6px;
 }
-
 .diplomaCard{
   background: rgba(0,0,0,0.22);
   border:1px solid rgba(255,255,255,0.12);
@@ -431,7 +398,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   padding: 18px;
   text-align:left;
 }
-
 .diplomaTop{
   display:flex;
   align-items:flex-end;
@@ -440,13 +406,11 @@ button:disabled{opacity:.55; cursor:not-allowed}
   flex-wrap:wrap;
   margin-bottom: 14px;
 }
-
 .diplomaTitle{
   font-size: 24px;
   font-weight: 1000;
   letter-spacing: .2px;
 }
-
 .diplomaMeta{
   font-size: 14px;
   opacity: .85;
@@ -459,7 +423,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   gap:10px;
   margin-bottom: 14px;
 }
-
 .pill{
   background: rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.12);
@@ -470,19 +433,9 @@ button:disabled{opacity:.55; cursor:not-allowed}
   align-items:center;
   gap:8px;
 }
-
 .pill.good{border-color: rgba(46,204,113,.55)}
 .pill.bad{border-color: rgba(255,90,111,.55)}
 
-/* Review tools */
-.reviewTools{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin: 10px 0 14px;
-}
-
-/* Review list rows */
 .reviewList{
   display:flex;
   flex-direction:column;
@@ -498,7 +451,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   background: rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.12);
 }
-
 .reviewThumb{
   flex: 0 0 130px;
   height: 92px;
@@ -510,25 +462,21 @@ button:disabled{opacity:.55; cursor:not-allowed}
   align-items:center;
   justify-content:center;
 }
-
 .reviewThumb img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
-
 .reviewInfo{
   flex:1;
   min-width: 0;
 }
-
 .reviewInfo h4{
   margin: 0 0 8px;
   font-size: 18px;
   line-height: 1.25;
 }
-
 .reviewMeta{
   display:flex;
   flex-wrap:wrap;
@@ -537,7 +485,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   font-size: 15px;
   opacity: .95;
 }
-
 .badge{
   display:inline-flex;
   align-items:center;
@@ -552,21 +499,14 @@ button:disabled{opacity:.55; cursor:not-allowed}
 .badge.good{border-color: rgba(46,204,113,.55)}
 .badge.bad{border-color: rgba(255,90,111,.55)}
 
-.reviewActions{
-  margin-top: 10px;
-}
+.reviewActions{ margin-top: 10px; }
+.endControls{ display:flex; justify-content:center; margin-top: 16px; }
 
-.endControls{
-  display:flex;
-  justify-content:center;
-  margin-top: 16px;
-}
-
-/* Mobile tweaks voor eindscherm */
+/* Mobile */
 @media (max-width: 720px){
   .view{padding:18px}
   .bigBtn{font-size:22px; padding:16px 22px}
-  button, a.btnPrimary, a.btnGhost{font-size:20px; padding:14px 18px}
+  button{font-size:20px; padding:14px 18px}
   .xmasHero{padding:14px}
   .reviewRow{flex-direction:column}
   .reviewThumb{flex:0 0 auto; width:100%; height:180px}
