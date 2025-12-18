@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kerst Quiz 2026</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <!-- Sneeuwlaag (pure CSS) -->
+  <div class="snow" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="card" id="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">🎄</div>
+          <div class="brandText">
+            <h1 id="topTitle">Kerst Quiz</h1>
+            <p id="topSub">Familie-editie • 2026</p>
+          </div>
+        </div>
+
+        <div class="stats" id="statsBar" aria-live="polite">
+          <div class="pill">Vraag: <b id="statQ">—</b></div>
+          <div class="pill good">Goed: <b id="statGood">0</b></div>
+          <div class="pill bad">Fout: <b id="statBad">0</b></div>
+          <div class="pill">Score: <b id="statScore">0%</b></div>
+        </div>
+      </header>
+
+      <!-- INTRO -->
+      <section class="view intro" id="introView">
+        <div class="introGlow" aria-hidden="true"></div>
+
+        <div class="introInner">
+          <div class="lights" aria-hidden="true"></div>
+
+          <h2 class="introTitle">
+            KERST QUIZ FAMILIE VD VENNE HENDRIKS MEELEN 2026!!!
+          </h2>
+
+          <p class="introText">
+            Welkom! 🎅✨<br />
+            Je krijgt vragen met (optioneel) een plaatje via een simpele web-link.<br />
+            Kies je antwoord en klik op <b>VOLGENDE</b> — elke vraag staat netjes op een nieuw scherm (geen scrollen).
+          </p>
+
+          <div class="introRules">
+            <div class="rule"><span>✅</span> Score wordt bijgehouden (goed/fout)</div>
+            <div class="rule"><span>🖼️</span> Afbeeldingen via URL (jpg/png/webp/gif)</div>
+            <div class="rule"><span>🎁</span> Aan het einde zie je wat je fout had</div>
+          </div>
+
+          <div class="introButtons">
+            <button class="btnPrimary" id="startBtn">START DE QUIZ</button>
+            <button class="btnGhost" id="howBtn" type="button">UITLEG (KORT)</button>
+          </div>
+
+          <div class="miniNote" id="miniNote" role="status"></div>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="view quiz" id="quizView">
+        <main class="grid">
+          <section class="panel qpanel">
+            <div class="qtop">
+              <div class="qnr" id="qNr">Vraag —</div>
+              <p class="question" id="qText">—</p>
+            </div>
+
+            <div class="imgwrap" id="imgWrap">
+              <div class="imgfallback">Geen afbeelding</div>
+            </div>
+          </section>
+
+          <section class="panel apanel">
+            <p class="hint" id="hint">Kies één antwoord. Daarna verschijnt “VOLGENDE”.</p>
+            <div class="answers" id="answers"></div>
+          </section>
+        </main>
+      </section>
+
+      <!-- RESULTAAT -->
+      <section class="view result" id="resultView">
+        <div class="resultInner">
+          <h2 class="resultTitle">Klaar! 🎉</h2>
+          <p class="resultSummary" id="resultSummary"></p>
+
+          <div class="resultButtons">
+            <button class="btnPrimary" id="restartBtn">OPNIEUW</button>
+            <button class="btnGhost" id="toIntroBtn">TERUG NAAR INTRO</button>
+          </div>
+
+          <div class="wrongList" id="wrongList"></div>
+        </div>
+      </section>
+
+      <footer class="footer" id="footerBar">
+        <div class="controls">
+          <button class="btnGhost" id="prevBtn" title="Vorige vraag">VORIGE</button>
+          <button class="btnGhost" id="resetBtn" title="Reset score">RESET</button>
+        </div>
+        <div class="controls">
+          <button class="btnPrimary" id="nextBtn" disabled>VOLGENDE</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
