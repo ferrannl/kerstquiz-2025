@@ -1,63 +1,87 @@
 // =====================================================
-// ✅ HET ENIGE DAT JE MOET AANPASSEN VOOR NIEUWE VRAGEN
+// 👤 SPELERS (LOKALE FOTO'S)
+// Zet de foto's in dezelfde map als index.html
+// =====================================================
+const PLAYERS = [
+  { name: "Kaj & Luuk", photo: "kaj-luuk.jpg" },
+  { name: "Ilonka",    photo: "ilonka.jpg" },
+  { name: "Carmen",    photo: "carmen.jpg" },
+  { name: "Ferran",    photo: "ferran.jpg" },
+  { name: "Richard",   photo: "richard.jpg" }
+];
+
+// =====================================================
+// ❓ VRAGEN – ALLEEN MULTIPLE CHOICE
 // =====================================================
 const QUESTIONS = [
   {
-    type: "mc",
     vraag: "Welke planeet is dit?",
-    image: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Mars_Valles_Marineris.jpeg",
+    image: "mars.jpg",   // <-- mag ook lokaal!
     antwoorden: ["Mars", "Jupiter", "Venus", "Saturnus"],
     correctIndex: 0
   },
   {
-    type: "mc",
-    vraag: "Welk dier zie je op de foto?",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Giraffe_Mikumi_National_Park.jpg",
-    antwoorden: ["Olifant", "Giraf", "Zebra", "Nijlpaard"],
+    vraag: "Welk dier zie je hier?",
+    image: "giraf.jpg",
+    antwoorden: ["Zebra", "Giraf", "Olifant", "Leeuw"],
     correctIndex: 1
-  },
-  {
-    type: "text",
-    vraag: "Hoe heet de hoofdstad van Nederland?",
-    image: "",
-    correctText: "amsterdam"
   }
 ];
+
 // =====================================================
 
 const $ = id => document.getElementById(id);
 
+let currentPlayer = null;
 let idx = 0;
 let state = QUESTIONS.map(()=>({answered:false,correct:false}));
 
-const intro  = $("introView");
-const quiz   = $("quizView");
-const result = $("resultView");
+// Views
+const playerView = $("playerView");
+const quizView   = $("quizView");
+const resultView = $("resultView");
 
+// Player select
+const playersEl = $("players");
+const startBtn  = $("startBtn");
+
+PLAYERS.forEach(p=>{
+  const d = document.createElement("div");
+  d.className = "player";
+  d.innerHTML = `
+    <img src="${p.photo}" alt="${p.name}">
+    <span>${p.name}</span>
+  `;
+  d.onclick = ()=>{
+    document.querySelectorAll(".player").forEach(x=>x.classList.remove("selected"));
+    d.classList.add("selected");
+    currentPlayer = p;
+    startBtn.disabled = false;
+  };
+  playersEl.appendChild(d);
+});
+
+// View switch
 function show(view){
-  [intro,quiz,result].forEach(v=>v.classList.remove("active"));
+  [playerView,quizView,resultView].forEach(v=>v.classList.remove("active"));
   view.classList.add("active");
 }
 
 function updateStats(){
-  const good = state.filter(s=>s.correct).length;
-  const bad  = state.filter(s=>s.answered&&!s.correct).length;
   $("statQ").textContent = `${idx+1}/${QUESTIONS.length}`;
-  $("statGood").textContent = good;
-  $("statBad").textContent = bad;
-  $("statScore").textContent =
-    Math.round((good/Math.max(1,good+bad))*100) + "%";
+  $("statGood").textContent = state.filter(s=>s.correct).length;
+  $("statBad").textContent  = state.filter(s=>s.answered&&!s.correct).length;
 }
 
 function render(){
   if(idx >= QUESTIONS.length){
-    show(result);
+    show(resultView);
     $("resultSummary").textContent =
-      `Goed: ${state.filter(s=>s.correct).length} – Fout: ${state.filter(s=>s.answered&&!s.correct).length}`;
+      `${currentPlayer.name}, je had ${state.filter(s=>s.correct).length} goede antwoorden 🎄`;
     return;
   }
 
-  show(quiz);
+  show(quizView);
 
   const q = QUESTIONS[idx];
   $("qNr").textContent = `Vraag ${idx+1}`;
@@ -67,41 +91,23 @@ function render(){
   const answers = $("answers");
   answers.innerHTML = "";
 
-  if(q.type === "mc"){
-    q.antwoorden.forEach((a,i)=>{
-      const b = document.createElement("button");
-      b.textContent = a;
-      b.onclick = () => {
-        state[idx] = {answered:true, correct:i===q.correctIndex};
-        idx++;
-        updateStats();
-        render();
-      };
-      answers.appendChild(b);
-    });
-  } else {
-    const input = document.createElement("input");
+  q.antwoorden.forEach((a,i)=>{
     const b = document.createElement("button");
-    input.placeholder = "Typ je antwoord";
-    b.textContent = "OK";
-
-    b.onclick = () => {
-      const ok = input.value.trim().toLowerCase() === q.correctText;
-      state[idx] = {answered:true, correct:ok};
+    b.textContent = a;
+    b.onclick = ()=>{
+      state[idx] = {answered:true, correct:i === q.correctIndex};
       idx++;
       updateStats();
       render();
     };
+    answers.appendChild(b);
+  });
 
-    answers.append(input,b);
-  }
+  updateStats();
 }
 
-$("startBtn").onclick = () => {
+startBtn.onclick = ()=>{
   idx = 0;
   state = QUESTIONS.map(()=>({answered:false,correct:false}));
-  updateStats();
   render();
 };
-
-$("restartBtn").onclick = () => location.reload();
