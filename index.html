@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kerst Quiz 2026</title>
+  <title>🎄 De Grote Kerstquiz 🎁</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,42 +13,34 @@
   <div class="wrap">
     <div class="card">
 
-      <!-- TOP -->
+      <!-- HEADER -->
       <header class="topbar">
-        <div class="brand">
-          <div class="logo">🎄</div>
-          <div>
-            <h1>Kerst Quiz</h1>
-            <p>Familie 2026</p>
-          </div>
-        </div>
-
-        <div class="stats" id="statsBar">
-          <span>Vraag <b id="statQ">—</b></span>
-          <span>Goed <b id="statGood">0</b></span>
-          <span>Fout <b id="statBad">0</b></span>
-          <span><b id="statScore">0%</b></span>
-        </div>
+        <h1 class="title">
+          🎄 De Grote Kerstquiz 🎁<br>
+          <span>Wie weet het meest deze kerst?</span>
+        </h1>
       </header>
 
-      <!-- INTRO -->
-      <section class="view intro active" id="introView">
-        <h2>KERST QUIZ FAMILIE VD VENNE HENDRIKS MEELEN 2026!!!</h2>
+      <!-- SELECT PLAYER -->
+      <section class="view active" id="playerView">
+        <h2>Wie ben jij?</h2>
+        <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
 
-        <p class="introText">
-          Welkom! 🎅✨<br><br>
-          Je krijgt vragen met (optioneel) een plaatje.<br>
-          Kies je antwoord en klik op <b>VOLGENDE</b>.<br><br>
-          <b>Je krijgt alle tijd, geen haast.</b>
-        </p>
+        <div class="players" id="players"></div>
 
-        <button class="btnPrimary bigBtn" id="startBtn">
+        <button class="btnPrimary bigBtn" id="startBtn" disabled>
           START DE QUIZ
         </button>
       </section>
 
       <!-- QUIZ -->
-      <section class="view quiz" id="quizView">
+      <section class="view" id="quizView">
+        <div class="stats">
+          Vraag <b id="statQ">—</b> |
+          Goed <b id="statGood">0</b> |
+          Fout <b id="statBad">0</b>
+        </div>
+
         <div class="grid">
           <div class="panel">
             <div class="qtop">
@@ -65,19 +57,13 @@
       </section>
 
       <!-- RESULT -->
-      <section class="view result" id="resultView">
+      <section class="view" id="resultView">
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
-        <button class="btnPrimary bigBtn" id="restartBtn">
-          OPNIEUW
+        <button class="btnPrimary bigBtn" onclick="location.reload()">
+          NIEUWE SPELER
         </button>
       </section>
-
-      <!-- FOOTER -->
-      <footer class="footer" id="footerBar">
-        <button id="prevBtn">VORIGE</button>
-        <button id="nextBtn" disabled>VOLGENDE</button>
-      </footer>
 
     </div>
   </div>
