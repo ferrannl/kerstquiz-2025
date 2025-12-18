@@ -11,13 +11,11 @@ const PLAYERS = [
 
 // =====================================================
 // ❓ VRAGEN – ALLEEN MULTIPLE CHOICE + UITLEG
-// Voeg per vraag toe:
-// - uitleg: "..." (mag lang, met zinnen/regels)
 // =====================================================
 const QUESTIONS = [
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
-    image: "", // optioneel: "kerstboom.jpg"
+    image: "",
     antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
     correctIndex: 0,
     uitleg:
@@ -28,19 +26,18 @@ const QUESTIONS = [
 - de blauwspar (Picea pungens)
 - de fraserspar (Abies fraseri)`
   },
-
   {
     vraag: "Welke planeet is dit?",
     image: "mars.jpg",
     antwoorden: ["Mars", "Jupiter", "Venus", "Saturnus"],
     correctIndex: 0,
-    uitleg: "Dit is Mars. Je ziet hier de Valles Marineris (een gigantisch canyonsysteem)."
+    uitleg: "Dit is Mars. Je ziet hier een bekende foto met o.a. Valles Marineris."
   }
 ];
 
 // =====================================================
 
-const $ = id => document.getElementById(id);
+const $ = (id) => document.getElementById(id);
 
 let currentPlayer = null;
 let idx = 0;
@@ -52,10 +49,11 @@ const playerView = $("playerView");
 const quizView   = $("quizView");
 const resultView = $("resultView");
 
-// UI
+// Player select UI
 const playersEl = $("players");
 const startBtn  = $("startBtn");
 
+// Quiz UI
 const qNr = $("qNr");
 const qText = $("qText");
 const imgWrap = $("imgWrap");
@@ -69,15 +67,15 @@ const prevBtn = $("prevBtn");
 const nextBtn = $("nextBtn");
 
 // Render spelerskeuze
-PLAYERS.forEach(p=>{
+PLAYERS.forEach(p => {
   const d = document.createElement("div");
   d.className = "player";
   d.innerHTML = `
     <img src="${p.photo}" alt="${p.name}">
     <span>${p.name}</span>
   `;
-  d.onclick = ()=>{
-    document.querySelectorAll(".player").forEach(x=>x.classList.remove("selected"));
+  d.onclick = () => {
+    document.querySelectorAll(".player").forEach(x => x.classList.remove("selected"));
     d.classList.add("selected");
     currentPlayer = p;
     startBtn.disabled = false;
@@ -90,21 +88,10 @@ function show(view){
   view.classList.add("active");
 }
 
-function renderOtherPlayers(){
-  const bar = $("othersBar");
-  bar.innerHTML = "";
-  PLAYERS.forEach(p=>{
-    const d = document.createElement("div");
-    d.className = "otherPlayer" + (p === currentPlayer ? " you" : "");
-    d.innerHTML = `<img src="${p.photo}" alt="${p.name}"><span>${p.name}</span>`;
-    bar.appendChild(d);
-  });
-}
-
 function updateStats(){
   $("statQ").textContent = `${idx+1}/${QUESTIONS.length}`;
-  $("statGood").textContent = state.filter(s=>s.answered && s.correct).length;
-  $("statBad").textContent  = state.filter(s=>s.answered && !s.correct).length;
+  $("statGood").textContent = state.filter(s => s.answered && s.correct).length;
+  $("statBad").textContent  = state.filter(s => s.answered && !s.correct).length;
 }
 
 function showFeedback(isCorrect, q){
@@ -123,17 +110,13 @@ function showFeedback(isCorrect, q){
   feedbackBody.textContent = q.uitleg ? q.uitleg : "Geen extra uitleg bij deze vraag.";
 }
 
-function render(){
+function renderQuiz(){
   if(idx >= QUESTIONS.length){
-    show(resultView);
-    const good = state.filter(s=>s.answered && s.correct).length;
-    const bad  = state.filter(s=>s.answered && !s.correct).length;
-    $("resultSummary").textContent = `${currentPlayer.name}, je had ${good} goed en ${bad} fout 🎄`;
+    renderResult();
     return;
   }
 
   show(quizView);
-  renderOtherPlayers();
 
   const q = QUESTIONS[idx];
   const s = state[idx];
@@ -142,14 +125,14 @@ function render(){
   qText.textContent = q.vraag;
   imgWrap.innerHTML = q.image ? `<img src="${q.image}" alt="Vraag afbeelding">` : "";
 
-  // reset feedback/next
+  // feedback reset
   feedbackBox.classList.add("hidden");
   feedbackHead.textContent = "";
   feedbackBody.textContent = "";
-  nextBtn.disabled = !s.answered;
 
-  // vorige knop
+  // controls
   prevBtn.disabled = (idx === 0);
+  nextBtn.disabled = !s.answered;
 
   // answers render
   answersEl.innerHTML = "";
@@ -159,7 +142,6 @@ function render(){
     b.type = "button";
     b.textContent = a;
 
-    // als al beantwoord: disable + highlight
     if(s.answered){
       b.disabled = true;
       if(i === q.correctIndex) b.classList.add("correct");
@@ -172,13 +154,9 @@ function render(){
       const correct = (i === q.correctIndex);
       state[idx] = { answered:true, correct, selectedIndex:i };
 
-      // disable all buttons + highlight
-      // (render opnieuw)
       nextBtn.disabled = false;
       updateStats();
-      render();
-
-      // na render: uitleg tonen
+      renderQuiz();
       showFeedback(correct, q);
     };
 
@@ -187,27 +165,51 @@ function render(){
 
   updateStats();
 
-  // als al beantwoord: laat feedback direct zien
+  // als al beantwoord: laat feedback zien
   if(s.answered){
     showFeedback(s.correct, q);
   }
+}
+
+function renderResult(){
+  show(resultView);
+
+  const good = state.filter(s => s.answered && s.correct).length;
+  const bad  = state.filter(s => s.answered && !s.correct).length;
+
+  $("resultSummary").textContent = `${currentPlayer.name}, je had ${good} goed en ${bad} fout 🎄`;
+
+  // Toon medespelers alleen op het eind
+  const othersEnd = $("othersEnd");
+  othersEnd.innerHTML = "";
+
+  PLAYERS.forEach(p => {
+    const d = document.createElement("div");
+    d.className = "otherCard" + (p === currentPlayer ? " you" : "");
+    d.innerHTML = `
+      <img src="${p.photo}" alt="${p.name}">
+      <span>${p.name}</span>
+    `;
+    othersEnd.appendChild(d);
+  });
 }
 
 // Controls
 nextBtn.onclick = () => {
   if(!state[idx].answered) return;
   idx++;
-  render();
+  renderQuiz();
 };
 
 prevBtn.onclick = () => {
   if(idx === 0) return;
   idx--;
-  render();
+  renderQuiz();
 };
 
 startBtn.onclick = () => {
   idx = 0;
   state = QUESTIONS.map(() => ({ answered:false, correct:false, selectedIndex:null }));
-  render();
+  updateStats();
+  renderQuiz();
 };
