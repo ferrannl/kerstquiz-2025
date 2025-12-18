@@ -377,4 +377,134 @@ h2{ margin: 12px 0 6px; font-size: 22px; }
 .diplomaKicker{
   font-size: 12px;
   letter-spacing: .14em;
-  text-transform
+  text-transform: uppercase;
+  opacity: .85;
+}
+.diplomaTitle{
+  font-weight: 1000;
+  font-size: 20px;
+  margin-top: 2px;
+}
+.diplomaBody{
+  margin-top: 14px;
+  position: relative;
+}
+.diplomaLine{
+  opacity: .9;
+  margin-bottom: 6px;
+}
+.diplomaName{
+  font-size: 34px;
+  font-weight: 1000;
+  letter-spacing: .02em;
+  margin: 2px 0 12px;
+}
+.diplomaStats{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.dStat{
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.dLabel{
+  font-size: 12px;
+  opacity: .85;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.dValue{ font-size: 18px; font-weight: 1000; }
+.diplomaFooter{
+  margin-top: 16px;
+  display:flex;
+  align-items:flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sig{ flex: 1; max-width: 320px; }
+.sigLine{
+  height: 2px;
+  width: 100%;
+  background: rgba(255,255,255,0.35);
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+.sigText{ font-size: 12px; opacity: .9; }
+.seal{ text-align:center; min-width: 140px; }
+.sealInner{
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 6px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 28px;
+  background: rgba(255,255,255,0.10);
+  border: 2px solid rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.05);
+}
+.sealText{
+  font-weight: 1000;
+  font-size: 12px;
+  letter-spacing: .14em;
+  opacity: .9;
+}
+
+@media (max-width: 900px){
+  .grid{ grid-template-columns: 1fr; }
+  .stats{ text-align:left; }
+}
+@media (max-width: 720px){
+  .diplomaName{ font-size: 28px; }
+  .diplomaStats{ grid-template-columns: 1fr; }
+}
+
+/* Snow (licht en simpel) */
+.snow{
+  pointer-events:none;
+  position:fixed;
+  inset:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px);
+  background-size: 110px 110px, 180px 180px;
+  background-position: 0 0, 40px 60px;
+  opacity: .25;
+  filter: blur(0.2px);
+}
+
+/* Print naar PDF: print alleen resultView */
+@media print{
+  body{ background:#fff !important; }
+  body *{ visibility: hidden !important; }
+  #resultView, #resultView *{ visibility: visible !important; }
+  #resultView{
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    color: #111 !important;
+  }
+  .btnPrimary, .btnGhost{ display:none !important; }
+
+  .diploma{
+    background: #fff !important;
+    color: #111 !important;
+    border: 2px solid #111 !important;
+  }
+  .diploma:before{ display:none !important; }
+  .dStat{
+    background: #fff !important;
+    border: 1px solid #111 !important;
+  }
+  .sigLine{ background:#111 !important; }
+  .sealInner{
+    border-color:#111 !important;
+    box-shadow:none !important;
+  }
+}
