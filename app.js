@@ -54,6 +54,98 @@ Veel verkochte soorten:
   },
 
   {
+  vraag: "Wat is 0 + 5?",
+  image: "",
+  antwoorden: ["0", "5", "10", "1"],
+  correctIndex: 1,
+  uitleg: "Nul verandert niks."
+},
+{
+  vraag: "Wat is het juiste antwoord?",
+  image: "fruit1.jpg",
+  antwoorden: ["18", "19", "20", "21"],
+  correctIndex: 2,
+  uitleg: "Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20."
+},
+
+  {
+  vraag: "Wat is de waarde van de banaan?",
+  image: "fruit2.jpg",
+  antwoorden: ["5", "6", "7", "8"],
+  correctIndex: 2,
+  uitleg: "Druiven zijn 22. 22 − 15 = 7, dus de banaan is 7."
+},
+
+
+  {
+  vraag: "Wat is dit?",
+  image: "takis.jpg",
+  antwoorden: ["Doritos", "Takis", "Cheetos", "Pringles"],
+  correctIndex: 1,
+  uitleg: "Takis zijn pittige snacks."
+},
+
+  {
+  vraag: "Wat is dit?",
+  image: "knikkers.jpg",
+  antwoorden: ["Knikkers", "Kauwgomballen", "IJsballetjes", "Kralen"],
+  correctIndex: 0,
+  uitleg: "Klassiek speelgoedding, helaas nooit meer terug in de trent gekomen."
+},
+{
+  vraag: "Wat is dit?",
+  image: "fidgetspinner.jpg",
+  antwoorden: ["Slinky", "Voetbal", "Draaiketting","Fidget spinner"],
+  correctIndex: 3,
+  uitleg: "Fidget spinners waren ineens overal."
+},
+
+  {
+  vraag: "Wat is dit?",
+  image: "beyblade.jpg",
+  antwoorden: ["Tol", "Beyblade", "Fidget spinner", "Jojo"],
+  correctIndex: 1,
+  uitleg: "Beyblades moeten echt een comeback maken."
+},
+
+  {
+  vraag: "Wat is dit?",
+  image: "tamagotchi.jpg",
+  antwoorden: ["Tamagochi", "Gameboy", "Pager", "Mini-telefoon"],
+  correctIndex: 0,
+  uitleg: "Een Tamagotchi is een digitaal huisdiertje dat je moest verzorgen."
+},
+
+  {
+  vraag: "Wat is dit?",
+  image: "neopets.jpg",
+  antwoorden: ["Neopets", "Habbo Hotel", "Club Penguin", "The Sims"],
+  correctIndex: 0,
+  uitleg: "Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
+},
+
+    {
+  vraag: "Hoeveel spelers staan er in één voetbalteam op het veld?",
+  image: "voetbalteam.jpg",
+  antwoorden: ["9", "10", "11", "12"],
+  correctIndex: 2,
+  uitleg: "Een elftal = 11 spelers ⚽"
+},
+  
+  {
+  vraag: "Wat gebeurt er bij buitenspel?",
+  image: "buitenspel.jpg",
+  antwoorden: [
+    "Vrije trap",
+    "Inworp",
+    "Spel wordt afgefloten",
+    "Penalty"
+  ],
+  correctIndex: 2,
+  uitleg: "Bij buitenspel fluit de scheidsrechter het spel af."
+},
+
+  {
     vraag: "Welke voetbalclub is dit?",
     image: "juventus.jpg",
     antwoorden: ["Ajax", "Juventus", "FC Barcelona", "Real Madrid"],
@@ -140,7 +232,15 @@ Veel verkochte soorten:
     antwoorden: ["een papa", "een opa", "één oma", "een broer"],
     correctIndex: 2,
     uitleg: "Een oma kan goed salsa dansen 💃"
-  }
+  },
+{
+  vraag: "Wie vergeet altijd zijn spullen?",
+  image: "sleutels.jpg",
+  antwoorden: ["Carmen", "Luuk", "Richard", "Ferran"],
+  correctIndex: 3,
+  uitleg: "Sleutels, tekeningen, handschoenen… altijd 😅"
+},
+  
 ];
 
 // =====================================================
