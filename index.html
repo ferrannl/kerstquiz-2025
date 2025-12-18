@@ -13,7 +13,7 @@
   <div class="wrap">
     <div class="card">
 
-      <!-- HEADER (alleen op beginscherm; JS verbergt dit tijdens quiz/result) -->
+      <!-- HEADER (alleen op start) -->
       <header class="topbar" id="topbar">
         <h1 class="title">
           🎄 De grote van der Venne Kerst Quiz! 🎁<br>
@@ -21,16 +21,18 @@
         </h1>
       </header>
 
-      <!-- PLAYER SELECT -->
+      <!-- START / PLAYER SELECT -->
       <section class="view active" id="playerView">
-        <h2>Wie ben jij?</h2>
-        <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
-
-        <!-- FAMILIE FOTO (BEGIN) -->
+        <!-- fam.jpg -->
         <div class="familyHero" aria-label="Familiefoto begin">
           <img class="familyPhoto big" src="fam.jpg" alt="Familie">
         </div>
 
+        <!-- Wie ben jij -->
+        <h2>Wie ben jij?</h2>
+        <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
+
+        <!-- spelers (DIT MOET ERIN BLIJVEN!) -->
         <div class="players" id="players"></div>
 
         <button class="btnPrimary bigBtn" id="startBtn" disabled>
@@ -42,8 +44,6 @@
 
       <!-- QUIZ -->
       <section class="view" id="quizView">
-
-        <!-- JOUW PROFIEL ALTIJD ZICHTBAAR -->
         <div class="quizTopRow">
           <div class="youCard" id="youCard" aria-label="Jouw speler">
             <img id="youImg" src="" alt="Jouw foto">
@@ -72,7 +72,6 @@
           <div class="panel">
             <div id="answers"></div>
 
-            <!-- FEEDBACK + UITLEG -->
             <div class="feedback hidden" id="feedbackBox">
               <div class="feedbackHead" id="feedbackHead">—</div>
               <div class="feedbackBody" id="feedbackBody"></div>
@@ -86,7 +85,7 @@
         </div>
       </section>
 
-      <!-- RESULT + SHARE -->
+      <!-- RESULT -->
       <section class="view" id="resultView">
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
@@ -97,7 +96,6 @@
 
           <div class="othersEnd" id="othersEnd"></div>
 
-          <!-- FAMILIE FOTO (EIND) -->
           <div class="familyWrap" aria-label="Familiefoto einde">
             <img class="familyPhoto big" src="fam.jpg" alt="Familie">
             <div class="familyHint">📸 Maak een foto/screenshot van je score en stuur ‘m in de groepsapp 😄</div>
