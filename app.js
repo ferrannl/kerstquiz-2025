@@ -66,7 +66,7 @@ const QUESTIONS = [
     image: "koken2.jpg",
     antwoorden: ["Kaj", "Richard", "Luuk.", "Ilonka"],
     correctIndex: 3,
-    uitleg: "Oma Ilonka is al meer dan 6kg afgevallen!! Whooo!"
+    uitleg: "Oma Ilonka is al meer dan 6kg afgevallen!! **KLAPPEN**👏👏 Whooo!"
   },
   
   {
@@ -106,7 +106,7 @@ Veel verkochte soorten:
   image: "takis.jpg",
   antwoorden: ["Doritos", "Takis", "Cheetos", "Pringles"],
   correctIndex: 1,
-  uitleg: "Takis zijn pittige snacks."
+  uitleg: "Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen."
 },
 
   {
@@ -114,7 +114,7 @@ Veel verkochte soorten:
   image: "knikkers.jpg",
   antwoorden: ["Knikkers", "Kauwgomballen", "IJsballetjes", "Kralen"],
   correctIndex: 0,
-  uitleg: "Klassiek speelgoedding, helaas nooit meer terug in de trent gekomen."
+  uitleg: "Klassiek speelgoed, helaas nooit meer terug in de trent gekomen."
 },
 {
   vraag: "Wat is dit?",
@@ -137,7 +137,7 @@ Veel verkochte soorten:
   image: "tamagotchi.jpg",
   antwoorden: ["Tamagochi", "Gameboy", "Pager", "Mini-telefoon"],
   correctIndex: 0,
-  uitleg: "Een Tamagotchi is een digitaal huisdiertje dat je moest verzorgen."
+  uitleg: "Een Tamagotchi is een digitaal huisdiertje dat je moest verzorgen. Carmen was er gek op, Ferran wil er nu nog steeds een"
 },
 
   {
@@ -145,7 +145,7 @@ Veel verkochte soorten:
   image: "neopets.jpg",
   antwoorden: ["Neopets", "Habbo Hotel", "Club Penguin", "The Sims"],
   correctIndex: 0,
-  uitleg: "Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
+  uitleg: "Neopets was een populaire online game waarin je digitale huisdieren verzorgde. Carmen speelde het veel."
 },
 
     {
