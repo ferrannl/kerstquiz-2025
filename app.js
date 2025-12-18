@@ -164,7 +164,7 @@ Veel verkochte soorten:
   {
        vraag: "Waar staat TOP Oss voor?",
     image: "toposs.jpg",
-    antwoorden: ["Trots Op Oss", "Top Oss", "Tot Ons Profijt Oss", "Tot Ons Plezier Oss"],
+    antwoorden: ["Trots Op Oss", "Toppers Oss", "Tot Ons Profijt Oss", "Tot Ons Plezier Oss"],
     correctIndex: 3,
     uitleg: "Van de oprichting in 1928 tot 1994 heette de club TOP, daarna heette de club tussen 2009 en 2018 FC Oss en sinds het seizoen 2018/19 heeft het de naam TOP Oss, zoals de club tussen 1994 en 2009 ook al heette. "
   },
@@ -203,9 +203,9 @@ Veel verkochte soorten:
   },
   
   {
-    vraag: "In welke film speelde deze knaap? (Zac Efron)",
+    vraag: "In welke film speelde deze knaap?",
     image: "zac.jpg",
-    antwoorden: ["Harry Potter", "High School Musical", "Grease", "Jaws"],
+    antwoorden: ["Harry Potter", "High School Musical", "Gooise Vrouwen", "Camp Rock"],
     correctIndex: 1,
     uitleg: "Zac Efron werd mega bekend door High School Musical."
   },
