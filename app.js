@@ -16,7 +16,7 @@ const PLAYERS = [
 const QUESTIONS = [
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
-    image: "", // optioneel: "kerstboom.jpg"
+    image: "kerstboom.jpg", // optioneel: "kerstboom.jpg"
     antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
     correctIndex: 0,
     uitleg:
@@ -24,25 +24,8 @@ const QUESTIONS = [
 - de fijnspar
 - de Nordmann-spar
 - de Servische spar
-- de blauwspar
-- de fraserspar`
   },
 
-  {
-    vraag: "Wie is dit?",
-    image: "mosterd.jpg",
-    antwoorden: ["Messi", "Ronaldo", "Richard", "Kaj"],
-    correctIndex: 2,
-    uitleg: "Richard met mosterd op zijn knie."
-  },
-  
-  {
-    vraag: "Wie is dit?",
-    image: "eenoma.jpg",
-    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
-    correctIndex: 2,
-    uitleg: "Een oma kan goed dansen"
-  },
 
     {
     vraag: "Welke voetbalclub is dit?",
@@ -59,6 +42,7 @@ const QUESTIONS = [
     correctIndex: 2,
     uitleg: "Dit is FC UUUUUUUUUUtrecht"
   },
+
 
   
     {
@@ -101,7 +85,46 @@ const QUESTIONS = [
     uitleg: "Aan het einde van de eerste spongebob film red David Hasstleoff Spongebob en Patrik door ze met zijn borst af te vuren naar de bodem van de zee, richting Bikinibroek"
   },
 
+        {
+    vraag: "Wie is het oudste",
+    image: "boys.jpg",
+    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
+    correctIndex: 2,
+    uitleg: "Rich is het oudste"
+  },
 
+        {
+    vraag: "Wie is het jongste",
+    image: "boys.jpg",
+    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
+    correctIndex: 2,
+    uitleg: "Luuk is het jongste"
+  },
+
+  
+  {
+    vraag: "Wie is dit?",
+    image: "mosterd.jpg",
+    antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
+    correctIndex: 2,
+    uitleg: "Richard met mosterd op zijn knie."
+  },
+  
+  {
+    vraag: "Wie is dit?",
+    image: "eenoma.jpg",
+    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
+    correctIndex: 2,
+    uitleg: "Een oma kan goed dansen"
+  },
+
+    {
+    vraag: "De rekening is €53,00",
+    image: "eenoma.jpg",
+    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
+    correctIndex: 2,
+    uitleg: "Een oma kan goed dansen"
+  },
   
 ];
 
