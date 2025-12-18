@@ -29,7 +29,6 @@ const QUESTIONS = [
     correctIndex: 0,
     uitleg: "Luuk is het jongste."
   }
-  // voeg hier al je vragen toe
 ];
 
 // =====================================================
@@ -49,6 +48,10 @@ function scrollToTop(){
 function safeSetText(id, value){
   const el = document.getElementById(id);
   if(el) el.textContent = String(value);
+}
+
+function setNextLabel(){
+  nextBtn.textContent = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
 }
 
 // =====================================================
@@ -71,7 +74,7 @@ const qTextEl    = $("qText");
 const qImgEl     = $("qImg");
 const answersEl  = $("answers");
 
-const feedbackEl = $("feedback");
+const feedbackEl   = $("feedback");
 const feedbackHead = $("feedbackHead");
 const feedbackBody = $("feedbackBody");
 
@@ -93,12 +96,8 @@ let currentIndex  = 0;
 let state = QUESTIONS.map(() => ({
   answered: false,
   pickedIndex: null,
-  correct: false,
-  elapsedSec: null
+  correct: false
 }));
-
-let questionStartTs = 0;
-let nextLockTimer = null;
 
 // =====================================================
 // 🎮 INIT PLAYER SELECT
@@ -122,7 +121,6 @@ function selectPlayer(p, el){
 }
 
 startBtn.onclick = () => {
-  // hide header tijdens quiz
   if(topbar) topbar.style.display = "none";
   startGame();
 };
@@ -135,8 +133,7 @@ function startGame(){
   state = QUESTIONS.map(() => ({
     answered: false,
     pickedIndex: null,
-    correct: false,
-    elapsedSec: null
+    correct: false
   }));
 
   youImg.src = currentPlayer?.photo || "";
@@ -148,9 +145,9 @@ function startGame(){
 }
 
 function renderQuestion(){
-  clearNextLock();
-
   const q = QUESTIONS[currentIndex];
+  const s = state[currentIndex];
+
   statsEl.textContent = `Vraag ${currentIndex + 1} / ${QUESTIONS.length}`;
   qNrEl.textContent = `Vraag ${currentIndex + 1}`;
   qTextEl.textContent = q.vraag;
@@ -160,11 +157,12 @@ function renderQuestion(){
 
   answersEl.innerHTML = "";
   feedbackEl.classList.add("hidden");
-  nextBtn.disabled = true;
 
-  backBtn.disabled = currentIndex === 0;
+  backBtn.disabled = (currentIndex === 0);
+  setNextLabel();
 
-  questionStartTs = Date.now();
+  // Next is alleen beschikbaar als er gekozen is (maar keuze blijft wijzigbaar)
+  nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
     const b = document.createElement("button");
@@ -174,52 +172,67 @@ function renderQuestion(){
     answersEl.appendChild(b);
   });
 
-  // als al beantwoord (bij terug) -> opnieuw tekenen
-  if(state[currentIndex].answered){
-    paintAnsweredState();
+  // Als al eerder gekozen: laat direct de status + feedback zien,
+  // maar laat knoppen actief zodat je kunt wijzigen.
+  if(s.answered){
+    paintAnsweredState();               // highlights + selected
+    showFeedback(s.correct, q, s.pickedIndex);
   }
 }
 
+/**
+ * ✅ Antwoord kiezen OF wijzigen
+ * - knoppen blijven klikbaar
+ * - state wordt overschreven
+ * - styling + feedback wordt live geüpdatet
+ */
 function pickAnswer(pickedIndex){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
-  if(s.answered) return;
 
-  const elapsedSec = Math.max(0, (Date.now() - questionStartTs) / 1000);
-  const correctIndex = q.correctIndex;
-  const isCorrect = pickedIndex === correctIndex;
+  const isCorrect = pickedIndex === q.correctIndex;
 
   s.answered = true;
   s.pickedIndex = pickedIndex;
   s.correct = isCorrect;
-  s.elapsedSec = elapsedSec;
 
   paintAnsweredState();
   showFeedback(isCorrect, q, pickedIndex);
 
-  // ✅ Wachttijd op VOLGENDE (langer als iemand super snel antwoordt)
-  // formule: minimaal 15s, maximaal 30s, en hoe sneller je bent, hoe langer je moet wachten
-  const waitSec = Math.max(15, Math.min(30, Math.round(30 - elapsedSec)));
-  lockNextFor(waitSec);
+  nextBtn.disabled = false;
+  setNextLabel();
 }
 
+/**
+ * ✅ Highlight correct + wrong + selected, maar NIET disablen
+ */
 function paintAnsweredState(){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
-
   const btns = [...answersEl.querySelectorAll("button")];
-  btns.forEach((b, idx) => {
-    b.disabled = true;
 
-    if(idx === q.correctIndex){
+  btns.forEach((b, idx) => {
+    // reset
+    b.classList.remove("correct", "wrong", "selectedPick");
+
+    // altijd: laat juiste antwoord groen zien zodra er gekozen is
+    if(s.answered && idx === q.correctIndex){
       b.classList.add("correct");
     }
-    if(s.pickedIndex === idx && idx !== q.correctIndex){
+
+    // de gekozen foute optie rood
+    if(s.answered && s.pickedIndex === idx && idx !== q.correctIndex){
       b.classList.add("wrong");
     }
-  });
 
-  // next wordt via lock vrijgegeven
+    // optioneel: markeer gekozen optie subtiel (ook als correct)
+    if(s.answered && s.pickedIndex === idx){
+      b.classList.add("selectedPick");
+    }
+
+    // knoppen blijven klikbaar -> dus NIET disabled
+    b.disabled = false;
+  });
 }
 
 function showFeedback(isCorrect, q, pickedIndex){
@@ -227,7 +240,7 @@ function showFeedback(isCorrect, q, pickedIndex){
   feedbackHead.textContent = isCorrect ? "✅ Goed!" : "❌ Fout!";
   feedbackHead.className = "feedbackHead " + (isCorrect ? "good" : "bad");
 
-  const chosen = q.antwoorden[pickedIndex];
+  const chosen  = (pickedIndex != null) ? q.antwoorden[pickedIndex] : "—";
   const correct = q.antwoorden[q.correctIndex];
 
   const uitleg = q.uitleg ? `<p><b>Uitleg:</b> ${q.uitleg}</p>` : "";
@@ -237,34 +250,6 @@ function showFeedback(isCorrect, q, pickedIndex){
     <p><b>Juiste antwoord:</b> ${correct}</p>
     ${uitleg}
   `;
-}
-
-// =====================================================
-// ⏳ NEXT LOCK (geen timer op scherm, alleen knop countdown)
-// =====================================================
-function clearNextLock(){
-  if(nextLockTimer){
-    clearInterval(nextLockTimer);
-    nextLockTimer = null;
-  }
-  nextBtn.textContent = "VOLGENDE ➡️";
-}
-
-function lockNextFor(seconds){
-  let left = seconds;
-  nextBtn.disabled = true;
-  nextBtn.textContent = `VOLGENDE (${left}s)`;
-
-  nextLockTimer = setInterval(() => {
-    left--;
-    if(left <= 0){
-      clearNextLock();
-      nextBtn.disabled = false;
-      nextBtn.textContent = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT 🎄" : "VOLGENDE ➡️";
-    }else{
-      nextBtn.textContent = `VOLGENDE (${left}s)`;
-    }
-  }, 1000);
 }
 
 // =====================================================
@@ -278,7 +263,6 @@ backBtn.onclick = () => {
 };
 
 nextBtn.onclick = () => {
-  // mag pas als answered + lock klaar
   if(!state[currentIndex].answered) return;
 
   if(currentIndex < QUESTIONS.length - 1){
@@ -292,7 +276,7 @@ nextBtn.onclick = () => {
 };
 
 // =====================================================
-// ✅ RESULT + REVIEW (FIXED: geen 0-bug meer)
+// ✅ RESULT + REVIEW
 // =====================================================
 function renderResult(){
   show(resultView);
@@ -301,38 +285,31 @@ function renderResult(){
   const bad  = state.filter(s => s.answered && !s.correct).length;
   const total = QUESTIONS.length;
 
-  const name = (currentPlayer && currentPlayer.name) ? currentPlayer.name : "Speler";
+  const name = currentPlayer?.name || "Speler";
   safeSetText("resultSummary", `${name}, je had ${good} goed en ${bad} fout 🎄`);
 
-  // others
   const othersEnd = $("othersEnd");
   if(othersEnd){
     othersEnd.innerHTML = "";
     PLAYERS.forEach(p => {
       const d = document.createElement("div");
-      d.className = "otherCard" + (p === currentPlayer ? " you" : "");
+      d.className = "otherCard";
       d.innerHTML = `<img src="${p.photo}" alt="${p.name}"><span>${p.name}</span>`;
       othersEnd.appendChild(d);
     });
   }
 
-  // diploma numbers
   safeSetText("dipGood", good);
   safeSetText("dipBad", bad);
   safeSetText("dipTotal", total);
 
-  // meta
   const now = new Date();
   const stamp =
     `${String(now.getDate()).padStart(2,"0")}-${String(now.getMonth()+1).padStart(2,"0")}-${now.getFullYear()} ` +
     `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
   safeSetText("diplomaMeta", `${name} • ${stamp}`);
 
-  // default review: alles
   buildReviewList({ onlyWrong:false });
-
-  // debug
-  console.log("[QUIZ] RESULT", { name, good, bad, total, state });
 }
 
 function buildReviewList({ onlyWrong }){
@@ -344,19 +321,17 @@ function buildReviewList({ onlyWrong }){
   QUESTIONS.forEach((q, i) => {
     const s = state[i];
     const isWrong = s.answered && !s.correct;
-
     if(onlyWrong && !isWrong) return;
 
-    const chosen = (s.pickedIndex != null) ? q.antwoorden[s.pickedIndex] : "—";
+    const chosen  = (s.pickedIndex != null) ? q.antwoorden[s.pickedIndex] : "—";
     const correct = q.antwoorden[q.correctIndex];
-
-    const row = document.createElement("div");
-    row.className = "reviewRow";
 
     const badge = s.answered
       ? (s.correct ? `<span class="badge good">✅ Goed</span>` : `<span class="badge bad">❌ Fout</span>`)
-      : `<span class="badge">⏳ Niet beantwoord</span>`;
+      : `<span class="badge">Niet beantwoord</span>`;
 
+    const row = document.createElement("div");
+    row.className = "reviewRow";
     row.innerHTML = `
       <div class="reviewThumb">
         <img src="${q.image || ""}" alt="Vraag ${i+1}">
@@ -368,9 +343,7 @@ function buildReviewList({ onlyWrong }){
           <span><b>Jij:</b> ${chosen}</span>
           <span><b>Juiste:</b> ${correct}</span>
         </div>
-        <div class="reviewActions">
-          ${q.uitleg ? `<div class="smallNote" style="margin:8px 0 0; opacity:.95;"><b>Uitleg:</b> ${q.uitleg}</div>` : ""}
-        </div>
+        ${q.uitleg ? `<div class="smallNote" style="margin:8px 0 0; opacity:.95;"><b>Uitleg:</b> ${q.uitleg}</div>` : ""}
       </div>
     `;
 
@@ -379,14 +352,14 @@ function buildReviewList({ onlyWrong }){
 }
 
 // =====================================================
-// 📄 PDF (jsPDF)
+// 📄 PDF
 // =====================================================
 function makePdf(){
   try{
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: "pt", format: "a4" });
 
-    const name = (currentPlayer && currentPlayer.name) ? currentPlayer.name : "Speler";
+    const name = currentPlayer?.name || "Speler";
     const good = state.filter(s => s.answered && s.correct).length;
     const bad  = state.filter(s => s.answered && !s.correct).length;
     const total = QUESTIONS.length;
@@ -397,10 +370,9 @@ function makePdf(){
       `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
 
     let y = 70;
-
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
-    doc.text("🎓 Kerst Quiz 2025 Diploma", 60, y);
+    doc.text("Kerst Quiz 2025 Diploma", 60, y);
 
     y += 30;
     doc.setFont("helvetica", "normal");
@@ -411,75 +383,28 @@ function makePdf(){
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.text(`Score: ${good} goed • ${bad} fout • totaal ${total}`, 60, y);
-    y += 26;
-
-    doc.setDrawColor(180);
-    doc.line(60, y, 535, y);
-    y += 18;
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(13);
-    doc.text("Overzicht (fouten):", 60, y);
-    y += 18;
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(11);
-
-    const wrongs = QUESTIONS
-      .map((q, i) => ({ q, i, s: state[i] }))
-      .filter(x => x.s.answered && !x.s.correct);
-
-    if(wrongs.length === 0){
-      doc.text("Geen fouten 🎄", 60, y);
-    }else{
-      wrongs.forEach(({ q, i, s }) => {
-        const chosen = (s.pickedIndex != null) ? q.antwoorden[s.pickedIndex] : "—";
-        const correct = q.antwoorden[q.correctIndex];
-
-        const lines = [
-          `${i+1}. ${q.vraag}`,
-          `Jij: ${chosen}`,
-          `Juiste: ${correct}`,
-          q.uitleg ? `Uitleg: ${q.uitleg}` : null
-        ].filter(Boolean);
-
-        lines.forEach(line => {
-          const wrapped = doc.splitTextToSize(line, 470);
-          wrapped.forEach(w => {
-            if(y > 780){ doc.addPage(); y = 70; }
-            doc.text(w, 60, y);
-            y += 14;
-          });
-        });
-
-        y += 10;
-      });
-    }
 
     doc.save(`KerstQuiz_${name}.pdf`);
   }catch(e){
     console.error("PDF error:", e);
-    alert("PDF maken lukt niet (check internet / jsPDF).");
+    alert("PDF maken lukt niet (check jsPDF / internet).");
   }
 }
 
 // =====================================================
-// 🔁 RESTART
+// 🔁 RESTART + FILTERS
 // =====================================================
 restartBtn.onclick = () => {
   if(topbar) topbar.style.display = "";
   currentPlayer = null;
   startBtn.disabled = true;
-
-  // deselect UI
   [...playersEl.children].forEach(c => c.classList.remove("selected"));
-
   show(playerView);
   scrollToTop();
 };
 
-toggleOnlyWrong.onclick = () => buildReviewList({ onlyWrong: true });
-toggleAll.onclick       = () => buildReviewList({ onlyWrong: false });
+toggleOnlyWrong.onclick = () => buildReviewList({ onlyWrong:true });
+toggleAll.onclick       = () => buildReviewList({ onlyWrong:false });
 scrollTopBtn.onclick    = () => scrollToTop();
 pdfBtn.onclick          = () => makePdf();
 
