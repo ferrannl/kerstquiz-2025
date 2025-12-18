@@ -1,6 +1,5 @@
 // =====================================================
 // 👤 SPELERS (LOKALE FOTO'S)
-// Zet de foto's in dezelfde map als index.html
 // =====================================================
 const PLAYERS = [
   { name: "Kaj & Luuk", photo: "kaj-luuk.jpg" },
@@ -16,7 +15,7 @@ const PLAYERS = [
 const QUESTIONS = [
   {
     vraag: "Welke planeet is dit?",
-    image: "mars.jpg",   // <-- mag ook lokaal!
+    image: "mars.jpg",
     antwoorden: ["Mars", "Jupiter", "Venus", "Saturnus"],
     correctIndex: 0
   },
@@ -45,6 +44,7 @@ const resultView = $("resultView");
 const playersEl = $("players");
 const startBtn  = $("startBtn");
 
+// Render spelerskeuze
 PLAYERS.forEach(p=>{
   const d = document.createElement("div");
   d.className = "player";
@@ -67,6 +67,21 @@ function show(view){
   view.classList.add("active");
 }
 
+// Medespelers
+function renderOtherPlayers(){
+  const bar = $("othersBar");
+  bar.innerHTML = "";
+  PLAYERS.forEach(p=>{
+    const d = document.createElement("div");
+    d.className = "otherPlayer" + (p === currentPlayer ? " you" : "");
+    d.innerHTML = `
+      <img src="${p.photo}">
+      <span>${p.name}</span>
+    `;
+    bar.appendChild(d);
+  });
+}
+
 function updateStats(){
   $("statQ").textContent = `${idx+1}/${QUESTIONS.length}`;
   $("statGood").textContent = state.filter(s=>s.correct).length;
@@ -82,6 +97,7 @@ function render(){
   }
 
   show(quizView);
+  renderOtherPlayers();
 
   const q = QUESTIONS[idx];
   $("qNr").textContent = `Vraag ${idx+1}`;
@@ -95,7 +111,7 @@ function render(){
     const b = document.createElement("button");
     b.textContent = a;
     b.onclick = ()=>{
-      state[idx] = {answered:true, correct:i === q.correctIndex};
+      state[idx] = {answered:true, correct:i===q.correctIndex};
       idx++;
       updateStats();
       render();
