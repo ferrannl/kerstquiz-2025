@@ -15,7 +15,7 @@ const PLAYERS = [
 const QUESTIONS = [
     {
     vraag: "Wie is het langste?",
-    image: "boys.jpg",
+    image: "lang.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 1,
     uitleg: "Ferran is het langste."
@@ -23,7 +23,7 @@ const QUESTIONS = [
 
   {
     vraag: "Wie is het jongste?",
-    image: "boys.jpg",
+    image: "jong.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 0,
     uitleg: "Luuk is het jongste."
@@ -32,7 +32,7 @@ const QUESTIONS = [
   
   {
     vraag: "Wie is het oudste?",
-    image: "boys.jpg",
+    image: "oud.jpg",
     antwoorden: ["Luuk", "één oma", "Richard", "Kaj"],
     correctIndex: 1,
     uitleg: "één oma is het oudste."
@@ -71,6 +71,14 @@ Veel verkochte soorten:
   },
 
   {
+       vraag: "Waar staat TOP Oss voor?",
+    image: "toposs.jpg",
+    antwoorden: ["Trots Op Oss", "Top Oss", "Tot Ons Profijt Oss", "Tot Ons Plezier Oss"],
+    correctIndex: 3,
+    uitleg: "Van de oprichting in 1928 tot 1994 heette de club TOP, daarna heette de club tussen 2009 en 2018 FC Oss en sinds het seizoen 2018/19 heeft het de naam TOP Oss, zoals de club tussen 1994 en 2009 ook al heette. "
+  },
+
+  {
     vraag: "Wie is dit?",
     image: "creeper.jpg",
     antwoorden: ["Mario", "Sonic", "Pikachu", "Creeper"],
@@ -95,6 +103,15 @@ Veel verkochte soorten:
   },
 
   {
+    vraag: "In welke film speelde hij?",
+    image: "cars.jpg",
+    antwoorden: ["Paw Patrol", "Minecraft", "Cars", "Fast & the Furious"],
+    correctIndex: 2,
+    uitleg:
+'Iets over Cars, hoe heet die auto, lightning mcqueen'
+  },
+  
+  {
     vraag: "In welke film speelde deze knaap? (Zac Efron)",
     image: "zac.jpg",
     antwoorden: ["Harry Potter", "High School Musical", "Grease", "Jaws"],
@@ -110,6 +127,8 @@ Veel verkochte soorten:
     uitleg:
 `In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp.`
   },
+
+  
 
   {
     vraag: "Wie is dit?",
