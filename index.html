@@ -13,7 +13,7 @@
   <div class="wrap">
     <div class="card">
 
-      <!-- TOPBAR -->
+      <!-- TOP -->
       <header class="topbar">
         <div class="brand">
           <div class="logo">🎄</div>
@@ -34,12 +34,17 @@
       <!-- INTRO -->
       <section class="view intro active" id="introView">
         <h2>KERST QUIZ FAMILIE VD VENNE HENDRIKS MEELEN 2026!!!</h2>
-        <p>
-          Welkom! 🎅✨<br>
+
+        <p class="introText">
+          Welkom! 🎅✨<br><br>
           Je krijgt vragen met (optioneel) een plaatje.<br>
-          Kies je antwoord en klik op <b>VOLGENDE</b>.
+          Kies je antwoord en klik op <b>VOLGENDE</b>.<br><br>
+          <b>Je krijgt alle tijd, geen haast.</b>
         </p>
-        <button class="btnPrimary" id="startBtn">START DE QUIZ</button>
+
+        <button class="btnPrimary bigBtn" id="startBtn">
+          START DE QUIZ
+        </button>
       </section>
 
       <!-- QUIZ -->
@@ -54,7 +59,6 @@
           </div>
 
           <div class="panel">
-            <p class="hint" id="hint"></p>
             <div id="answers"></div>
           </div>
         </div>
@@ -64,8 +68,9 @@
       <section class="view result" id="resultView">
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
-        <div id="wrongList"></div>
-        <button class="btnPrimary" id="restartBtn">OPNIEUW</button>
+        <button class="btnPrimary bigBtn" id="restartBtn">
+          OPNIEUW
+        </button>
       </section>
 
       <!-- FOOTER -->
