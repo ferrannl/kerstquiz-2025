@@ -1,116 +1,108 @@
 <!doctype html>
 <html lang="nl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🎄 De grote van der Venne Kerst Quiz! 🎁</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <div class="snow" aria-hidden="true"></div>
+  <div class="snow"></div>
 
   <div class="wrap">
     <div class="card">
 
-      
-      <!-- HEADER (alleen op start) -->
-      
-      <!-- 
+      <!-- HEADER (alleen start) -->
       <header class="topbar" id="topbar">
         <h1 class="title">
-          🎄 De grote van der Venne Kerst Quiz! 🎁<br>
+          🎄 De grote van der Venne Kerst Quiz! 🎁<br />
           <span>Wie weet het meest deze kerst?</span>
         </h1>
       </header>
-      -->
 
       <!-- START / PLAYER SELECT -->
       <section class="view active" id="playerView">
         <div class="familyHero" aria-label="Familiefoto begin">
-          <img class="familyPhoto big" src="fam.jpg" alt="Familie">
+          <img class="familyPhoto big" src="fam.jpg" alt="Familiefoto" />
         </div>
 
-        <h2>Wie ben jij?</h2>
-        <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
+        <div class="subtitle">Wie ben jij?</div>
+        <div class="smallNote">Kies jezelf en start wanneer je klaar bent</div>
 
         <div class="players" id="players"></div>
 
-        <button class="btnPrimary bigBtn" id="startBtn" disabled>
-          START DE QUIZ
-        </button>
+        <button class="btnPrimary bigBtn" id="startBtn" disabled>START DE QUIZ</button>
 
-        <p class="smallNote"><b>Je krijgt alle tijd, geen haast.</b></p>
+        <div class="smallNote" style="margin-top:14px;">Je krijgt alle tijd, geen haast.</div>
       </section>
 
       <!-- QUIZ -->
       <section class="view" id="quizView">
         <div class="quizTopRow">
-          <div class="youCard" id="youCard" aria-label="Jouw speler">
-            <img id="youImg" src="" alt="Jouw foto">
+          <div class="youCard" id="youCard">
+            <img id="youImg" alt="Jij" />
             <div class="youMeta">
-              <div class="youLabel">Jij speelt als</div>
-              <div class="youName" id="youName">—</div>
+              <div class="youLabel">Jij:</div>
+              <div class="youName" id="youName">Speler</div>
             </div>
           </div>
 
-          <div class="stats">
-            Vraag <b id="statQ">—</b> |
-            Goed <b id="statGood" class="statGood">0</b> |
-            Fout <b id="statBad" class="statBad">0</b>
-          </div>
+          <div class="stats" id="stats">Vraag 1 / 1</div>
         </div>
 
         <div class="grid">
-          <div class="panel">
-            <div class="qtop">
-              <span id="qNr"></span>
-              <h3 id="qText"></h3>
+          <div class="panel qtop">
+            <div id="qNr"></div>
+            <div id="qText"></div>
+            <div class="imgwrap">
+              <img id="qImg" alt="Vraag afbeelding" />
             </div>
-            <div class="imgwrap" id="imgWrap"></div>
           </div>
 
           <div class="panel">
             <div id="answers"></div>
 
-            <div class="feedback hidden" id="feedbackBox">
-              <div class="feedbackHead" id="feedbackHead">—</div>
+            <div class="feedback hidden" id="feedback">
+              <div class="feedbackHead" id="feedbackHead"></div>
               <div class="feedbackBody" id="feedbackBody"></div>
             </div>
 
             <div class="quizControls">
-              <button class="btnGhost" id="prevBtn" type="button">VORIGE</button>
-
-              <!-- NEXT met progress overlay -->
-              <button class="btnPrimary" id="nextBtn" type="button" disabled>
-                <span class="btnLabel" id="nextLabel">VOLGENDE</span>
-                <span class="btnCooldown hidden" id="cooldownWrap" aria-hidden="true">
-                  <span class="btnCooldownBar" id="cooldownBar"></span>
-                </span>
-              </button>
+              <button class="btnGhost" id="backBtn" disabled>⬅️ Terug</button>
+              <button class="btnPrimary" id="nextBtn" disabled>VOLGENDE ➡️</button>
             </div>
-
-            <div class="cooldownHint" id="cooldownHint" aria-live="polite"></div>
           </div>
         </div>
       </section>
 
-      <!-- RESULT -->
+      <!-- RESULT / END -->
       <section class="view" id="resultView">
-        <h2>Klaar! 🎉</h2>
-        <p id="resultSummary"></p>
+        <div class="xmasHero">
+          <img class="xmasPhoto" src="fam.jpg" alt="Kerst foto" />
+          <div id="resultSummary" class="subtitle" style="margin:10px 0 0;"></div>
 
-        <!-- Xmas foto + download -->
-        <div class="xmasHero" aria-label="Kerstfoto einde">
-          <img class="xmasPhoto" src="xmas.jpg" alt="Kerstfoto">
           <div class="xmasActions">
-            <a class="btnPrimary bigBtn" href="xmas.jpg" download="xmas.jpg">DOWNLOAD</a>
-            <button class="btnGhost bigBtn" id="pdfBtn" type="button">Download je Score Overzicht (PDF)</button>
+            <button class="btnGhost" id="toggleOnlyWrong">Alleen fout</button>
+            <button class="btnGhost" id="toggleAll">Alles</button>
+            <button class="btnGhost" id="scrollTopBtn">⬆️ Naar boven</button>
+            <button class="btnPrimary" id="pdfBtn">📄 Download PDF diploma</button>
           </div>
-          <p class="smallNote">Tip: als de foto niet downloadt, rechtsklik → “Afbeelding opslaan als…”.</p>
         </div>
-        <!-- DIPLOMA / OVERZICHT -->
-        <div class="diplomaWrap" id="diplomaWrap">
+
+        <div class="shareBox">
+          <div style="font-weight:900; font-size:18px;">
+            DEEL DE SCORE MET JE MEDESPELERS! WIE HAD ER HET MEESTE GOED!?
+          </div>
+
+          <div class="othersEnd" id="othersEnd"></div>
+
+          <div class="familyWrap">
+            <img class="familyPhoto" src="fam.jpg" alt="Familiefoto klein" />
+            <div class="familyHint">Tip: maak een foto/screenshot van het diploma of download de PDF 😄</div>
+          </div>
+        </div>
+
+        <div class="diplomaWrap">
           <div class="diplomaCard">
             <div class="diplomaTop">
               <div class="diplomaTitle">🎓 Kerst Quiz 2025 Score Overzicht</div>
@@ -124,15 +116,15 @@
             </div>
 
             <div class="reviewTools">
-              <button class="btnGhost" id="toggleOnlyWrong" type="button">Toon alleen fout</button>
-              <button class="btnGhost" id="toggleAll" type="button">Toon alles</button>
-              <button class="btnGhost" id="scrollTopBtn" type="button">⬆︎ Naar boven</button>
+              <span class="smallNote" style="margin:0; opacity:.9;">
+                Hieronder zie je alles overzichtelijk: vraag, foto, jouw antwoord, juiste antwoord en uitleg.
+              </span>
             </div>
 
             <div class="reviewList" id="reviewList"></div>
 
             <div class="endControls">
-              <button class="btnGhost" id="playAgainBtn" type="button">Opnieuw spelen</button>
+              <button class="btnPrimary" id="restartBtn">🔁 Opnieuw</button>
             </div>
           </div>
         </div>
@@ -141,9 +133,8 @@
     </div>
   </div>
 
-  <!-- jsPDF (PDF export) -->
+  <!-- jsPDF (voor diploma PDF) -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
   <script src="app.js"></script>
 </body>
 </html>
