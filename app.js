@@ -35,23 +35,17 @@ let currentPlayer = null;
 let idx = 0;
 let state = QUESTIONS.map(()=>({answered:false,correct:false}));
 
-// Views
 const playerView = $("playerView");
 const quizView   = $("quizView");
 const resultView = $("resultView");
-
-// Player select
-const playersEl = $("players");
-const startBtn  = $("startBtn");
+const playersEl  = $("players");
+const startBtn   = $("startBtn");
 
 // Render spelerskeuze
 PLAYERS.forEach(p=>{
   const d = document.createElement("div");
   d.className = "player";
-  d.innerHTML = `
-    <img src="${p.photo}" alt="${p.name}">
-    <span>${p.name}</span>
-  `;
+  d.innerHTML = `<img src="${p.photo}"><span>${p.name}</span>`;
   d.onclick = ()=>{
     document.querySelectorAll(".player").forEach(x=>x.classList.remove("selected"));
     d.classList.add("selected");
@@ -61,23 +55,18 @@ PLAYERS.forEach(p=>{
   playersEl.appendChild(d);
 });
 
-// View switch
 function show(view){
   [playerView,quizView,resultView].forEach(v=>v.classList.remove("active"));
   view.classList.add("active");
 }
 
-// Medespelers
 function renderOtherPlayers(){
   const bar = $("othersBar");
   bar.innerHTML = "";
   PLAYERS.forEach(p=>{
     const d = document.createElement("div");
     d.className = "otherPlayer" + (p === currentPlayer ? " you" : "");
-    d.innerHTML = `
-      <img src="${p.photo}">
-      <span>${p.name}</span>
-    `;
+    d.innerHTML = `<img src="${p.photo}"><span>${p.name}</span>`;
     bar.appendChild(d);
   });
 }
