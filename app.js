@@ -37,6 +37,37 @@ const QUESTIONS = [
     correctIndex: 1,
     uitleg: "één oma is het oudste."
   },
+
+    {
+    vraag: "Van wie is dit skateboard?",
+    image: "skateboard.jpg",
+    antwoorden: ["Richard", "De buurjongen", "Ferran", "Kaj"],
+    correctIndex: 2,
+    uitleg: "Oome Ferran natuurlijk"
+  },
+
+    {
+    vraag: "Van wie is deze tekening?",
+    image: "tekening.jpg",
+    antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
+    correctIndex: 1,
+    uitleg: "Kunstenaar Luukje"
+  },
+  
+    {
+    vraag: "Wie kan er het lekkerste koken?",
+    image: "koken1.jpg",
+    antwoorden: ["Carmen", "Richard", "Ferran", "Ilonka"],
+    correctIndex: 1,
+    uitleg: "Kunstenaar Luukje"
+  },
+      {
+    vraag: "Wie eet er het gezondst?",
+    image: "koken2.jpg",
+    antwoorden: ["Kaj", "Richard", "Luuk.", "Ilonka"],
+    correctIndex: 3,
+    uitleg: "Oma Ilonka is al meer dan 6kg afgevallen!! Whooo!"
+  },
   
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
@@ -53,13 +84,6 @@ Veel verkochte soorten:
 
   },
 
-  {
-  vraag: "Wat is: 1+0 ?",
-  image: "",
-  antwoorden: ["0", "1", "10", "11"],
-  correctIndex: 1,
-  uitleg: "Nul verandert niks."
-},
 {
   vraag: "Wat is het juiste antwoord?",
   image: "fruit1.jpg",
@@ -223,7 +247,7 @@ Veel verkochte soorten:
     image: "mosterd.jpg",
     antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
     correctIndex: 2,
-    uitleg: "Richard met mosterd op zijn knie 😭"
+    uitleg: "papa (Richard) met mosterd op zijn knie 😭"
   },
 
   {
