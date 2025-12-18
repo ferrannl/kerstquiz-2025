@@ -56,7 +56,7 @@ const QUESTIONS = [
     vraag: "Welke voetbalclub is dit?",
     image: "fcutrecht.jpg",
     antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcalona"],
-    correctIndex: 1,
+    correctIndex: 2,
     uitleg: "Dit is FC UUUUUUUUUUtrecht"
   },
 
@@ -72,8 +72,8 @@ const QUESTIONS = [
     {
     vraag: "Wie is dit?",
     image: "chimp.jpg",
-    antwoorden: ["tralalero tralala", "chimpanzini bananini", "Henk Zegelaar", "Bokito"],
-    correctIndex: 1,
+    antwoorden: ["Henk Zegelaar", "tralalero tralala", "chimpanzini bananini", "Bokito"],
+    correctIndex: 2,
     uitleg: "Dit is chimpanzini bananini een welbekend AI gegenereerd plaatje"
   },
 
@@ -87,7 +87,7 @@ const QUESTIONS = [
 
         {
     vraag: "In welke film speelde deze knaap? (Zac Efron)",
-    image: "haar.jpg",
+    image: "zac.jpg",
     antwoorden: ["Harry Potter", "High School Musical", "Grease", "Jaws"],
     correctIndex: 1,
     uitleg: "Dit is chimpanzini bananini een welbekend AI gegenereerd plaatje"
@@ -95,7 +95,7 @@ const QUESTIONS = [
 
         {
     vraag: "In welke film speelde deze man?",
-    image: "haar.jpg",
+    image: "david.jpg",
     antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
     correctIndex: 3,
     uitleg: "Aan het einde van de eerste spongebob film red David Hasstleoff Spongebob en Patrik door ze met zijn borst af te vuren naar de bodem van de zee, richting Bikinibroek"
