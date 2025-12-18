@@ -30,7 +30,6 @@
         <h2>Wie ben jij?</h2>
         <p class="subtitle">Kies jezelf en start wanneer je klaar bent</p>
 
-        <!-- spelers (DIT MOET ERIN BLIJVEN!) -->
         <div class="players" id="players"></div>
 
         <button class="btnPrimary bigBtn" id="startBtn" disabled>
@@ -88,67 +87,17 @@
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
 
-        <!-- DIPLOMA -->
-        <div class="diploma" id="diploma">
-          <div class="diplomaTop">
-            <div class="diplomaBadge">🎓</div>
-            <div class="diplomaTitles">
-              <div class="diplomaKicker">Officieel Kerst Quiz Diploma</div>
-              <div class="diplomaTitle">De grote van der Venne Kerst Quiz</div>
-            </div>
-          </div>
-
-          <div class="diplomaBody">
-            <div class="diplomaLine">Dit diploma is uitgereikt aan</div>
-            <div class="diplomaName" id="diplomaName">—</div>
-
-            <div class="diplomaStats">
-              <div class="dStat">
-                <div class="dLabel">Score</div>
-                <div class="dValue"><span id="dScore">0</span>/<span id="dTotal">0</span></div>
-              </div>
-              <div class="dStat">
-                <div class="dLabel">Percentage</div>
-                <div class="dValue" id="dPct">0%</div>
-              </div>
-              <div class="dStat">
-                <div class="dLabel">Datum</div>
-                <div class="dValue" id="dDate">—</div>
-              </div>
-            </div>
-
-            <div class="diplomaFooter">
-              <div class="sig">
-                <div class="sigLine"></div>
-                <div class="sigText">Jury (de tafel)</div>
-              </div>
-              <div class="seal">
-                <div class="sealInner">🎄✅</div>
-                <div class="sealText">GECERTIFICEERD</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="btnGhost" id="printPdfBtn" type="button">OPSLAAN ALS PDF</button>
-
-        <h3 class="sectionTitle">Overzicht</h3>
-        <div class="reviewList" id="reviewList"></div>
-
         <div class="shareBox">
           <h3>DEEL DE SCORE MET JE MEDESPELERS! WIE HAD ER HET MEESTE GOED!?</h3>
-          <p class="subtitle" style="margin: 8px 0 18px;">Laat iedereen om de beurt spelen 😄</p>
 
           <div class="othersEnd" id="othersEnd"></div>
 
           <div class="familyWrap" aria-label="Familiefoto einde">
             <img class="familyPhoto big" src="fam.jpg" alt="Familie">
-            <div class="familyHint">📸 Maak een foto/screenshot van je score en stuur ‘m in de groepsapp 😄</div>
+            <div class="familyHint">
+              📸 Maak een foto/screenshot van je score en stuur ‘m in de groepsapp 😄
+            </div>
           </div>
-
-          <button class="btnPrimary bigBtn" id="playAgainBtn" type="button">
-            IEMAND ANDERS LATEN SPELEN
-          </button>
         </div>
       </section>
 
