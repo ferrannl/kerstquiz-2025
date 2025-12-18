@@ -13,7 +13,6 @@ const PLAYERS = [
 
 // =====================================================
 // ❓ VRAGEN – MULTIPLE CHOICE + UITLEG
-// (laat je QUESTIONS zoals je ze al had; ik neem ze hier over)
 // =====================================================
 const QUESTIONS = [
   {
@@ -244,8 +243,7 @@ let idx = 0;
 let state = QUESTIONS.map(() => ({
   answered: false,
   correct: false,
-  selectedIndex: null,
-  unlockedAt: 0 // cooldown end timestamp
+  selectedIndex: null
 }));
 
 // Views
@@ -273,7 +271,7 @@ const feedbackBody = $("feedbackBody");
 const prevBtn = $("prevBtn");
 const nextBtn = $("nextBtn");
 
-// cooldown UI
+// (Timer UI elementen bestaan nog in HTML, maar we gebruiken ze niet meer)
 const nextLabel    = $("nextLabel");
 const cooldownWrap = $("cooldownWrap");
 const cooldownBar  = $("cooldownBar");
@@ -434,67 +432,17 @@ function renderImage(src){
 }
 
 // =====================================================
-// ⏳ Cooldown: eerst antwoord kiezen -> 5 sec wachten -> dan pas VOLGENDE
+// ✅ Next gating zonder timer: alleen "antwoord gekozen?" check
 // =====================================================
-const COOLDOWN_MS = 5000;
-let cooldownTimer = null;
-
-function stopCooldownUI(){
-  if(cooldownTimer) clearInterval(cooldownTimer);
-  cooldownTimer = null;
-
-  cooldownWrap.classList.add("hidden");
-  cooldownBar.style.width = "0%";
-  cooldownHint.textContent = "";
-  nextLabel.textContent = "VOLGENDE";
-}
-
-function startCooldownUI(endsAt){
-  stopCooldownUI();
-
-  cooldownWrap.classList.remove("hidden");
-  nextBtn.disabled = true;
-
-  const start = Date.now();
-  const total = Math.max(endsAt - start, 1);
-
-  cooldownTimer = setInterval(() => {
-    const now = Date.now();
-    const left = Math.max(0, endsAt - now);
-    const done = Math.min(1, (now - start) / total);
-
-    cooldownBar.style.width = `${Math.round(done * 100)}%`;
-
-    const secs = Math.ceil(left / 1000);
-    if(left > 0){
-      nextLabel.textContent = `WACHT… ${secs}s`;
-      cooldownHint.textContent = `Even wachten (${secs}s) — dan kun je door naar de volgende vraag.`;
-    } else {
-      nextLabel.textContent = "VOLGENDE";
-      cooldownHint.textContent = "";
-      cooldownWrap.classList.add("hidden");
-      nextBtn.disabled = false;
-      clearInterval(cooldownTimer);
-      cooldownTimer = null;
-    }
-  }, 60);
-}
-
-function maybeEnableNext(){
+function updateNextButton(){
   const s = state[idx];
-  if(!s.answered){
-    stopCooldownUI();
-    nextBtn.disabled = true;
-    return;
-  }
+  nextBtn.disabled = !s.answered;
 
-  const now = Date.now();
-  if(now >= s.unlockedAt){
-    stopCooldownUI();
-    nextBtn.disabled = false;
-  } else {
-    startCooldownUI(s.unlockedAt);
-  }
+  // verberg timer UI als die in HTML zit
+  if(cooldownWrap) cooldownWrap.classList.add("hidden");
+  if(cooldownBar) cooldownBar.style.width = "0%";
+  if(cooldownHint) cooldownHint.textContent = "";
+  if(nextLabel) nextLabel.textContent = "VOLGENDE";
 }
 
 // =====================================================
@@ -537,14 +485,13 @@ function renderQuiz(){
       if(state[idx].answered) return;
 
       const correct = (i === q.correctIndex);
-      const unlockedAt = Date.now() + COOLDOWN_MS;
-
-      state[idx] = { answered:true, correct, selectedIndex:i, unlockedAt };
+      state[idx] = { answered:true, correct, selectedIndex:i };
 
       updateStats();
       renderQuiz(); // rerender to lock answers and show colors
       showFeedback(correct, q);
-      maybeEnableNext(); // start cooldown UI
+
+      updateNextButton(); // direct vrij
     };
 
     answersEl.appendChild(b);
@@ -556,8 +503,7 @@ function renderQuiz(){
     showFeedback(s.correct, q);
   }
 
-  // Next button gating
-  maybeEnableNext();
+  updateNextButton();
 }
 
 // =====================================================
@@ -565,7 +511,6 @@ function renderQuiz(){
 // =====================================================
 function renderResult(){
   show(resultView);
-  stopCooldownUI();
 
   const good = state.filter(s => s.answered && s.correct).length;
   const bad  = state.filter(s => s.answered && !s.correct).length;
@@ -643,7 +588,7 @@ function buildReviewList({ onlyWrong }){
 }
 
 // =====================================================
-// 📄 PDF export (jsPDF) — best effort (met tekst + score + Q/A)
+// 📄 PDF export (jsPDF)
 // =====================================================
 async function makePdf(){
   const { jsPDF } = window.jspdf || {};
@@ -731,7 +676,6 @@ PLAYERS.forEach(p => {
 nextBtn.onclick = () => {
   const s = state[idx];
   if(!s.answered) return;
-  if(Date.now() < s.unlockedAt) return; // extra safety
   idx++;
   renderQuiz();
   scrollToTop();
@@ -746,7 +690,7 @@ prevBtn.onclick = () => {
 
 startBtn.onclick = () => {
   idx = 0;
-  state = QUESTIONS.map(() => ({ answered:false, correct:false, selectedIndex:null, unlockedAt:0 }));
+  state = QUESTIONS.map(() => ({ answered:false, correct:false, selectedIndex:null }));
 
   if(topbar) topbar.style.display = "none";
 
