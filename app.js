@@ -54,9 +54,9 @@ Veel verkochte soorten:
   },
 
   {
-  vraag: "Wat is 0 + 5?",
+  vraag: "Wat is: 1+0 ?",
   image: "",
-  antwoorden: ["0", "5", "10", "1"],
+  antwoorden: ["0", "1", "10", "11"],
   correctIndex: 1,
   uitleg: "Nul verandert niks."
 },
