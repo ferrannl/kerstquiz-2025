@@ -10,23 +10,46 @@ const PLAYERS = [
 ];
 
 // =====================================================
-// ❓ VRAGEN – MULTIPLE CHOICE + UITLEG
+// ❓ VRAGEN – MULTIPLE CHOICE + UITLEG (OPGESCHOOND)
 // =====================================================
 const QUESTIONS = [
+    {
+    vraag: "Wie is het langste?",
+    image: "boys.jpg",
+    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
+    correctIndex: 1,
+    uitleg: "Ferran is het langste."
+  },
+
+  {
+    vraag: "Wie is het jongste?",
+    image: "boys.jpg",
+    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
+    correctIndex: 0,
+    uitleg: "Luuk is het jongste."
+  },
+
+  
+  {
+    vraag: "Wie is het oudste?",
+    image: "boys.jpg",
+    antwoorden: ["Luuk", "één oma", "Richard", "Kaj"],
+    correctIndex: 1,
+    uitleg: "één oma is het oudste."
+  },
+  
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
     image: "kerstboom.jpg",
     antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
     correctIndex: 0,
     uitleg:
-`In Nederland zijn kerstbomen meestal een spar.
+`In Nederland zijn kerstbomen meestal een **spar**.
 
 Veel verkochte soorten:
-- Fijnspar (Picea abies)
-- Nordmann-spar (Abies nordmanniana)
-- Servische spar (Picea omorika)
-- Blauwspar (Picea pungens)
-- Fraserspar (Abies fraseri)
+- Fijnspar
+- Nordmann-spar
+- Servische spar
 
 (En daarom zingen we soms “O denneboom” terwijl het vaak een spar is 😄)`
   },
@@ -85,26 +108,7 @@ Veel verkochte soorten:
     antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
     correctIndex: 3,
     uitleg:
-`In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp.
-
-Fun fact:
-- Hij helpt SpongeBob & Patrick richting Bikini Bottom 😄`
-  },
-
-  {
-    vraag: "Wie is het oudste?",
-    image: "boys.jpg",
-    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
-    correctIndex: 2,
-    uitleg: "Richard is het oudste."
-  },
-
-  {
-    vraag: "Wie is het jongste?",
-    image: "boys.jpg",
-    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
-    correctIndex: 0,
-    uitleg: "Luuk is het jongste."
+`In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp.`
   },
 
   {
