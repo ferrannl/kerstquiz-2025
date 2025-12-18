@@ -49,9 +49,8 @@ const QUESTIONS = [
 Veel verkochte soorten:
 - Fijnspar
 - Nordmann-spar
-- Servische spar
+- Servische spar`
 
-(En daarom zingen we soms “O denneboom” terwijl het vaak een spar is 😄)`
   },
 
   {
@@ -124,11 +123,8 @@ Veel verkochte soorten:
     image: "david.jpg",
     antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
     correctIndex: 3,
-    uitleg:
-`In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp.`
+    uitleg: "In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp."
   },
-
-  
 
   {
     vraag: "Wie is dit?",
