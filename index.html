@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <div class="snow"></div>
+  <div class="snow" aria-hidden="true"></div>
 
   <div class="wrap">
     <div class="card">
@@ -52,8 +52,8 @@
 
           <div class="stats">
             Vraag <b id="statQ">—</b> |
-            Goed <b id="statGood">0</b> |
-            Fout <b id="statBad">0</b>
+            Goed <b id="statGood" class="statGood">0</b> |
+            Fout <b id="statBad" class="statBad">0</b>
           </div>
         </div>
 
@@ -76,8 +76,17 @@
 
             <div class="quizControls">
               <button class="btnGhost" id="prevBtn" type="button">VORIGE</button>
-              <button class="btnPrimary" id="nextBtn" type="button" disabled>VOLGENDE</button>
+
+              <!-- NEXT met progress overlay -->
+              <button class="btnPrimary" id="nextBtn" type="button" disabled>
+                <span class="btnLabel" id="nextLabel">VOLGENDE</span>
+                <span class="btnCooldown hidden" id="cooldownWrap" aria-hidden="true">
+                  <span class="btnCooldownBar" id="cooldownBar"></span>
+                </span>
+              </button>
             </div>
+
+            <div class="cooldownHint" id="cooldownHint" aria-live="polite"></div>
           </div>
         </div>
       </section>
@@ -86,6 +95,16 @@
       <section class="view" id="resultView">
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
+
+        <!-- Xmas foto + download -->
+        <div class="xmasHero" aria-label="Kerstfoto einde">
+          <img class="xmasPhoto" src="xmas.jpg" alt="Kerstfoto">
+          <div class="xmasActions">
+            <a class="btnPrimary bigBtn" href="xmas.jpg" download="xmas.jpg">DOWNLOAD</a>
+            <button class="btnGhost bigBtn" id="pdfBtn" type="button">Download Diploma (PDF)</button>
+          </div>
+          <p class="smallNote">Tip: als de foto niet downloadt, rechtsklik → “Afbeelding opslaan als…”.</p>
+        </div>
 
         <div class="shareBox">
           <h3>DEEL DE SCORE MET JE MEDESPELERS! WIE HAD ER HET MEESTE GOED!?</h3>
@@ -99,10 +118,41 @@
             </div>
           </div>
         </div>
+
+        <!-- DIPLOMA / OVERZICHT -->
+        <div class="diplomaWrap" id="diplomaWrap">
+          <div class="diplomaCard">
+            <div class="diplomaTop">
+              <div class="diplomaTitle">🎓 Kerst Quiz 2025 Score Diploma</div>
+              <div class="diplomaMeta" id="diplomaMeta">—</div>
+            </div>
+
+            <div class="diplomaStats">
+              <div class="pill good">✅ Goed: <b id="dipGood">0</b></div>
+              <div class="pill bad">❌ Fout: <b id="dipBad">0</b></div>
+              <div class="pill">📌 Totaal: <b id="dipTotal">0</b></div>
+            </div>
+
+            <div class="reviewTools">
+              <button class="btnGhost" id="toggleOnlyWrong" type="button">Toon alleen fout</button>
+              <button class="btnGhost" id="toggleAll" type="button">Toon alles</button>
+              <button class="btnGhost" id="scrollTopBtn" type="button">⬆︎ Naar boven</button>
+            </div>
+
+            <div class="reviewList" id="reviewList"></div>
+
+            <div class="endControls">
+              <button class="btnGhost" id="playAgainBtn" type="button">Opnieuw spelen</button>
+            </div>
+          </div>
+        </div>
       </section>
 
     </div>
   </div>
+
+  <!-- jsPDF (PDF export) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <script src="app.js"></script>
 </body>
