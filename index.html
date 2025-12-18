@@ -31,6 +31,8 @@
         <button class="btnPrimary bigBtn" id="startBtn" disabled>
           START DE QUIZ
         </button>
+
+        <p class="smallNote"><b>Je krijgt alle tijd, geen haast.</b></p>
       </section>
 
       <!-- QUIZ -->
@@ -56,6 +58,18 @@
 
           <div class="panel">
             <div id="answers"></div>
+
+            <!-- FEEDBACK + UITLEG -->
+            <div class="feedback hidden" id="feedbackBox">
+              <div class="feedbackHead" id="feedbackHead">—</div>
+              <div class="feedbackBody" id="feedbackBody"></div>
+            </div>
+
+            <div class="quizControls">
+              <button class="btnGhost" id="prevBtn" type="button">VORIGE</button>
+              <button class="btnPrimary" id="nextBtn" type="button" disabled>VOLGENDE</button>
+            </div>
+
           </div>
         </div>
       </section>
