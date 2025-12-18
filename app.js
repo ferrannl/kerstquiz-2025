@@ -3,8 +3,8 @@
 // =====================================================
 const PLAYERS = [
   { name: "Kaj & Luuk", photo: "kaj-luuk.jpg" },
-  { name: "Luuk", photo: "kaj-luuk.jpg" },
-  { name: "Kaj", photo: "kaj-luuk.jpg" },
+  { name: "Kaj", photo: "kaj.jpg" },
+  { name: "Luuk", photo: "luuk.jpg" },
   { name: "Ilonka", photo: "ilonka.jpg" },
   { name: "Carmen", photo: "carmen.jpg" },
   { name: "Ferran", photo: "ferran.jpg" },
