@@ -3,13 +3,13 @@
   --card:#0f1d33;
   --text:#f2f5ff;
   --accent:#d63b4a;
+
+  --good:#2ecc71;
+  --bad:#ff5a6f;
 }
 
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  padding:0;
-}
+html,body{margin:0;padding:0}
 
 body{
   min-height:100vh;
@@ -19,7 +19,7 @@ body{
     var(--bg);
   color:var(--text);
   font-family: system-ui, sans-serif;
-  overflow:auto; /* ✅ SCROLL TOEGESTAAN */
+  overflow:auto;
 }
 
 /* SNEEUW */
@@ -82,13 +82,19 @@ body{
   margin-bottom:24px;
 }
 
+.smallNote{
+  margin-top:18px;
+  font-size:18px;
+  opacity:.95;
+}
+
 /* PLAYER SELECT */
 .players{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
   gap:20px;
   max-width:900px;
-  margin:0 auto 30px;
+  margin:0 auto 24px;
 }
 
 .player{
@@ -117,37 +123,6 @@ body{
   font-weight:800;
 }
 
-/* MEDE-SPELERS */
-.othersBar{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  margin-bottom:14px;
-  flex-wrap:wrap;
-}
-.otherPlayer{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 14px;
-  background:rgba(255,255,255,0.08);
-  border-radius:999px;
-  opacity:0.65;
-  font-size:16px;
-}
-.otherPlayer img{
-  width:42px;
-  height:42px;
-  object-fit:cover;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,0.3);
-}
-.otherPlayer.you{
-  opacity:1;
-  background:rgba(214,59,74,0.3);
-  font-weight:800;
-}
-
 /* QUIZ */
 .stats{
   font-size:20px;
@@ -159,12 +134,8 @@ body{
   grid-template-columns:1fr 1fr;
   gap:20px;
 }
-
-/* Responsive */
 @media (max-width: 900px){
-  .grid{
-    grid-template-columns:1fr;
-  }
+  .grid{ grid-template-columns:1fr; }
 }
 
 .panel{
@@ -192,13 +163,115 @@ body{
 #answers{
   display:grid;
   gap:18px;
+  margin-bottom:18px;
 }
-#answers button{
+.answerBtn{
   font-size:24px;
   padding:20px;
   border-radius:20px;
   border:none;
   cursor:pointer;
+  text-align:left;
+}
+.answerBtn:disabled{
+  opacity:.72;
+  cursor:not-allowed;
+}
+.answerBtn.correct{
+  outline:3px solid rgba(46,204,113,.45);
+  background: rgba(46,204,113,.12);
+}
+.answerBtn.wrong{
+  outline:3px solid rgba(255,90,111,.45);
+  background: rgba(255,90,111,.10);
+}
+
+/* FEEDBACK / UITLEG */
+.feedback{
+  text-align:left;
+  border-radius:18px;
+  padding:16px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  margin-bottom:16px;
+}
+.hidden{ display:none; }
+
+.feedbackHead{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.feedbackHead.good{ color: var(--good); }
+.feedbackHead.bad{ color: var(--bad); }
+
+.feedbackBody{
+  font-size:18px;
+  line-height:1.5;
+  opacity:.95;
+  white-space:pre-wrap;
+}
+
+/* Controls */
+.quizControls{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:6px;
+}
+
+/* RESULT SHARE */
+.shareBox{
+  margin-top:18px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:22px;
+  padding:18px;
+}
+
+.shareBox h3{
+  margin:0;
+  font-size:24px;
+  line-height:1.25;
+}
+
+.othersEnd{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:14px;
+  max-width:900px;
+  margin: 0 auto 18px;
+}
+
+.otherCard{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-radius:18px;
+  background: rgba(0,0,0,0.20);
+  border:1px solid rgba(255,255,255,0.10);
+  opacity:0.85;
+}
+
+.otherCard.you{
+  opacity:1;
+  border-color: rgba(214,59,74,0.5);
+  background: rgba(214,59,74,0.15);
+  font-weight:900;
+}
+
+.otherCard img{
+  width:54px;
+  height:54px;
+  object-fit:cover;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.30);
+}
+
+.otherCard span{
+  font-size:20px;
+  font-weight:800;
 }
 
 /* BUTTONS */
@@ -213,8 +286,19 @@ button{
   font-size:26px;
   padding:20px 40px;
 }
+
 .btnPrimary{
   background:linear-gradient(135deg,var(--accent),#ff6b7a);
   color:white;
   font-weight:800;
+}
+.btnPrimary:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.btnGhost{
+  background:rgba(255,255,255,0.08);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.14);
 }

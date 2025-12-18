@@ -31,14 +31,12 @@
         <button class="btnPrimary bigBtn" id="startBtn" disabled>
           START DE QUIZ
         </button>
+
+        <p class="smallNote"><b>Je krijgt alle tijd, geen haast.</b></p>
       </section>
 
       <!-- QUIZ -->
       <section class="view" id="quizView">
-
-        <!-- MEDE-SPELERS -->
-        <div class="othersBar" id="othersBar"></div>
-
         <div class="stats">
           Vraag <b id="statQ">—</b> |
           Goed <b id="statGood">0</b> |
@@ -56,18 +54,36 @@
 
           <div class="panel">
             <div id="answers"></div>
+
+            <!-- FEEDBACK + UITLEG -->
+            <div class="feedback hidden" id="feedbackBox">
+              <div class="feedbackHead" id="feedbackHead">—</div>
+              <div class="feedbackBody" id="feedbackBody"></div>
+            </div>
+
+            <div class="quizControls">
+              <button class="btnGhost" id="prevBtn" type="button">VORIGE</button>
+              <button class="btnPrimary" id="nextBtn" type="button" disabled>VOLGENDE</button>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- RESULT -->
+      <!-- RESULT + SHARE -->
       <section class="view" id="resultView">
         <h2>Klaar! 🎉</h2>
         <p id="resultSummary"></p>
 
-        <button class="btnPrimary bigBtn" onclick="location.reload()">
-          NIEUWE SPELER
-        </button>
+        <div class="shareBox">
+          <h3>DEEL DE SCORE ME JE MEDESPELERS! WIE HAD ER HET MEESTE GOED!?</h3>
+          <p class="subtitle" style="margin: 8px 0 18px;">Laat iedereen om de beurt spelen 😄</p>
+
+          <div class="othersEnd" id="othersEnd"></div>
+
+          <button class="btnPrimary bigBtn" onclick="location.reload()">
+            NIEUWE SPELER
+          </button>
+        </div>
       </section>
 
     </div>
