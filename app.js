@@ -10,122 +10,122 @@ const PLAYERS = [
 ];
 
 // =====================================================
-// ❓ VRAGEN – ALLEEN MULTIPLE CHOICE + UITLEG
+// ❓ VRAGEN – MULTIPLE CHOICE + UITLEG (OPGESCHOOND)
 // =====================================================
+// - Syntax gefixt (template strings / braces)
+// - “De rekening is €53,00” verwijderd (dubbel/raar)
+// - “Wie is het jongste” correctIndex gefixt naar Luuk
 // =====================================================
 const QUESTIONS = [
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
-    image: "kerstboom.jpg", // optioneel: "kerstboom.jpg"
+    image: "kerstboom.jpg",
     antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
     correctIndex: 0,
     uitleg:
-`Kerstboomverkopers verkopen:
-- de fijnspar
-- de Nordmann-spar
-- de Servische spar
+`In Nederland zijn kerstbomen meestal een **spar**.
+
+Veel verkochte soorten:
+- Fijnspar (Picea abies)
+- Nordmann-spar (Abies nordmanniana)
+- Servische spar (Picea omorika)
+- Blauwspar (Picea pungens)
+- Fraserspar (Abies fraseri)
+
+(En daarom zingen we soms “O denneboom” terwijl het vaak een spar is 😄)`
   },
 
-
-    {
+  {
     vraag: "Welke voetbalclub is dit?",
     image: "juventus.jpg",
-    antwoorden: ["Ajax", "Juventus", "FC Barcalona", "Real Madrid"],
+    antwoorden: ["Ajax", "Juventus", "FC Barcelona", "Real Madrid"],
     correctIndex: 1,
-    uitleg: "Dit is Juventus, een van de oudste voetbalclubs van Italië."
+    uitleg: "Dit is Juventus, een van de bekendste clubs van Italië."
   },
 
-    {
+  {
     vraag: "Welke voetbalclub is dit?",
     image: "fcutrecht.jpg",
-    antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcalona"],
+    antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcelona"],
     correctIndex: 2,
-    uitleg: "Dit is FC UUUUUUUUUUtrecht"
+    uitleg: "Dit is FC Utrecht. (FC UUUUUUUUUUtrecht 😄)"
   },
 
-
-  
-    {
+  {
     vraag: "Wie is dit?",
     image: "creeper.jpg",
     antwoorden: ["Mario", "Sonic", "Pikachu", "Creeper"],
     correctIndex: 3,
-    uitleg: "Dit is een Creeper uit Minecraft. PAS OP! Hij kan exploderen"
+    uitleg: "Dit is een Creeper uit Minecraft. Pas op… hij kan ontploffen 💥"
   },
-  
-    {
+
+  {
     vraag: "Wie is dit?",
     image: "chimp.jpg",
     antwoorden: ["Henk Zegelaar", "tralalero tralala", "chimpanzini bananini", "Bokito"],
     correctIndex: 2,
-    uitleg: "Dit is chimpanzini bananini een welbekend AI gegenereerd plaatje"
+    uitleg: "Dit is ‘chimpanzini bananini’ — zo’n bekend AI/meme-plaatje."
   },
 
-      {
+  {
     vraag: "Wie is dit?",
     image: "haai.jpg",
     antwoorden: ["Reagea Shark", "Sharktale", "Tralalero tralala", "Jaws"],
     correctIndex: 2,
-    uitleg: "Dit is Tralalero tralala een welbekend AI gegenereerd plaatje"
+    uitleg: "Dit is ‘Tralalero tralala’ — ook zo’n bekende meme/AI-afbeelding."
   },
 
-        {
+  {
     vraag: "In welke film speelde deze knaap? (Zac Efron)",
     image: "zac.jpg",
     antwoorden: ["Harry Potter", "High School Musical", "Grease", "Jaws"],
     correctIndex: 1,
-    uitleg: "Dit is chimpanzini bananini een welbekend AI gegenereerd plaatje"
+    uitleg: "Zac Efron werd mega bekend door High School Musical."
   },
 
-        {
+  {
     vraag: "In welke film speelde deze man?",
     image: "david.jpg",
     antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
     correctIndex: 3,
-    uitleg: "Aan het einde van de eerste spongebob film red David Hasstleoff Spongebob en Patrik door ze met zijn borst af te vuren naar de bodem van de zee, richting Bikinibroek"
+    uitleg:
+`In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp.
+
+Fun fact:
+- Hij helpt SpongeBob & Patrick richting Bikini Bottom 😄`
   },
 
-        {
-    vraag: "Wie is het oudste",
+  {
+    vraag: "Wie is het oudste?",
     image: "boys.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 2,
-    uitleg: "Rich is het oudste"
+    uitleg: "Richard is het oudste."
   },
 
-        {
-    vraag: "Wie is het jongste",
+  {
+    vraag: "Wie is het jongste?",
     image: "boys.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
-    correctIndex: 2,
-    uitleg: "Luuk is het jongste"
+    correctIndex: 0,
+    uitleg: "Luuk is het jongste."
   },
 
-  
   {
     vraag: "Wie is dit?",
     image: "mosterd.jpg",
     antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
     correctIndex: 2,
-    uitleg: "Richard met mosterd op zijn knie."
+    uitleg: "Richard met mosterd op zijn knie 😭"
   },
-  
+
   {
     vraag: "Wie is dit?",
     image: "eenoma.jpg",
     antwoorden: ["een papa", "een opa", "één oma", "een broer"],
     correctIndex: 2,
-    uitleg: "Een oma kan goed dansen"
-  },
-
-    {
-    vraag: "De rekening is €53,00",
-    image: "eenoma.jpg",
-    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
-    correctIndex: 2,
-    uitleg: "Een oma kan goed dansen"
-  },
-  
+    uitleg: "Een oma kan goed salsa dansen 💃"
+  }
 ];
 
 // =====================================================
@@ -159,6 +159,44 @@ const feedbackBody = $("feedbackBody");
 const prevBtn = $("prevBtn");
 const nextBtn = $("nextBtn");
 
+// =====================================================
+// 🔍 IMAGE VALIDATION (best effort)
+// - Preload alle images die je gebruikt
+// - On error: console warning + placeholder in UI
+// =====================================================
+const missingImages = new Set();
+
+function preloadImage(src){
+  return new Promise((resolve) => {
+    if(!src) return resolve(true);
+    const im = new Image();
+    im.onload = () => resolve(true);
+    im.onerror = () => {
+      missingImages.add(src);
+      console.warn(`[QUIZ] Afbeelding ontbreekt: ${src}`);
+      resolve(false);
+    };
+    im.src = src;
+  });
+}
+
+async function validateImages(){
+  const unique = new Set();
+  PLAYERS.forEach(p => unique.add(p.photo));
+  QUESTIONS.forEach(q => q.image && unique.add(q.image));
+  unique.add("fam.jpg");
+
+  // preload alles
+  for(const src of unique){
+    // eslint-disable-next-line no-await-in-loop
+    await preloadImage(src);
+  }
+
+  if(missingImages.size){
+    console.warn(`[QUIZ] Ontbrekende afbeeldingen (${missingImages.size}):`, [...missingImages]);
+  }
+}
+
 // Render spelerskeuze
 PLAYERS.forEach(p => {
   const d = document.createElement("div");
@@ -187,6 +225,71 @@ function updateStats(){
   $("statBad").textContent  = state.filter(s => s.answered && !s.correct).length;
 }
 
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+// ✨ UITLEG FORMATTER
+// - ondersteunt bullets (regels die beginnen met "- ")
+// - ondersteunt lege regels voor paragrafen
+function formatUitleg(uitleg){
+  if(!uitleg) return "<p>Geen extra uitleg bij deze vraag.</p>";
+
+  const raw = String(uitleg).trim();
+  const lines = raw.split("\n").map(l => l.trimEnd());
+
+  const blocks = [];
+  let currentParagraph = [];
+  let currentList = [];
+
+  const flushParagraph = () => {
+    if(currentParagraph.length){
+      blocks.push(`<p>${escapeHtml(currentParagraph.join(" ")).replaceAll("**","")}</p>`);
+      currentParagraph = [];
+    }
+  };
+
+  const flushList = () => {
+    if(currentList.length){
+      const items = currentList.map(li => `<li>${escapeHtml(li)}</li>`).join("");
+      blocks.push(`<ul>${items}</ul>`);
+      currentList = [];
+    }
+  };
+
+  for(const line of lines){
+    const trimmed = line.trim();
+
+    if(trimmed === ""){
+      flushList();
+      flushParagraph();
+      continue;
+    }
+
+    if(trimmed.startsWith("- ")){
+      flushParagraph();
+      currentList.push(trimmed.slice(2));
+      continue;
+    }
+
+    // normale tekstregel
+    flushList();
+    currentParagraph.push(trimmed);
+  }
+
+  flushList();
+  flushParagraph();
+
+  // Kleine bonus: als iemand **bold** typte, strippen we dat (simpel)
+  // (Je kunt dit later upgraden naar echte markdown als je wil.)
+  return blocks.join("");
+}
+
 function showFeedback(isCorrect, q){
   feedbackBox.classList.remove("hidden");
   feedbackHead.classList.remove("good","bad");
@@ -200,7 +303,26 @@ function showFeedback(isCorrect, q){
     feedbackHead.classList.add("bad");
   }
 
-  feedbackBody.textContent = q.uitleg ? q.uitleg : "Geen extra uitleg bij deze vraag.";
+  feedbackBody.innerHTML = formatUitleg(q.uitleg);
+}
+
+function renderImage(src){
+  if(!src){
+    imgWrap.innerHTML = "";
+    return;
+  }
+
+  if(missingImages.has(src)){
+    imgWrap.innerHTML = `
+      <div class="imgPlaceholder">
+        <b>Afbeelding ontbreekt 😅</b>
+        <small>Bestand niet gevonden: <code>${escapeHtml(src)}</code></small>
+      </div>
+    `;
+    return;
+  }
+
+  imgWrap.innerHTML = `<img src="${src}" alt="Vraag afbeelding">`;
 }
 
 function renderQuiz(){
@@ -216,12 +338,13 @@ function renderQuiz(){
 
   qNr.textContent = `Vraag ${idx+1}`;
   qText.textContent = q.vraag;
-  imgWrap.innerHTML = q.image ? `<img src="${q.image}" alt="Vraag afbeelding">` : "";
+
+  renderImage(q.image);
 
   // feedback reset
   feedbackBox.classList.add("hidden");
   feedbackHead.textContent = "";
-  feedbackBody.textContent = "";
+  feedbackBody.innerHTML = "";
 
   // controls
   prevBtn.disabled = (idx === 0);
@@ -306,3 +429,6 @@ startBtn.onclick = () => {
   updateStats();
   renderQuiz();
 };
+
+// Start: validate images once (best effort)
+validateImages();
