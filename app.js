@@ -8,7 +8,7 @@ const PLAYERS = [
   { name: "Ilonka", photo: "ilonka.jpg" },
   { name: "Carmen", photo: "carmen.gif" },
   { name: "Ferran", photo: "ferran.jpg" },
-  { name: "Richard", photo: "richard.jpg" }
+  { name: "Richard", photo: "richard.gif" }
 ];
 
 // =====================================================
