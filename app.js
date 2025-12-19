@@ -2,10 +2,10 @@
 // 👤 SPELERS (LOKALE FOTO'S)
 // =====================================================
 const PLAYERS = [
-  { name: "Kaj & Luuk", photo: "kaj-luuk.jpg" },
-  { name: "Kaj", photo: "kaj.jpg" },
-  { name: "Luuk", photo: "luuk.jpg" },
-  { name: "Ilonka", photo: "ilonka.jpg" },
+  { name: "Kaj & Luuk", photo: "kaj-luuk.gif" },
+  { name: "Kaj", photo: "kaj.gif" },
+  { name: "Luuk", photo: "luuk.gif" },
+  { name: "Ilonka", photo: "ilonka.gif" },
   { name: "Carmen", photo: "carmen.gif" },
   { name: "Ferran", photo: "ferran.gif" },
   { name: "Richard", photo: "richard.gif" }
