@@ -6,7 +6,7 @@ const PLAYERS = [
   { name: "Kaj", photo: "kaj.jpg" },
   { name: "Luuk", photo: "luuk.jpg" },
   { name: "Ilonka", photo: "ilonka.jpg" },
-  { name: "Carmen", photo: "carmen.jpg" },
+  { name: "Carmen", photo: "carmen.gif" },
   { name: "Ferran", photo: "ferran.jpg" },
   { name: "Richard", photo: "richard.jpg" }
 ];
