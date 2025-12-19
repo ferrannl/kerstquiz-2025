@@ -7,29 +7,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="snow"></div>
+  <div class="snow" aria-hidden="true"></div>
 
   <div class="wrap">
     <div class="card">
 
-      
-      <!-- HEADER (alleen start) -->
-  <!--
-      <header class="topbar" id="topbar">
-        <h1 class="title">
-          🎄 De grote van der Venne Kerst Quiz! 🎁<br />
-          <span>Wie weet het meest deze kerst?</span>
-        </h1>
-      </header>
-   -->
-      
-      
-
       <!-- START / PLAYER SELECT -->
       <section class="view active" id="playerView">
         <div class="familyHero" aria-label="Familiefoto begin">
-          <img class="familyPhoto big" src="fam.jpg" alt="Familiefoto" />
+          <img class="familyPhoto" src="fam.jpg" alt="Familiefoto" />
         </div>
+
+        <h1 class="title">
+          🎄 De grote van der Venne Kerst Quiz! 🎁
+          <span>Wie weet het meest deze kerst?</span>
+        </h1>
 
         <div class="subtitle">Wie ben jij?</div>
         <div class="smallNote">Kies jezelf en start wanneer je klaar bent</div>
@@ -57,15 +49,16 @@
 
         <div class="grid">
           <div class="panel qtop">
-            <div id="qNr"></div>
-            <div id="qText"></div>
-            <div class="imgwrap">
+            <div class="qNr" id="qNr"></div>
+            <div class="qText" id="qText"></div>
+
+            <div class="imgwrap" id="mediaWrap">
               <img id="qImg" alt="Vraag afbeelding" />
             </div>
           </div>
 
           <div class="panel">
-            <div id="answers"></div>
+            <div class="answers" id="answers"></div>
 
             <div class="feedback hidden" id="feedback">
               <div class="feedbackHead" id="feedbackHead"></div>
@@ -73,8 +66,12 @@
             </div>
 
             <div class="quizControls">
-              <button class="btnGhost" id="backBtn" disabled>⬅️ Terug</button>
+              <button class="btnGhost" id="backBtn" disabled>Terug</button>
               <button class="btnPrimary" id="nextBtn" disabled>VOLGENDE</button>
+            </div>
+
+            <div class="tinyNote">
+              Tip: je kunt je antwoord altijd nog aanpassen, ook als je teruggaat.
             </div>
           </div>
         </div>
@@ -85,6 +82,7 @@
         <div class="xmasHero">
           <img class="xmasPhoto" src="xmas.jpg" alt="Kerst foto" />
           <div id="resultSummary" class="subtitle" style="margin:10px 0 0;"></div>
+          <div class="smallNote" id="resultMeta"></div>
         </div>
 
         <div class="diplomaWrap">
@@ -95,14 +93,24 @@
             </div>
 
             <div class="diplomaStats">
-              <div class="pill good">✅ Goed: <b id="dipGood">0</b></div>
-              <div class="pill bad">❌ Fout: <b id="dipBad">0</b></div>
-              <div class="pill">📌 Totaal: <b id="dipTotal">0</b></div>
+              <div class="pill good">Goed: <b id="dipGood">0</b></div>
+              <div class="pill bad">Fout: <b id="dipBad">0</b></div>
+              <div class="pill">Totaal: <b id="dipTotal">0</b></div>
             </div>
+
+            <div class="reviewHeaderRow">
+              <div class="subtitle" style="margin:0;">Overzicht per vraag</div>
+              <div class="reviewActions">
+                <button class="btnGhost" id="showAllBtn">Alles</button>
+                <button class="btnGhost" id="showWrongBtn">Alleen fout</button>
+              </div>
+            </div>
+
             <div class="reviewList" id="reviewList"></div>
 
             <div class="endControls">
-              <button class="btnPrimary" id="restartBtn">🔁 Opnieuw</button>
+              <button class="btnGhost" id="toTopBtn">Naar boven</button>
+              <button class="btnPrimary" id="restartBtn">Opnieuw</button>
             </div>
           </div>
         </div>
@@ -111,8 +119,6 @@
     </div>
   </div>
 
-  <!-- jsPDF (voor diploma PDF) -->
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
