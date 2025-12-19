@@ -330,6 +330,19 @@ let state = QUESTIONS.map(() => ({
 }));
 
 // =====================================================
+// ⚠️ LEAVE / REFRESH WARNING
+// =====================================================
+let quizStarted = false;
+
+window.addEventListener("beforeunload", (e) => {
+  if (!quizStarted) return;
+
+  e.preventDefault();
+  e.returnValue = ""; // required for browser confirm dialog
+});
+
+
+// =====================================================
 // 🎮 INIT PLAYER SELECT
 // =====================================================
 function renderPlayers(){
@@ -360,6 +373,7 @@ startBtn.onclick = () => {
 // ▶️ GAME FLOW
 // =====================================================
 function startGame(){
+  quizStarted = true;
   currentIndex = 0;
   state = QUESTIONS.map(() => ({
     answered: false,
@@ -595,6 +609,7 @@ if(xmasPhoto){
 // 🔁 RESTART + FILTERS + TOP
 // =====================================================
 restartBtn.onclick = () => {
+  quizStarted = false;
   if(topbar) topbar.style.display = "";
   currentPlayer = null;
   startBtn.disabled = true;
