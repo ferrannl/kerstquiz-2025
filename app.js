@@ -20,7 +20,7 @@ const QUESTIONS = [
     image: "lang.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 1,
-    uitleg: "Richard is volgens Google slechts 1,73 m."
+    uitleg: "Volgens Google is Richard slechts 1,73 m."
   },
   {
     vraag: "Wie is het jongste?",
@@ -48,7 +48,7 @@ const QUESTIONS = [
     image: "tekening.jpg",
     antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
     correctIndex: 1,
-    uitleg: "Luuk Van Gogh👨‍🎨"
+    uitleg: "Luuk Van Gogh 👨‍🎨"
   },
   {
     vraag: "Wat is de lievelingskleur van Oome Ferran?",
@@ -215,7 +215,7 @@ Veel verkochte soorten:
     vraag: "Wat wordt hier overhandigd?",
     image: "zwem.jpg",
     antwoorden: ["Veterstrikdiploma", "Tandenpoets diploma", "Zwemdiploma", "HBO Diploma"],
-    correctIndex: 3,
+    correctIndex: 2,
     uitleg: "Zwemdiploma A is binnen!"
   },
   {
@@ -224,6 +224,14 @@ Veel verkochte soorten:
     antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
     correctIndex: 2,
     uitleg: "Borstcrawl.  Goede workout hoor!"
+  },
+ 
+  {
+    vraag: "Wie is dit?",
+    image: "mosterd.jpg",
+    antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
+    correctIndex: 2,
+    uitleg: "Papa (Richard) met mosterd op zijn knie 😭"
   },
 
   {
@@ -238,18 +246,12 @@ Carmen, de vrouw van Van der Venne, was niet bij de wedstrijd aanwezig omdat hun
   
   {
     vraag: "Wie is dit?",
-    image: "mosterd.jpg",
-    antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
-    correctIndex: 2,
-    uitleg: "Papa (Richard) met mosterd op zijn knie 😭"
-  },
-  {
-    vraag: "Wie is dit?",
     image: "eenoma.jpg",
     antwoorden: ["een papa", "een opa", "één oma", "een broer"],
     correctIndex: 2,
     uitleg: "Een oma kan goed salsa dansen 💃"
   },
+
   {
     vraag: "Wie is dit?",
     image: "sleutels.jpg",
