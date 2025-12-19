@@ -75,7 +75,12 @@
       <!-- RESULT / END -->
       <section class="view" id="resultView">
         <div class="xmasHero">
-          <img class="xmasPhoto" src="xmas.jpg" alt="Kerst foto" />
+          <img class="xmasPhoto" id="xmasPhoto" src="xmas.jpg" alt="Kerst foto" />
+
+          <div class="xmasActions">
+            <a class="btnGhost" href="xmas.jpg" download="xmas.jpg">Download afbeelding</a>
+          </div>
+
           <div id="resultSummary" class="subtitle" style="margin:10px 0 0;"></div>
           <div class="smallNote" id="resultMeta"></div>
         </div>
@@ -112,6 +117,12 @@
       </section>
 
     </div>
+  </div>
+
+  <!-- LIGHTBOX (alleen eind-overzicht) -->
+  <div class="lightbox hidden" id="lightbox" aria-hidden="true">
+    <button class="lightboxClose" id="lightboxClose" aria-label="Sluiten">✕</button>
+    <img id="lightboxImg" alt="" />
   </div>
 
   <script src="app.js"></script>
