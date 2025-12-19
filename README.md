@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <b>Een interactieve familie kerstquiz 🎅🎁</b><br>
+  <b>Een interactieve familie kerstquiz voor fam. vd Venne🎅🎁</b><br>
   Speel samen, lach samen, en kijk wie er écht oplet tijdens kerst.
 </p>
 
@@ -67,13 +67,6 @@ Geen frameworks, geen build-steps, gewoon open & spelen.
 
 Alle afbeeldingen (zoals `fam.jpg`) worden lokaal geladen en zijn onderdeel van de quizbeleving.  
 De bovenste afbeelding in deze README is **klikbaar** en brengt je direct naar de quiz.
-
----
-
-## 🎁 Waarom dit project?
-
-Omdat kerst niet draait om winnen —  
-maar om **samen zijn**, **herinneringen**, en **een beetje plagen** 😉  
 
 ---
 
