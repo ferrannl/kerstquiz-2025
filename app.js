@@ -52,7 +52,7 @@ const QUESTIONS = [
   },
   {
     vraag: "Wat is de lievelingskleur van Oome Ferran?",
-    image: "kleur.jpg",
+    image: "zwart.jpeg",
     antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
     correctIndex: 2,
     uitleg: "🖤 Ferran houdt van dezelfde kleur als één oma."
@@ -71,7 +71,7 @@ const QUESTIONS = [
     antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
     correctIndex: 0,
     uitleg:
-`In Nederland zijn kerstbomen meestal een **spar**.
+`In Nederland zijn kerstbomen meestal een spar.
 
 Veel verkochte soorten:
 - Fijnspar
@@ -220,7 +220,7 @@ Veel verkochte soorten:
   },
   {
     vraag: "Welke oefening moest Kaj hier doen?",
-    image: "zwem.gif",
+    image: "borst.gif",
     antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
     correctIndex: 2,
     uitleg: "Borstcrawl. Goede workout hoor!"
