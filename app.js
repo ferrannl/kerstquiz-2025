@@ -176,7 +176,7 @@ Veel verkochte soorten:
   },
   {
     vraag: "In welke film speelde hij?",
-    image: "cars.jpg",
+    image: "cars.gif",
     antwoorden: ["Paw Patrol", "Minecraft", "Cars", "Fast & the Furious"],
     correctIndex: 2,
     uitleg: "Lightning McQueen hoort bij Cars 🏁"
