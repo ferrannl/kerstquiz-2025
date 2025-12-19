@@ -55,9 +55,9 @@ const QUESTIONS = [
     image: "kleur.jpg",
     antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
     correctIndex: 2,
-    uitleg: "🖤Ferran houdt van dezelfde kleuren als één Oma"
+    uitleg: "🖤 Ferran houdt van dezelfde kleur als één oma."
   },
-   
+
   {
     vraag: "Wie eet er het gezondst?",
     image: "koken2.jpg",
@@ -259,7 +259,10 @@ function show(view){
 }
 
 function scrollToTop(){
+  // extra-robust (werkt ook als browser/body raar doet)
   window.scrollTo({ top: 0, behavior: "smooth" });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
 function safeSetText(id, value){
@@ -299,12 +302,16 @@ const backBtn    = $("backBtn");
 const nextBtn    = $("nextBtn");
 
 const restartBtn = $("restartBtn");
+const showAllBtn = $("showAllBtn");
+const showWrongBtn = $("showWrongBtn");
+const toTopBtn = $("toTopBtn");
 
-// Optionele knoppen (bestaan niet in jouw HTML -> mag dus null zijn)
-const toggleOnlyWrong = $("toggleOnlyWrong");
-const toggleAll       = $("toggleAll");
-const scrollTopBtn    = $("scrollTopBtn");
-const pdfBtn          = $("pdfBtn");
+const xmasPhoto = $("xmasPhoto");
+
+// Lightbox
+const lightbox = $("lightbox");
+const lightboxImg = $("lightboxImg");
+const lightboxClose = $("lightboxClose");
 
 // =====================================================
 // 🧠 STATE
@@ -393,7 +400,7 @@ function renderQuestion(){
 
   if(s.answered){
     paintAnsweredState();
-    showFeedback(s.correct, q, s.pickedIndex);
+    showFeedback(s.correct, q);
   }
 }
 
@@ -408,7 +415,7 @@ function pickAnswer(pickedIndex){
   s.correct = isCorrect;
 
   paintAnsweredState();
-  showFeedback(isCorrect, q, pickedIndex);
+  showFeedback(isCorrect, q);
 
   nextBtn.disabled = false;
   setNextLabel();
@@ -436,18 +443,16 @@ function paintAnsweredState(){
   });
 }
 
-function showFeedback(isCorrect, q, pickedIndex){
+function showFeedback(isCorrect, q){
   feedbackEl.classList.remove("hidden");
   feedbackHead.textContent = isCorrect ? "✅ Goed!" : "❌ Fout!";
   feedbackHead.className = "feedbackHead " + (isCorrect ? "good" : "bad");
 
-  const chosen  = (pickedIndex != null) ? q.antwoorden[pickedIndex] : "—";
   const correct = q.antwoorden[q.correctIndex];
-
   const uitleg = q.uitleg ? `<p><b>Uitleg:</b> ${q.uitleg}</p>` : "";
 
+  // GEEN "Jouw antwoord" meer tonen
   feedbackBody.innerHTML = `
-    <p><b>Jouw antwoord:</b> ${chosen}</p>
     <p><b>Juiste antwoord:</b> ${correct}</p>
     ${uitleg}
   `;
@@ -489,17 +494,6 @@ function renderResult(){
   const name = currentPlayer?.name || "Speler";
   safeSetText("resultSummary", `${name}, je had ${good} goed en ${bad} fout 🎄`);
 
-  const othersEnd = $("othersEnd");
-  if(othersEnd){
-    othersEnd.innerHTML = "";
-    PLAYERS.forEach(p => {
-      const d = document.createElement("div");
-      d.className = "otherCard";
-      d.innerHTML = `<img src="${p.photo}" alt="${p.name}"><span>${p.name}</span>`;
-      othersEnd.appendChild(d);
-    });
-  }
-
   safeSetText("dipGood", good);
   safeSetText("dipBad", bad);
   safeSetText("dipTotal", total);
@@ -524,7 +518,6 @@ function buildReviewList({ onlyWrong }){
     const isWrong = s.answered && !s.correct;
     if(onlyWrong && !isWrong) return;
 
-    const chosen  = (s.pickedIndex != null) ? q.antwoorden[s.pickedIndex] : "—";
     const correct = q.antwoorden[q.correctIndex];
 
     const badge = s.answered
@@ -535,64 +528,67 @@ function buildReviewList({ onlyWrong }){
     row.className = "reviewRow";
     row.innerHTML = `
       <div class="reviewThumb">
-        <img src="${q.image || ""}" alt="Vraag ${i+1}">
+        <img data-lightbox="1" src="${q.image || ""}" alt="Vraag ${i+1}">
       </div>
       <div class="reviewInfo">
         <h4>${i+1}. ${q.vraag}</h4>
         <div class="reviewMeta">
           ${badge}
-          <span><b>Jij:</b> ${chosen}</span>
-          <span><b>Juiste:</b> ${correct}</span>
+          <span><b>Juiste antwoord:</b> ${correct}</span>
         </div>
         ${q.uitleg ? `<div class="smallNote" style="margin:8px 0 0; opacity:.95;"><b>Uitleg:</b> ${q.uitleg}</div>` : ""}
       </div>
     `;
     list.appendChild(row);
   });
+
+  wireLightboxForReviewImages();
 }
 
 // =====================================================
-// 📄 PDF
+// 🔍 LIGHTBOX (alleen eind-overzicht)
 // =====================================================
-function makePdf(){
-  try{
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: "pt", format: "a4" });
+function openLightbox(src, alt){
+  if(!lightbox || !lightboxImg) return;
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || "";
+  lightbox.classList.remove("hidden");
+  lightbox.setAttribute("aria-hidden", "false");
+}
 
-    const name = currentPlayer?.name || "Speler";
-    const good = state.filter(s => s.answered && s.correct).length;
-    const bad  = state.filter(s => s.answered && !s.correct).length;
-    const total = QUESTIONS.length;
+function closeLightbox(){
+  if(!lightbox || !lightboxImg) return;
+  lightbox.classList.add("hidden");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImg.src = "";
+  lightboxImg.alt = "";
+}
 
-    const now = new Date();
-    const stamp =
-      `${String(now.getDate()).padStart(2,"0")}-${String(now.getMonth()+1).padStart(2,"0")}-${now.getFullYear()} ` +
-      `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+function wireLightboxForReviewImages(){
+  const list = $("reviewList");
+  if(!list) return;
 
-    let y = 70;
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.text("Kerst Quiz 2025 Diploma", 60, y);
+  const imgs = list.querySelectorAll('img[data-lightbox="1"]');
+  imgs.forEach(img => {
+    img.onclick = () => openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
+  });
+}
 
-    y += 30;
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.text(`Naam: ${name}`, 60, y); y += 18;
-    doc.text(`Datum: ${stamp}`, 60, y); y += 24;
+// Sluiten via knop / achtergrond / ESC
+if(lightboxClose) lightboxClose.onclick = (e) => { e.stopPropagation(); closeLightbox(); };
+if(lightbox) lightbox.onclick = () => closeLightbox();
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeLightbox();
+});
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text(`Score: ${good} goed • ${bad} fout • totaal ${total}`, 60, y);
-
-    doc.save(`KerstQuiz_${name}.pdf`);
-  }catch(e){
-    console.error("PDF error:", e);
-    alert("PDF maken lukt niet (check jsPDF / internet).");
-  }
+// Optioneel: ook xmas foto in eindscherm klikbaar (mag, is eindscherm)
+if(xmasPhoto){
+  xmasPhoto.style.cursor = "zoom-in";
+  xmasPhoto.onclick = () => openLightbox("xmas.jpg", "Kerst foto");
 }
 
 // =====================================================
-// 🔁 RESTART + (OPTIONELE) FILTERS
+// 🔁 RESTART + FILTERS + TOP
 // =====================================================
 restartBtn.onclick = () => {
   if(topbar) topbar.style.display = "";
@@ -603,11 +599,9 @@ restartBtn.onclick = () => {
   scrollToTop();
 };
 
-// Deze bestaan mogelijk niet -> alleen koppelen als ze er zijn
-if(toggleOnlyWrong) toggleOnlyWrong.onclick = () => buildReviewList({ onlyWrong:true });
-if(toggleAll)       toggleAll.onclick       = () => buildReviewList({ onlyWrong:false });
-if(scrollTopBtn)    scrollTopBtn.onclick    = () => scrollToTop();
-if(pdfBtn)          pdfBtn.onclick          = () => makePdf();
+if(showWrongBtn) showWrongBtn.onclick = () => buildReviewList({ onlyWrong:true });
+if(showAllBtn)   showAllBtn.onclick   = () => buildReviewList({ onlyWrong:false });
+if(toTopBtn)     toTopBtn.onclick     = () => scrollToTop();
 
 // init
 renderPlayers();
