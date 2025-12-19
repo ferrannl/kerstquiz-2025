@@ -20,42 +20,42 @@ const QUESTIONS = [
     image: "lang.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 1,
-    uitleg: "Ferran is het langste."
+    uitleg: "Richard is volgens Google slechts 1,73 m."
   },
   {
     vraag: "Wie is het jongste?",
     image: "jong.jpg",
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 0,
-    uitleg: "Luuk is het jongste."
+    uitleg: "Luuk is het laatst van ons geboren."
   },
   {
     vraag: "Wie is het oudste?",
     image: "oud.jpg",
     antwoorden: ["Luuk", "Ilonka", "Richard", "Kaj"],
     correctIndex: 1,
-    uitleg: "één oma is het oudste."
+    uitleg: "één oma is als eerste van ons geboren. Lang geleden."
   },
   {
     vraag: "Van wie is dit skateboard?",
     image: "skateboard.jpg",
-    antwoorden: ["Richard", "De buurjongen", "Ferran", "Kaj"],
+    antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
     correctIndex: 2,
     uitleg: "Oome Ferran natuurlijk"
   },
   {
-    vraag: "Van wie zijn deze tekeningen?",
+    vraag: "Wie heeft deze kunstwerken gemaakt?",
     image: "tekening.jpg",
     antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
     correctIndex: 1,
-    uitleg: "Kunstenaar Luuk 👨‍🎨"
+    uitleg: "Luuk Van Gogh👨‍🎨"
   },
   {
     vraag: "Wat is de lievelingskleur van Oome Ferran?",
     image: "zwart.jpeg",
     antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
     correctIndex: 2,
-    uitleg: "🖤 Ferran houdt van dezelfde kleur als één oma."
+    uitleg: "🖤 dezelfde kleur als één oma."
   },
 
   {
@@ -63,7 +63,7 @@ const QUESTIONS = [
     image: "koken2.jpg",
     antwoorden: ["Kaj", "Richard", "Luuk", "Ilonka"],
     correctIndex: 3,
-    uitleg: "Oma Ilonka is al meer dan 6kg afgevallen! 👏"
+    uitleg: "één oma is al meer dan 6kg afgevallen en past haar broeken niet meer! 👏"
   },
   {
     vraag: "Wat voor een soort boom is een kerstboom?",
@@ -104,7 +104,7 @@ Veel verkochte soorten:
     image: "knikkers.jpg",
     antwoorden: ["Kauwgomballen", "IJsballetjes", "Knikkers", "Kralen"],
     correctIndex: 2,
-    uitleg: "Klassiek speelgoed, helaas nooit meer terug in de trend gekomen."
+    uitleg: "Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen."
   },
   {
     vraag: "Wat is dit?",
@@ -118,7 +118,7 @@ Veel verkochte soorten:
     image: "beyblade.jpg",
     antwoorden: ["Tol", "Beyblade", "Fidget spinner", "Jojo"],
     correctIndex: 1,
-    uitleg: "Beyblades moeten echt een comeback maken."
+    uitleg: "Een soort tollen uit de 2000's. Beyblades moeten echt een comeback maken."
   },
   {
     vraag: "Wat is dit?",
@@ -132,7 +132,7 @@ Veel verkochte soorten:
     image: "neopets.jpg",
     antwoorden: ["Neopets", "Habbo Hotel", "Club Penguin", "The Sims"],
     correctIndex: 0,
-    uitleg: "Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
+    uitleg: "Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
   },
   {
     vraag: "Hoeveel spelers staan er in één voetbalteam op het veld?",
@@ -146,7 +146,7 @@ Veel verkochte soorten:
     image: "buitenspel.jpg",
     antwoorden: ["Vrije trap", "Inworp", "Spel wordt afgefloten", "Penalty"],
     correctIndex: 2,
-    uitleg: "Bij buitenspel fluit de scheidsrechter het spel af."
+    uitleg: "Bij buitenspel fluit de scheidsrechter het spel af. En wat gebeurt er dan...?"
   },
   {
     vraag: "Welke voetbalclub is dit?",
@@ -160,7 +160,7 @@ Veel verkochte soorten:
     image: "fcutrecht.jpg",
     antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcelona"],
     correctIndex: 2,
-    uitleg: "Dit is FC Utrecht. (FC UUUUUUUUUUtrecht 😄)"
+    uitleg: "Dit is FC UUUUUUUUUUtrecht 😄"
   },
   {
     vraag: "Waar staat TOP Oss voor?",
@@ -174,7 +174,7 @@ Veel verkochte soorten:
     image: "creeper.jpg",
     antwoorden: ["Mario", "Sonic", "Pikachu", "Creeper"],
     correctIndex: 3,
-    uitleg: "Dit is een Creeper uit Minecraft. Pas op… 💥"
+    uitleg: "Dit is een Creeper uit Minecraft. Pas op… 💥 Hij explodeert"
   },
   {
     vraag: "Wie is dit?",
@@ -202,7 +202,7 @@ Veel verkochte soorten:
     image: "zac.jpg",
     antwoorden: ["Harry Potter", "High School Musical", "Gooise Vrouwen", "Camp Rock"],
     correctIndex: 1,
-    uitleg: "Zac Efron werd mega bekend door High School Musical."
+    uitleg: "Mama Carmen wilt deze films graag kijken. Zac Efron werd mega bekend door High School Musical."
   },
   {
     vraag: "In welke film speelde deze man?",
@@ -214,17 +214,28 @@ Veel verkochte soorten:
   {
     vraag: "Wat wordt hier overhandigd?",
     image: "zwem.jpg",
-    antwoorden: ["Veterstrikdiploma 👟", "Tandenpoets diploma 🦷", "Zwemdiploma 🏊‍♂️", "HBO Diploma 🧾"],
+    antwoorden: ["Veterstrikdiploma", "Tandenpoets diploma", "Zwemdiploma", "HBO Diploma"],
     correctIndex: 3,
-    uitleg: "Zwemdiploma is binnen!"
+    uitleg: "Zwemdiploma A is binnen!"
   },
   {
     vraag: "Welke oefening moest Kaj hier doen?",
     image: "borst.gif",
     antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
     correctIndex: 2,
-    uitleg: "Borstcrawl. Goede workout hoor!"
+    uitleg: "Borstcrawl.  Goede workout hoor!"
   },
+
+  {
+    vraag: "Wanneer scoort Papa Richard de meeste goals?",
+    image: "score.jpg",
+    antwoorden: ["Als hij voor de wedstrijd chocola heeft gegeten", "Als hij voor de wedstrijd geen chocola heeft gegeten", "Als mama Carmen komt toeschouwen",  "Als mama Carmen thuis blijft"],
+    correctIndex: 3,
+    uitleg: ` Uit een verslag van DTV Nieuws: 'Carmen, blijf thuis!'
+
+Carmen, de vrouw van Van der Venne, was niet bij de wedstrijd aanwezig omdat hun kindje ziek thuis zat. De interviewer concludeerde dat de middenvelder vaker tot score komt als zij er niet bij is. Dus is het advies van Van der Venne aan haar: 'Blijf thuis!'` 
+  },
+  
   {
     vraag: "Wie is dit?",
     image: "mosterd.jpg",
@@ -244,7 +255,7 @@ Veel verkochte soorten:
     image: "sleutels.jpg",
     antwoorden: ["Carmen", "Luuk", "Richard", "Ferran"],
     correctIndex: 3,
-    uitleg: "Sleutels, tekeningen, handschoenen… altijd 😅"
+    uitleg: "Sleutels, tekeningen, handschoenen… altijd 😅 Jullie moeten mij niet zo aflijden!"
   },
 ];
 
