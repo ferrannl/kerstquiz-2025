@@ -55,7 +55,7 @@ const QUESTIONS = [
     image: "zwart.jpeg",
     antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
     correctIndex: 2,
-    uitleg: "🖤 dezelfde kleur als één oma."
+    uitleg: "🖤 dezelfde kleur waar één oma van houdt."
   },
 
   {
