@@ -56,7 +56,6 @@ const QUESTIONS = [
     correctIndex: 2,
     uitleg: "🖤 dezelfde kleur waar één oma van houdt."
   },
-
   {
     vraag: "Wie eet er het gezondst?",
     image: "koken2.jpg",
@@ -210,7 +209,6 @@ Veel verkochte soorten:
     correctIndex: 2,
     uitleg: "Borstcrawl.  Goede workout hoor!"
   },
- 
   {
     vraag: "Wie is dit?",
     image: "mosterd.jpg",
@@ -218,17 +216,20 @@ Veel verkochte soorten:
     correctIndex: 2,
     uitleg: "Papa (Richard) met mosterd op zijn knie 😭"
   },
-
   {
     vraag: "Wanneer scoort Papa Richard de meeste goals?",
     image: "score.jpg",
-    antwoorden: ["Als hij voor de wedstrijd chocola heeft gegeten", "Als hij voor de wedstrijd geen chocola heeft gegeten", "Als mama Carmen komt toeschouwen",  "Als mama Carmen thuis blijft"],
+    antwoorden: [
+      "Als hij voor de wedstrijd chocola heeft gegeten",
+      "Als hij voor de wedstrijd geen chocola heeft gegeten",
+      "Als mama Carmen komt toeschouwen",
+      "Als mama Carmen thuis blijft"
+    ],
     correctIndex: 3,
     uitleg: ` Uit een verslag van DTV Nieuws: 'Carmen, blijf thuis!'
 
-Carmen, de vrouw van Van der Venne, was niet bij de wedstrijd aanwezig omdat hun kindje ziek thuis zat. De interviewer concludeerde dat de middenvelder vaker tot score komt als zij er niet bij is. Dus is het advies van Van der Venne aan haar: 'Blijf thuis!'` 
+Carmen, de vrouw van Van der Venne, was niet bij de wedstrijd aanwezig omdat hun kindje ziek thuis zat. De interviewer concludeerde dat de middenvelder vaker tot score komt als zij er niet bij is. Dus is het advies van Van der Venne aan haar: 'Blijf thuis!'`
   },
-  
   {
     vraag: "Wie is dit?",
     image: "eenoma.jpg",
@@ -236,7 +237,6 @@ Carmen, de vrouw van Van der Venne, was niet bij de wedstrijd aanwezig omdat hun
     correctIndex: 2,
     uitleg: "Een oma kan goed salsa dansen 💃"
   },
-
   {
     vraag: "Wie is dit?",
     image: "sleutels.jpg",
@@ -257,7 +257,6 @@ function show(view){
 }
 
 function scrollToTop(){
-  // extra-robust (werkt ook als browser/body raar doet)
   window.scrollTo({ top: 0, behavior: "smooth" });
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
@@ -273,10 +272,23 @@ function setNextLabel(){
 }
 
 function getStillPhoto(photoPath){
-  // Zet kaj.gif -> kaj.jpg (of png/webp als je wilt)
   return String(photoPath || "").replace(/\.(gif|webp|png|jpg|jpeg)$/i, ".jpg");
 }
 
+// =====================================================
+// 🎯 SPELER-REGELS (JOUW WENSEN)
+// =====================================================
+const NO_CHANGE_PLAYER = "Kaj";                 // Kaj mag NIET wijzigen na keuze
+const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // Kaj + Luuk krijgen timers
+const ANSWER_LOCK_SECONDS = 15;                 // vóór antwoord
+const NEXT_LOCK_SECONDS   = 15;                 // vóór volgende
+
+function isTimedPlayer(){
+  return TIMED_PLAYERS.has(currentPlayer?.name || "");
+}
+function isNoChangePlayer(){
+  return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
+}
 
 // =====================================================
 // 📌 ELEMENTS
@@ -312,6 +324,9 @@ const toTopBtn = $("toTopBtn");
 
 const xmasPhoto = $("xmasPhoto");
 
+// Timer UI (klein tekstje boven antwoorden)
+const timerNote = $("timerNote");
+
 // Lightbox
 const lightbox = $("lightbox");
 const lightboxImg = $("lightboxImg");
@@ -326,8 +341,99 @@ let currentIndex  = 0;
 let state = QUESTIONS.map(() => ({
   answered: false,
   pickedIndex: null,
-  correct: false
+  correct: false,
+  nextReadyAt: null // timestamp (ms) wanneer "VOLGENDE" weer mag
 }));
+
+// =====================================================
+// ⏱️ TIMER HANDLES (zodat we kunnen stoppen bij nav)
+// =====================================================
+let answerLockInterval = null;
+let nextLockInterval = null;
+let answerLocked = false;
+
+function clearTimers(){
+  if(answerLockInterval){ clearInterval(answerLockInterval); answerLockInterval = null; }
+  if(nextLockInterval){ clearInterval(nextLockInterval); nextLockInterval = null; }
+  answerLocked = false;
+  if(timerNote) timerNote.textContent = "";
+  setNextLabel();
+}
+
+function setAllAnswerButtonsDisabled(disabled){
+  const btns = [...answersEl.querySelectorAll("button")];
+  btns.forEach(b => b.disabled = !!disabled);
+}
+
+function startAnswerLock(){
+  if(!isTimedPlayer()) return;
+  const s = state[currentIndex];
+  if(s.answered) return; // al beantwoord -> geen "vóór antwoord" timer nodig
+
+  clearInterval(answerLockInterval);
+  answerLocked = true;
+
+  let remaining = ANSWER_LOCK_SECONDS;
+  if(timerNote) timerNote.textContent = `⏳ Wacht ${remaining}s voordat je mag antwoorden...`;
+
+  setAllAnswerButtonsDisabled(true);
+
+  answerLockInterval = setInterval(() => {
+    remaining--;
+    if(remaining <= 0){
+      clearInterval(answerLockInterval);
+      answerLockInterval = null;
+      answerLocked = false;
+      if(timerNote) timerNote.textContent = "";
+      // answers weer enable (maar let op Kaj: als hij al beantwoord heeft, blijft lock)
+      paintAnsweredState();
+      return;
+    }
+    if(timerNote) timerNote.textContent = `⏳ Wacht ${remaining}s voordat je mag antwoorden...`;
+  }, 1000);
+}
+
+function startNextLock(targetTimeMs){
+  clearInterval(nextLockInterval);
+
+  const tick = () => {
+    const ms = targetTimeMs - Date.now();
+    const sec = Math.max(0, Math.ceil(ms / 1000));
+    if(sec <= 0){
+      clearInterval(nextLockInterval);
+      nextLockInterval = null;
+      setNextLabel();
+      nextBtn.disabled = false; // mag weer
+      return;
+    }
+
+    // label met countdown
+    const base = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
+    nextBtn.textContent = `${base} (${sec}s)`;
+    nextBtn.disabled = true;
+  };
+
+  tick();
+  nextLockInterval = setInterval(tick, 250);
+}
+
+function applyNextLockIfNeeded(){
+  const s = state[currentIndex];
+  if(!isTimedPlayer()) return;
+
+  if(s.answered){
+    // als nog niet gezet: zet vanaf moment van eerste antwoord
+    if(!s.nextReadyAt){
+      s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
+    }
+    if(s.nextReadyAt > Date.now()){
+      startNextLock(s.nextReadyAt);
+    }else{
+      setNextLabel();
+      nextBtn.disabled = false;
+    }
+  }
+}
 
 // =====================================================
 // ⚠️ LEAVE / REFRESH WARNING
@@ -336,11 +442,9 @@ let quizStarted = false;
 
 window.addEventListener("beforeunload", (e) => {
   if (!quizStarted) return;
-
   e.preventDefault();
-  e.returnValue = ""; // required for browser confirm dialog
+  e.returnValue = "";
 });
-
 
 // =====================================================
 // 🎮 INIT PLAYER SELECT
@@ -375,10 +479,12 @@ startBtn.onclick = () => {
 function startGame(){
   quizStarted = true;
   currentIndex = 0;
+
   state = QUESTIONS.map(() => ({
     answered: false,
     pickedIndex: null,
-    correct: false
+    correct: false,
+    nextReadyAt: null
   }));
 
   youImg.src = getStillPhoto(currentPlayer?.photo) || "";
@@ -390,6 +496,8 @@ function startGame(){
 }
 
 function renderQuestion(){
+  clearTimers();
+
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
 
@@ -406,6 +514,7 @@ function renderQuestion(){
   backBtn.disabled = (currentIndex === 0);
   setNextLabel();
 
+  // standaard: "VOLGENDE" pas na antwoord
   nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
@@ -420,11 +529,21 @@ function renderQuestion(){
     paintAnsweredState();
     showFeedback(s.correct, q);
   }
+
+  // Timers alleen voor Kaj + Luuk
+  startAnswerLock();
+  applyNextLockIfNeeded();
 }
 
 function pickAnswer(pickedIndex){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
+
+  // 🔒 Voor Kaj: zodra hij iets gekozen heeft -> nooit meer wijzigen
+  if(isNoChangePlayer() && s.answered) return;
+
+  // ⏳ Voor Kaj + Luuk: eerst wachttijd vóór antwoord
+  if(isTimedPlayer() && answerLocked) return;
 
   const isCorrect = pickedIndex === q.correctIndex;
 
@@ -432,11 +551,21 @@ function pickAnswer(pickedIndex){
   s.pickedIndex = pickedIndex;
   s.correct = isCorrect;
 
+  // ⏳ Voor Kaj + Luuk: na (eerste) antwoord -> lock "VOLGENDE" 15s
+  if(isTimedPlayer() && !s.nextReadyAt){
+    s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
+  }
+
   paintAnsweredState();
   showFeedback(isCorrect, q);
 
-  nextBtn.disabled = false;
-  setNextLabel();
+  // VOLGENDE pas aan na timer (timed players) of direct (anderen)
+  if(isTimedPlayer()){
+    applyNextLockIfNeeded();
+  }else{
+    nextBtn.disabled = false;
+    setNextLabel();
+  }
 }
 
 function paintAnsweredState(){
@@ -457,7 +586,13 @@ function paintAnsweredState(){
       b.classList.add("selectedPick");
     }
 
-    b.disabled = false;
+    // default: enable, behalve:
+    // - als answerLocked actief (Kaj/Luuk vóór antwoord)
+    // - als Kaj al geantwoord heeft (no change)
+    const lockByAnswerTimer = isTimedPlayer() && answerLocked;
+    const lockByKajRule = isNoChangePlayer() && s.answered;
+
+    b.disabled = lockByAnswerTimer || lockByKajRule;
   });
 }
 
@@ -469,7 +604,6 @@ function showFeedback(isCorrect, q){
   const correct = q.antwoorden[q.correctIndex];
   const uitleg = q.uitleg ? `<p><b>Uitleg:</b> ${q.uitleg}</p>` : "";
 
-  // GEEN "Jouw antwoord" meer tonen
   feedbackBody.innerHTML = `
     <p><b>Juiste antwoord:</b> ${correct}</p>
     ${uitleg}
@@ -487,7 +621,11 @@ backBtn.onclick = () => {
 };
 
 nextBtn.onclick = () => {
-  if(!state[currentIndex].answered) return;
+  const s = state[currentIndex];
+  if(!s.answered) return;
+
+  // ⏳ Kaj/Luuk: als timer nog loopt, blokkeren
+  if(isTimedPlayer() && s.nextReadyAt && s.nextReadyAt > Date.now()) return;
 
   if(currentIndex < QUESTIONS.length - 1){
     currentIndex++;
@@ -503,6 +641,7 @@ nextBtn.onclick = () => {
 // ✅ RESULT + REVIEW
 // =====================================================
 function renderResult(){
+  clearTimers();
   show(resultView);
 
   const good = state.filter(s => s.answered && s.correct).length;
@@ -564,7 +703,7 @@ function buildReviewList({ onlyWrong }){
 }
 
 // =====================================================
-// 🔍 LIGHTBOX (alleen eind-overzicht)
+// 🔍 LIGHTBOX
 // =====================================================
 function openLightbox(src, alt){
   if(!lightbox || !lightboxImg) return;
@@ -599,7 +738,15 @@ document.addEventListener("keydown", (e) => {
   if(e.key === "Escape") closeLightbox();
 });
 
-// Optioneel: ook xmas foto in eindscherm klikbaar (mag, is eindscherm)
+// Klik op jouw profielfoto (in quiz) -> vergroot
+if(youImg){
+  youImg.style.cursor = "zoom-in";
+  youImg.onclick = () => {
+    if(youImg.src) openLightbox(youImg.src, currentPlayer?.name || "Speler");
+  };
+}
+
+// Optioneel: ook xmas foto in eindscherm klikbaar
 if(xmasPhoto){
   xmasPhoto.style.cursor = "zoom-in";
   xmasPhoto.onclick = () => openLightbox("xmas.jpg", "Kerst foto");
@@ -609,6 +756,7 @@ if(xmasPhoto){
 // 🔁 RESTART + FILTERS + TOP
 // =====================================================
 restartBtn.onclick = () => {
+  clearTimers();
   quizStarted = false;
   if(topbar) topbar.style.display = "";
   currentPlayer = null;
