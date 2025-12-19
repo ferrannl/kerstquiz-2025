@@ -12,13 +12,18 @@
   <div class="wrap">
     <div class="card">
 
+      
       <!-- HEADER (alleen start) -->
+  <!--
       <header class="topbar" id="topbar">
         <h1 class="title">
           🎄 De grote van der Venne Kerst Quiz! 🎁<br />
           <span>Wie weet het meest deze kerst?</span>
         </h1>
       </header>
+   -->
+      
+      
 
       <!-- START / PLAYER SELECT -->
       <section class="view active" id="playerView">
@@ -69,7 +74,7 @@
 
             <div class="quizControls">
               <button class="btnGhost" id="backBtn" disabled>⬅️ Terug</button>
-              <button class="btnPrimary" id="nextBtn" disabled>VOLGENDE ➡️</button>
+              <button class="btnPrimary" id="nextBtn" disabled>VOLGENDE</button>
             </div>
           </div>
         </div>
@@ -80,13 +85,6 @@
         <div class="xmasHero">
           <img class="xmasPhoto" src="fam.jpg" alt="Kerst foto" />
           <div id="resultSummary" class="subtitle" style="margin:10px 0 0;"></div>
-
-          <div class="xmasActions">
-            <button class="btnGhost" id="toggleOnlyWrong">Alleen fout</button>
-            <button class="btnGhost" id="toggleAll">Alles</button>
-            <button class="btnGhost" id="scrollTopBtn">⬆️ Naar boven</button>
-            <button class="btnPrimary" id="pdfBtn">📄 Download PDF diploma</button>
-          </div>
         </div>
 
         <div class="shareBox">
@@ -98,7 +96,6 @@
 
           <div class="familyWrap">
             <img class="familyPhoto" src="fam.jpg" alt="Familiefoto klein" />
-            <div class="familyHint">Tip: maak een foto/screenshot van het diploma of download de PDF 😄</div>
           </div>
         </div>
 
@@ -114,13 +111,6 @@
               <div class="pill bad">❌ Fout: <b id="dipBad">0</b></div>
               <div class="pill">📌 Totaal: <b id="dipTotal">0</b></div>
             </div>
-
-            <div class="reviewTools">
-              <span class="smallNote" style="margin:0; opacity:.9;">
-                Hieronder zie je alles overzichtelijk: vraag, foto, jouw antwoord, juiste antwoord en uitleg.
-              </span>
-            </div>
-
             <div class="reviewList" id="reviewList"></div>
 
             <div class="endControls">
