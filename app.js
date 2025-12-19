@@ -115,30 +115,16 @@ Veel verkochte soorten:
   },
   {
     vraag: "Wat is dit?",
-    image: "beyblade.jpg",
-    antwoorden: ["Tol", "Beyblade", "Fidget spinner", "Jojo"],
-    correctIndex: 1,
-    uitleg: "Een soort tollen uit de 2000's. Beyblades moeten echt een comeback maken."
-  },
-  {
-    vraag: "Wat is dit?",
-    image: "tamagotchi.jpg",
-    antwoorden: ["Tamagochi", "Gameboy", "Pager", "Mini-telefoon"],
-    correctIndex: 0,
-    uitleg: "Een Tamagotchi is een digitaal huisdiertje dat je moest verzorgen."
-  },
-  {
-    vraag: "Wat is dit?",
     image: "neopets.jpg",
-    antwoorden: ["Neopets", "Habbo Hotel", "Club Penguin", "The Sims"],
-    correctIndex: 0,
+    antwoorden: ["Brainrot", "Pokémon", "Neopets", "Club Penguin"],
+    correctIndex: 2,
     uitleg: "Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
   },
   {
     vraag: "Hoeveel spelers staan er in één voetbalteam op het veld?",
     image: "voetbalteam.jpg",
-    antwoorden: ["9", "10", "11", "12"],
-    correctIndex: 2,
+    antwoorden: ["10", "11", "12", "13"],
+    correctIndex: 1,
     uitleg: "Een elftal = 11 spelers ⚽"
   },
   {
