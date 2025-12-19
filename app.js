@@ -28,7 +28,234 @@ const QUESTIONS = [
     antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
     correctIndex: 0,
     uitleg: "Luuk is het jongste."
-  }
+  },
+  {
+    vraag: "Wie is het oudste?",
+    image: "oud.jpg",
+    antwoorden: ["Luuk", "Ilonka", "Richard", "Kaj"],
+    correctIndex: 1,
+    uitleg: "één oma is het oudste."
+  },
+  {
+    vraag: "Van wie is dit skateboard?",
+    image: "skateboard.jpg",
+    antwoorden: ["Richard", "De buurjongen", "Ferran", "Kaj"],
+    correctIndex: 2,
+    uitleg: "Oome Ferran natuurlijk"
+  },
+  {
+    vraag: "Van wie zijn deze tekeningen?",
+    image: "tekening.jpg",
+    antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
+    correctIndex: 1,
+    uitleg: "Kunstenaar Luuk 👨‍🎨"
+  },
+  {
+    vraag: "Wat is de lievelingskleur van Oome Ferran?",
+    image: "kleur.jpg",
+    antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
+    correctIndex: 1,
+    uitleg: "🖤Ferran houdt van dezelfde kleuren als één Oma"
+  },
+  
+  {
+    vraag: "Wie kan er het lekkerste koken?",
+    image: "koken1.jpg",
+    antwoorden: ["Carmen", "Richard", "Ferran", "Ilonka"],
+    correctIndex: 1,
+    uitleg: "Zei d'r iemand thuisbezorgd? 👨‍🍳"
+  },
+  
+  {
+    vraag: "Wie eet er het gezondst?",
+    image: "koken2.jpg",
+    antwoorden: ["Kaj", "Richard", "Luuk", "Ilonka"],
+    correctIndex: 3,
+    uitleg: "Oma Ilonka is al meer dan 6kg afgevallen! 👏"
+  },
+  {
+    vraag: "Wat voor een soort boom is een kerstboom?",
+    image: "kerstboom.jpg",
+    antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
+    correctIndex: 0,
+    uitleg:
+`In Nederland zijn kerstbomen meestal een **spar**.
+
+Veel verkochte soorten:
+- Fijnspar
+- Nordmann-spar
+- Servische spar`
+  },
+  
+  {
+    vraag: "Wat is het juiste antwoord?",
+    image: "fruit1.jpg",
+    antwoorden: ["18", "19", "20", "21"],
+    correctIndex: 2,
+    uitleg: "Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20."
+  },
+  {
+    vraag: "Wat is de waarde van de banaan?",
+    image: "fruit2.jpg",
+    antwoorden: ["5", "6", "7", "8"],
+    correctIndex: 2,
+    uitleg: "Druiven zijn 22. 22 − 15 = 7, dus de banaan is 7."
+  },
+  {
+    vraag: "Wat is dit?",
+    image: "takis.jpg",
+    antwoorden: ["Doritos", "Takis", "Cheetos", "Pringles"],
+    correctIndex: 1,
+    uitleg: "Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen."
+  },
+  {
+    vraag: "Wat is dit?",
+    image: "knikkers.jpg",
+    antwoorden: ["Kauwgomballen", "IJsballetjes", "Knikkers", "Kralen"],
+    correctIndex: 2,
+    uitleg: "Klassiek speelgoed, helaas nooit meer terug in de trend gekomen."
+  },
+  {
+    vraag: "Wat is dit?",
+    image: "fidgetspinner.jpg",
+    antwoorden: ["Slinky", "Voetbal", "Draaiketting", "Fidget spinner"],
+    correctIndex: 3,
+    uitleg: "Fidget spinners waren ineens overal."
+  },
+  {
+    vraag: "Wat is dit?",
+    image: "beyblade.jpg",
+    antwoorden: ["Tol", "Beyblade", "Fidget spinner", "Jojo"],
+    correctIndex: 1,
+    uitleg: "Beyblades moeten echt een comeback maken."
+  },
+  {
+    vraag: "Wat is dit?",
+    image: "tamagotchi.jpg",
+    antwoorden: ["Tamagochi", "Gameboy", "Pager", "Mini-telefoon"],
+    correctIndex: 0,
+    uitleg: "Een Tamagotchi is een digitaal huisdiertje dat je moest verzorgen."
+  },
+  {
+    vraag: "Wat is dit?",
+    image: "neopets.jpg",
+    antwoorden: ["Neopets", "Habbo Hotel", "Club Penguin", "The Sims"],
+    correctIndex: 0,
+    uitleg: "Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
+  },
+  {
+    vraag: "Hoeveel spelers staan er in één voetbalteam op het veld?",
+    image: "voetbalteam.jpg",
+    antwoorden: ["9", "10", "11", "12"],
+    correctIndex: 2,
+    uitleg: "Een elftal = 11 spelers ⚽"
+  },
+  {
+    vraag: "Wat gebeurt er bij buitenspel?",
+    image: "buitenspel.jpg",
+    antwoorden: ["Vrije trap", "Inworp", "Spel wordt afgefloten", "Penalty"],
+    correctIndex: 2,
+    uitleg: "Bij buitenspel fluit de scheidsrechter het spel af."
+  },
+  {
+    vraag: "Welke voetbalclub is dit?",
+    image: "juventus.jpg",
+    antwoorden: ["Ajax", "Juventus", "FC Barcelona", "Real Madrid"],
+    correctIndex: 1,
+    uitleg: "Dit is Juventus, een van de bekendste clubs van Italië."
+  },
+  {
+    vraag: "Welke voetbalclub is dit?",
+    image: "fcutrecht.jpg",
+    antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcelona"],
+    correctIndex: 2,
+    uitleg: "Dit is FC Utrecht. (FC UUUUUUUUUUtrecht 😄)"
+  },
+  {
+    vraag: "Waar staat TOP Oss voor?",
+    image: "toposs.jpg",
+    antwoorden: ["Trots Op Oss", "Toppers Oss", "Tot Ons Profijt Oss", "Tot Ons Plezier Oss"],
+    correctIndex: 3,
+    uitleg: "Leuk weetje: TOP Oss begon als TOP (1928), was FC Oss (2009–2018) en is weer TOP Oss."
+  },
+  {
+    vraag: "Wie is dit?",
+    image: "creeper.jpg",
+    antwoorden: ["Mario", "Sonic", "Pikachu", "Creeper"],
+    correctIndex: 3,
+    uitleg: "Dit is een Creeper uit Minecraft. Pas op… 💥"
+  },
+  {
+    vraag: "Wie is dit?",
+    image: "chimp.jpg",
+    antwoorden: ["Henk Zegelaar", "tralalero tralala", "chimpanzini bananini", "Bokito"],
+    correctIndex: 2,
+    uitleg: "Dit is ‘chimpanzini bananini’ — zo’n bekende meme/AI-afbeelding."
+  },
+  {
+    vraag: "Wie is dit?",
+    image: "haai.jpg",
+    antwoorden: ["Reagea Shark", "Sharktale", "Tralalero tralala", "Jaws"],
+    correctIndex: 2,
+    uitleg: "Dit is ‘Tralalero tralala’ — ook zo’n bekende meme/AI-afbeelding."
+  },
+  {
+    vraag: "In welke film speelde hij?",
+    image: "cars.jpg",
+    antwoorden: ["Paw Patrol", "Minecraft", "Cars", "Fast & the Furious"],
+    correctIndex: 2,
+    uitleg: "Lightning McQueen hoort bij Cars 🏁"
+  },
+  {
+    vraag: "In welke film speelde deze knaap?",
+    image: "zac.jpg",
+    antwoorden: ["Harry Potter", "High School Musical", "Gooise Vrouwen", "Camp Rock"],
+    correctIndex: 1,
+    uitleg: "Zac Efron werd mega bekend door High School Musical."
+  },
+  {
+    vraag: "In welke film speelde deze man?",
+    image: "david.jpg",
+    antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
+    correctIndex: 3,
+    uitleg: "In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp."
+  },
+        {
+    vraag: "Wie is dit?",
+    image: "zwem.jpg",
+    antwoorden: ["Luuk", "De Buurjongen", "Richard", "Kaj"],
+    correctIndex: 3,
+    uitleg: "Zwemdiploma is binnen!"
+  },
+    {
+    vraag: "Welke oefening moest Kaj hier doen?",
+    image: "zwem.gif",
+    antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
+    correctIndex: 2,
+    uitleg: "Goede workout hoor!"
+  },
+  {
+    vraag: "Wie is dit?",
+    image: "mosterd.jpg",
+    antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
+    correctIndex: 2,
+    uitleg: "Papa (Richard) met mosterd op zijn knie 😭"
+  },
+  {
+    vraag: "Wie is dit?",
+    image: "eenoma.jpg",
+    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
+    correctIndex: 2,
+    uitleg: "Een oma kan goed salsa dansen 💃"
+  },
+  {
+    vraag: "Wie vergeet altijd zijn spullen?",
+    image: "sleutels.jpg",
+    antwoorden: ["Carmen", "Luuk", "Richard", "Ferran"],
+    correctIndex: 3,
+    uitleg: "Sleutels, tekeningen, handschoenen… altijd 😅"
+  },
+
 ];
 
 // =====================================================
