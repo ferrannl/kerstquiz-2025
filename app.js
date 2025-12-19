@@ -2,7 +2,6 @@
 // 👤 SPELERS (LOKALE FOTO'S)
 // =====================================================
 const PLAYERS = [
-  { name: "Kaj & Luuk", photo: "kaj-luuk.gif" },
   { name: "Kaj", photo: "kaj.gif" },
   { name: "Luuk", photo: "luuk.gif" },
   { name: "Ilonka", photo: "ilonka.gif" },
