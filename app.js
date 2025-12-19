@@ -54,16 +54,19 @@ const QUESTIONS = [
     vraag: "Wat is de lievelingskleur van Oome Ferran?",
     image: "kleur.jpg",
     antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
-    correctIndex: 1,
+    correctIndex: 2,
     uitleg: "🖤Ferran houdt van dezelfde kleuren als één Oma"
   },
+  
   {
-    vraag: "Wie kan er het lekkerste koken?",
+   /* vraag: "Wie kan er het lekkerste koken?",
     image: "koken1.jpg",
     antwoorden: ["Carmen", "Richard", "Ferran", "Ilonka"],
     correctIndex: 1,
     uitleg: "Zei d'r iemand thuisbezorgd? 👨‍🍳"
   },
+  */
+    
   {
     vraag: "Wie eet er het gezondst?",
     image: "koken2.jpg",
@@ -218,9 +221,9 @@ Veel verkochte soorten:
     uitleg: "In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp."
   },
   {
-    vraag: "Wie is dit?",
+    vraag: "Wat wordt hier overhandigd?",
     image: "zwem.jpg",
-    antwoorden: ["Luuk", "De Buurjongen", "Richard", "Kaj"],
+    antwoorden: ["Veterstrikdiploma 👟", "Tandenpoets diploma 🦷", "Zwemdiploma 🏊‍♂️", "HBO Diploma 🧾"],
     correctIndex: 3,
     uitleg: "Zwemdiploma is binnen!"
   },
@@ -229,7 +232,7 @@ Veel verkochte soorten:
     image: "zwem.gif",
     antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
     correctIndex: 2,
-    uitleg: "Goede workout hoor!"
+    uitleg: "Borstcrawl. Goede workout hoor!"
   },
   {
     vraag: "Wie is dit?",
@@ -246,7 +249,7 @@ Veel verkochte soorten:
     uitleg: "Een oma kan goed salsa dansen 💃"
   },
   {
-    vraag: "Wie vergeet altijd zijn spullen?",
+    vraag: "Wie is dit?",
     image: "sleutels.jpg",
     antwoorden: ["Carmen", "Luuk", "Richard", "Ferran"],
     correctIndex: 3,
