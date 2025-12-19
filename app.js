@@ -287,6 +287,12 @@ function setNextLabel(){
   nextBtn.textContent = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
 }
 
+function getStillPhoto(photoPath){
+  // Zet kaj.gif -> kaj.jpg (of png/webp als je wilt)
+  return String(photoPath || "").replace(/\.(gif|webp|png|jpg|jpeg)$/i, ".jpg");
+}
+
+
 // =====================================================
 // 📌 ELEMENTS
 // =====================================================
@@ -376,7 +382,7 @@ function startGame(){
     correct: false
   }));
 
-  youImg.src = currentPlayer?.photo || "";
+  youImg.src = getStillPhoto(currentPlayer?.photo) || "";
   youName.textContent = currentPlayer?.name || "Speler";
 
   show(quizView);
