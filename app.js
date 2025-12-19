@@ -57,7 +57,6 @@ const QUESTIONS = [
     correctIndex: 1,
     uitleg: "🖤Ferran houdt van dezelfde kleuren als één Oma"
   },
-  
   {
     vraag: "Wie kan er het lekkerste koken?",
     image: "koken1.jpg",
@@ -65,7 +64,6 @@ const QUESTIONS = [
     correctIndex: 1,
     uitleg: "Zei d'r iemand thuisbezorgd? 👨‍🍳"
   },
-  
   {
     vraag: "Wie eet er het gezondst?",
     image: "koken2.jpg",
@@ -86,7 +84,6 @@ Veel verkochte soorten:
 - Nordmann-spar
 - Servische spar`
   },
-  
   {
     vraag: "Wat is het juiste antwoord?",
     image: "fruit1.jpg",
@@ -220,14 +217,14 @@ Veel verkochte soorten:
     correctIndex: 3,
     uitleg: "In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp."
   },
-        {
+  {
     vraag: "Wie is dit?",
     image: "zwem.jpg",
     antwoorden: ["Luuk", "De Buurjongen", "Richard", "Kaj"],
     correctIndex: 3,
     uitleg: "Zwemdiploma is binnen!"
   },
-    {
+  {
     vraag: "Welke oefening moest Kaj hier doen?",
     image: "zwem.gif",
     antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
@@ -255,7 +252,6 @@ Veel verkochte soorten:
     correctIndex: 3,
     uitleg: "Sleutels, tekeningen, handschoenen… altijd 😅"
   },
-
 ];
 
 // =====================================================
@@ -308,11 +304,13 @@ const feedbackBody = $("feedbackBody");
 const backBtn    = $("backBtn");
 const nextBtn    = $("nextBtn");
 
+const restartBtn = $("restartBtn");
+
+// Optionele knoppen (bestaan niet in jouw HTML -> mag dus null zijn)
 const toggleOnlyWrong = $("toggleOnlyWrong");
 const toggleAll       = $("toggleAll");
 const scrollTopBtn    = $("scrollTopBtn");
 const pdfBtn          = $("pdfBtn");
-const restartBtn      = $("restartBtn");
 
 // =====================================================
 // 🧠 STATE
@@ -330,6 +328,7 @@ let state = QUESTIONS.map(() => ({
 // 🎮 INIT PLAYER SELECT
 // =====================================================
 function renderPlayers(){
+  if(!playersEl) return;
   playersEl.innerHTML = "";
   PLAYERS.forEach(p => {
     const el = document.createElement("div");
@@ -388,7 +387,6 @@ function renderQuestion(){
   backBtn.disabled = (currentIndex === 0);
   setNextLabel();
 
-  // Next is alleen beschikbaar als er gekozen is (maar keuze blijft wijzigbaar)
   nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
@@ -399,20 +397,12 @@ function renderQuestion(){
     answersEl.appendChild(b);
   });
 
-  // Als al eerder gekozen: laat direct de status + feedback zien,
-  // maar laat knoppen actief zodat je kunt wijzigen.
   if(s.answered){
-    paintAnsweredState();               // highlights + selected
+    paintAnsweredState();
     showFeedback(s.correct, q, s.pickedIndex);
   }
 }
 
-/**
- * ✅ Antwoord kiezen OF wijzigen
- * - knoppen blijven klikbaar
- * - state wordt overschreven
- * - styling + feedback wordt live geüpdatet
- */
 function pickAnswer(pickedIndex){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
@@ -430,34 +420,24 @@ function pickAnswer(pickedIndex){
   setNextLabel();
 }
 
-/**
- * ✅ Highlight correct + wrong + selected, maar NIET disablen
- */
 function paintAnsweredState(){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
   const btns = [...answersEl.querySelectorAll("button")];
 
   btns.forEach((b, idx) => {
-    // reset
     b.classList.remove("correct", "wrong", "selectedPick");
 
-    // altijd: laat juiste antwoord groen zien zodra er gekozen is
     if(s.answered && idx === q.correctIndex){
       b.classList.add("correct");
     }
-
-    // de gekozen foute optie rood
     if(s.answered && s.pickedIndex === idx && idx !== q.correctIndex){
       b.classList.add("wrong");
     }
-
-    // optioneel: markeer gekozen optie subtiel (ook als correct)
     if(s.answered && s.pickedIndex === idx){
       b.classList.add("selectedPick");
     }
 
-    // knoppen blijven klikbaar -> dus NIET disabled
     b.disabled = false;
   });
 }
@@ -573,7 +553,6 @@ function buildReviewList({ onlyWrong }){
         ${q.uitleg ? `<div class="smallNote" style="margin:8px 0 0; opacity:.95;"><b>Uitleg:</b> ${q.uitleg}</div>` : ""}
       </div>
     `;
-
     list.appendChild(row);
   });
 }
@@ -619,7 +598,7 @@ function makePdf(){
 }
 
 // =====================================================
-// 🔁 RESTART + FILTERS
+// 🔁 RESTART + (OPTIONELE) FILTERS
 // =====================================================
 restartBtn.onclick = () => {
   if(topbar) topbar.style.display = "";
@@ -630,10 +609,11 @@ restartBtn.onclick = () => {
   scrollToTop();
 };
 
-toggleOnlyWrong.onclick = () => buildReviewList({ onlyWrong:true });
-toggleAll.onclick       = () => buildReviewList({ onlyWrong:false });
-scrollTopBtn.onclick    = () => scrollToTop();
-pdfBtn.onclick          = () => makePdf();
+// Deze bestaan mogelijk niet -> alleen koppelen als ze er zijn
+if(toggleOnlyWrong) toggleOnlyWrong.onclick = () => buildReviewList({ onlyWrong:true });
+if(toggleAll)       toggleAll.onclick       = () => buildReviewList({ onlyWrong:false });
+if(scrollTopBtn)    scrollTopBtn.onclick    = () => scrollToTop();
+if(pdfBtn)          pdfBtn.onclick          = () => makePdf();
 
 // init
 renderPlayers();
