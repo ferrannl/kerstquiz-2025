@@ -249,6 +249,19 @@ body{
   border-color: rgba(40,209,124,.70);
 }
 
+.timerNote{
+  margin: 0 0 12px;
+  font-size: 16px;
+  opacity: .9;
+  text-align: center;
+}
+
+/* profielfoto klik hint */
+.youCard img{
+  cursor: zoom-in;
+}
+
+
 /* FEEDBACK */
 .feedback{
   text-align:left;
