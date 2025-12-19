@@ -280,8 +280,8 @@ function getStillPhoto(photoPath){
 // =====================================================
 const NO_CHANGE_PLAYER = "Kaj";                 // Kaj mag NIET wijzigen na keuze
 const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // Kaj + Luuk krijgen timers
-const ANSWER_LOCK_SECONDS = 15;                 // vóór antwoord
-const NEXT_LOCK_SECONDS   = 15;                 // vóór volgende
+const ANSWER_LOCK_SECONDS = 5;                 // vóór antwoord
+const NEXT_LOCK_SECONDS   = 5;                 // vóór volgende
 
 function isTimedPlayer(){
   return TIMED_PLAYERS.has(currentPlayer?.name || "");
