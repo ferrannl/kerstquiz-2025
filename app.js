@@ -121,10 +121,10 @@ function isNoChangePlayer(){
 
 // ✅ Fade-in voor iedereen behalve Ferran
 const FADE_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
-const FADE_DURATION_MS = 14000;
+const FADE_DURATION_MS = 11000;
 
 // ✅ Kaj krijgt extra start-delay voordat fade begint
-const KAJ_START_DELAY_MS = 2500;
+const KAJ_START_DELAY_MS = 2700;
 
 function shouldFade(){
   return FADE_PLAYERS.has(currentPlayer?.name || "");
