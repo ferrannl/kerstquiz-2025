@@ -1,3 +1,6 @@
+
+// app.js
+
 // =====================================================
 // 👤 SPELERS (LOKALE FOTO'S)
 // =====================================================
@@ -276,12 +279,12 @@ function getStillPhoto(photoPath){
 }
 
 // =====================================================
-// 🎯 SPELER-REGELS (JOUW WENSEN)
+// 🎯 SPELER-REGELS
 // =====================================================
 const NO_CHANGE_PLAYER = "Kaj";                 // Kaj mag NIET wijzigen na keuze
-const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // Kaj + Luuk krijgen timers
-const ANSWER_LOCK_SECONDS = 0;                 // vóór antwoord
-const NEXT_LOCK_SECONDS   = 5;                 // vóór volgende
+const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // timers (laat staan als je die nog gebruikt)
+const ANSWER_LOCK_SECONDS = 0;
+const NEXT_LOCK_SECONDS   = 5;
 
 function isTimedPlayer(){
   return TIMED_PLAYERS.has(currentPlayer?.name || "");
@@ -290,10 +293,42 @@ function isNoChangePlayer(){
   return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
 }
 
+// ✅ Fade-in instellingen voor Kaj (vraag-afbeelding)
+const FADE_PLAYER = "Kaj";
+const KAJ_FADE_START_OPACITY = 0.08;     // hoe doorzichtig start (0 = onzichtbaar, 1 = zichtbaar)
+const KAJ_FADE_DURATION_MS   = 7500;     // hoe lang tot volledig zichtbaar
+
+function isFadePlayer(){
+  return (currentPlayer?.name || "") === FADE_PLAYER;
+}
+
+function applyKajFadeToQuestionImage(){
+  if(!qImgEl) return;
+
+  // reset altijd eerst (zodat "Terug/Volgende" opnieuw werkt)
+  qImgEl.classList.remove("kaj-fade", "is-visible");
+  qImgEl.style.transition = "";
+  qImgEl.style.opacity = "";
+
+  if(!isFadePlayer()) return;
+
+  // Zet de startwaarden, en trigger daarna de transition naar zichtbaar
+  qImgEl.classList.add("kaj-fade");
+  qImgEl.style.opacity = String(KAJ_FADE_START_OPACITY);
+  qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
+
+  // Force reflow zodat browser de start-opacity pakt
+  void qImgEl.offsetWidth;
+
+  // volgende frame -> zichtbaar
+  requestAnimationFrame(() => {
+    qImgEl.classList.add("is-visible");
+  });
+}
+
 // =====================================================
 // 📌 ELEMENTS
 // =====================================================
-const topbar     = $("topbar");
 const playerView = $("playerView");
 const quizView   = $("quizView");
 const resultView = $("resultView");
@@ -324,9 +359,6 @@ const toTopBtn = $("toTopBtn");
 
 const xmasPhoto = $("xmasPhoto");
 
-// Timer UI (klein tekstje boven antwoorden)
-const timerNote = $("timerNote");
-
 // Lightbox
 const lightbox = $("lightbox");
 const lightboxImg = $("lightboxImg");
@@ -342,55 +374,17 @@ let state = QUESTIONS.map(() => ({
   answered: false,
   pickedIndex: null,
   correct: false,
-  nextReadyAt: null // timestamp (ms) wanneer "VOLGENDE" weer mag
+  nextReadyAt: null
 }));
 
 // =====================================================
-// ⏱️ TIMER HANDLES (zodat we kunnen stoppen bij nav)
+// ⏱️ TIMER HANDLES
 // =====================================================
-let answerLockInterval = null;
 let nextLockInterval = null;
-let answerLocked = false;
 
 function clearTimers(){
-  if(answerLockInterval){ clearInterval(answerLockInterval); answerLockInterval = null; }
   if(nextLockInterval){ clearInterval(nextLockInterval); nextLockInterval = null; }
-  answerLocked = false;
-  if(timerNote) timerNote.textContent = "";
   setNextLabel();
-}
-
-function setAllAnswerButtonsDisabled(disabled){
-  const btns = [...answersEl.querySelectorAll("button")];
-  btns.forEach(b => b.disabled = !!disabled);
-}
-
-function startAnswerLock(){
-  if(!isTimedPlayer()) return;
-  const s = state[currentIndex];
-  if(s.answered) return; // al beantwoord -> geen "vóór antwoord" timer nodig
-
-  clearInterval(answerLockInterval);
-  answerLocked = true;
-
-  let remaining = ANSWER_LOCK_SECONDS;
-  if(timerNote) timerNote.textContent = `⏳ Wacht ${remaining}s voordat je mag antwoorden...`;
-
-  setAllAnswerButtonsDisabled(true);
-
-  answerLockInterval = setInterval(() => {
-    remaining--;
-    if(remaining <= 0){
-      clearInterval(answerLockInterval);
-      answerLockInterval = null;
-      answerLocked = false;
-      if(timerNote) timerNote.textContent = "";
-      // answers weer enable (maar let op Kaj: als hij al beantwoord heeft, blijft lock)
-      paintAnsweredState();
-      return;
-    }
-    if(timerNote) timerNote.textContent = `⏳ Wacht ${remaining}s voordat je mag antwoorden...`;
-  }, 1000);
 }
 
 function startNextLock(targetTimeMs){
@@ -403,11 +397,9 @@ function startNextLock(targetTimeMs){
       clearInterval(nextLockInterval);
       nextLockInterval = null;
       setNextLabel();
-      nextBtn.disabled = false; // mag weer
+      nextBtn.disabled = false;
       return;
     }
-
-    // label met countdown
     const base = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
     nextBtn.textContent = `${base} (${sec}s)`;
     nextBtn.disabled = true;
@@ -422,7 +414,6 @@ function applyNextLockIfNeeded(){
   if(!isTimedPlayer()) return;
 
   if(s.answered){
-    // als nog niet gezet: zet vanaf moment van eerste antwoord
     if(!s.nextReadyAt){
       s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
     }
@@ -468,10 +459,7 @@ function selectPlayer(p, el){
   startBtn.disabled = false;
 }
 
-startBtn.onclick = () => {
-  if(topbar) topbar.style.display = "none";
-  startGame();
-};
+startBtn.onclick = () => startGame();
 
 // =====================================================
 // ▶️ GAME FLOW
@@ -505,8 +493,14 @@ function renderQuestion(){
   qNrEl.textContent = `Vraag ${currentIndex + 1}`;
   qTextEl.textContent = q.vraag;
 
+  // set image
   qImgEl.src = q.image || "";
   qImgEl.alt = q.vraag;
+
+  // ✅ Kaj: langzaam zichtbaar worden (start zodra de afbeelding laadt)
+  qImgEl.onload = () => applyKajFadeToQuestionImage();
+  // fallback: als browser image al cached en onload soms niet (zeker mobiel)
+  requestAnimationFrame(() => applyKajFadeToQuestionImage());
 
   answersEl.innerHTML = "";
   feedbackEl.classList.add("hidden");
@@ -514,7 +508,7 @@ function renderQuestion(){
   backBtn.disabled = (currentIndex === 0);
   setNextLabel();
 
-  // standaard: "VOLGENDE" pas na antwoord
+  // "VOLGENDE" pas na antwoord
   nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
@@ -530,8 +524,6 @@ function renderQuestion(){
     showFeedback(s.correct, q);
   }
 
-  // Timers alleen voor Kaj + Luuk
-  startAnswerLock();
   applyNextLockIfNeeded();
 }
 
@@ -542,16 +534,12 @@ function pickAnswer(pickedIndex){
   // 🔒 Voor Kaj: zodra hij iets gekozen heeft -> nooit meer wijzigen
   if(isNoChangePlayer() && s.answered) return;
 
-  // ⏳ Voor Kaj + Luuk: eerst wachttijd vóór antwoord
-  if(isTimedPlayer() && answerLocked) return;
-
   const isCorrect = pickedIndex === q.correctIndex;
 
   s.answered = true;
   s.pickedIndex = pickedIndex;
   s.correct = isCorrect;
 
-  // ⏳ Voor Kaj + Luuk: na (eerste) antwoord -> lock "VOLGENDE" 15s
   if(isTimedPlayer() && !s.nextReadyAt){
     s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
   }
@@ -559,7 +547,6 @@ function pickAnswer(pickedIndex){
   paintAnsweredState();
   showFeedback(isCorrect, q);
 
-  // VOLGENDE pas aan na timer (timed players) of direct (anderen)
   if(isTimedPlayer()){
     applyNextLockIfNeeded();
   }else{
@@ -576,23 +563,12 @@ function paintAnsweredState(){
   btns.forEach((b, idx) => {
     b.classList.remove("correct", "wrong", "selectedPick");
 
-    if(s.answered && idx === q.correctIndex){
-      b.classList.add("correct");
-    }
-    if(s.answered && s.pickedIndex === idx && idx !== q.correctIndex){
-      b.classList.add("wrong");
-    }
-    if(s.answered && s.pickedIndex === idx){
-      b.classList.add("selectedPick");
-    }
+    if(s.answered && idx === q.correctIndex) b.classList.add("correct");
+    if(s.answered && s.pickedIndex === idx && idx !== q.correctIndex) b.classList.add("wrong");
+    if(s.answered && s.pickedIndex === idx) b.classList.add("selectedPick");
 
-    // default: enable, behalve:
-    // - als answerLocked actief (Kaj/Luuk vóór antwoord)
-    // - als Kaj al geantwoord heeft (no change)
-    const lockByAnswerTimer = isTimedPlayer() && answerLocked;
     const lockByKajRule = isNoChangePlayer() && s.answered;
-
-    b.disabled = lockByAnswerTimer || lockByKajRule;
+    b.disabled = lockByKajRule;
   });
 }
 
@@ -624,7 +600,6 @@ nextBtn.onclick = () => {
   const s = state[currentIndex];
   if(!s.answered) return;
 
-  // ⏳ Kaj/Luuk: als timer nog loopt, blokkeren
   if(isTimedPlayer() && s.nextReadyAt && s.nextReadyAt > Date.now()) return;
 
   if(currentIndex < QUESTIONS.length - 1){
@@ -731,7 +706,6 @@ function wireLightboxForReviewImages(){
   });
 }
 
-// Sluiten via knop / achtergrond / ESC
 if(lightboxClose) lightboxClose.onclick = (e) => { e.stopPropagation(); closeLightbox(); };
 if(lightbox) lightbox.onclick = () => closeLightbox();
 document.addEventListener("keydown", (e) => {
@@ -746,7 +720,7 @@ if(youImg){
   };
 }
 
-// Optioneel: ook xmas foto in eindscherm klikbaar
+// xmas foto klikbaar
 if(xmasPhoto){
   xmasPhoto.style.cursor = "zoom-in";
   xmasPhoto.onclick = () => openLightbox("xmas.jpg", "Kerst foto");
@@ -758,7 +732,6 @@ if(xmasPhoto){
 restartBtn.onclick = () => {
   clearTimers();
   quizStarted = false;
-  if(topbar) topbar.style.display = "";
   currentPlayer = null;
   startBtn.disabled = true;
   [...playersEl.children].forEach(c => c.classList.remove("selected"));
