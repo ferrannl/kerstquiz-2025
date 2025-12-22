@@ -1,3 +1,4 @@
+
 // app.js
 
 // =====================================================
@@ -16,7 +17,7 @@ const PLAYERS = [
 // ❓ VRAGEN
 // =====================================================
 const QUESTIONS = [
-  
+
   { vraag:"Wie is het jongste?", image:"jong.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:0, uitleg:"Luuk is het laatst van ons geboren." },
   { vraag:"Wie is het langste?", image:"lang.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:1, uitleg:"Volgens Google is Richard slechts 1,73 m." },
   { vraag:"Wie is het oudste?", image:"oud.jpg", antwoorden:["Carmen","Ilonka","Richard","Ferran"], correctIndex:1, uitleg:"één oma is als eerste van ons geboren. Lang, lang geleden." },
@@ -38,7 +39,7 @@ Veel verkochte soorten:
   },
   { vraag:"Wat is de waarde van de banaan?", image:"fruit2.jpg", antwoorden:["5","6","7","8"], correctIndex:2, uitleg:"Druiven zijn 22. 22 − 15 = 7, dus de banaan is 7." },
   { vraag:"Wat is het juiste antwoord?", image:"fruit1.jpg", antwoorden:["18","19","20","21"], correctIndex:2, uitleg:"Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20." },
-  
+
   { vraag:"Wat zijn dit?", image:"takis.jpg", antwoorden:["Doritos","Takis","Cheetos","Pringles"], correctIndex:1, uitleg:"Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen." },
   { vraag:"Wat zijn dit?", image:"knikkers.jpg", antwoorden:["Kauwgomballen","IJsballetjes","Knikkers","Kralen"], correctIndex:2, uitleg:"Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen." },
   { vraag:"Wat is dit?", image:"fidgetspinner.jpg", antwoorden:["Slinky","Voetbal","Draaiketting","Fidget spinner"], correctIndex:3, uitleg:"Fidget spinners waren ineens overal." },
@@ -107,18 +108,24 @@ function getStillPhoto(photoPath){
 // =====================================================
 // 🎯 REGELS (JOUW NIEUWE WENSEN)
 // =====================================================
-const NO_CHANGE_PLAYER = "Kaj";   // Kaj mag NIET wijzigen na keuze
+const NO_CHANGE_PLAYER = "Kaj";     // Kaj mag NIET wijzigen na keuze
 const FERRAN = "Ferran";
 
 // ✅ Iedereen behalve Ferran krijgt "VOLGENDE" lock
 const TIMED_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
 const NEXT_LOCK_SECONDS = 5;
 
+// ✅ Kaj: wél wachten, maar GEEN zichtbare countdown op de knop
+const HIDE_COUNTDOWN_FOR = new Set(["Kaj"]);
+
 function isTimedPlayer(){
   return TIMED_PLAYERS.has(currentPlayer?.name || "");
 }
 function isNoChangePlayer(){
   return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
+}
+function shouldShowCountdown(){
+  return !HIDE_COUNTDOWN_FOR.has(currentPlayer?.name || "");
 }
 
 // ✅ Fade-in voor iedereen behalve Ferran
@@ -198,12 +205,14 @@ function clearTimers(){
   setNextLabel();
 }
 
+// ✅ aangepast: countdown kan verborgen worden (Kaj)
 function startNextLock(targetTimeMs){
   clearInterval(nextLockInterval);
 
   const tick = () => {
     const ms = targetTimeMs - Date.now();
     const sec = Math.max(0, Math.ceil(ms / 1000));
+
     if(sec <= 0){
       clearInterval(nextLockInterval);
       nextLockInterval = null;
@@ -211,9 +220,17 @@ function startNextLock(targetTimeMs){
       nextBtn.disabled = false;
       return;
     }
-    const base = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
-    nextBtn.textContent = `${base} (${sec}s)`;
+
     nextBtn.disabled = true;
+
+    // Alleen bij spelers waar het mag: tekst met (Xs)
+    if(shouldShowCountdown()){
+      const base = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
+      nextBtn.textContent = `${base} (${sec}s)`;
+    } else {
+      // Kaj: geen aftellen zichtbaar, wél lock actief
+      setNextLabel();
+    }
   };
 
   tick();
@@ -502,102 +519,4 @@ function buildReviewList({ onlyWrong }){
   const list = $("reviewList");
   if(!list) return;
 
-  list.innerHTML = "";
-
-  QUESTIONS.forEach((q, i) => {
-    const s = state[i];
-    const isWrong = s.answered && !s.correct;
-    if(onlyWrong && !isWrong) return;
-
-    const correct = q.antwoorden[q.correctIndex];
-
-    const badge = s.answered
-      ? (s.correct ? `<span class="badge good">✅ Goed</span>` : `<span class="badge bad">❌ Fout</span>`)
-      : `<span class="badge">Niet beantwoord</span>`;
-
-    const row = document.createElement("div");
-    row.className = "reviewRow";
-    row.innerHTML = `
-      <div class="reviewThumb">
-        <img data-lightbox="1" src="${q.image || ""}" alt="Vraag ${i+1}">
-      </div>
-      <div class="reviewInfo">
-        <h4>${i+1}. ${q.vraag}</h4>
-        <div class="reviewMeta">
-          ${badge}
-          <span><b>Juiste antwoord:</b> ${correct}</span>
-        </div>
-        ${q.uitleg ? `<div class="smallNote" style="margin:8px 0 0; opacity:.95;"><b>Uitleg:</b> ${q.uitleg}</div>` : ""}
-      </div>
-    `;
-    list.appendChild(row);
-  });
-
-  wireLightboxForReviewImages();
-}
-
-// =====================================================
-// 🔍 LIGHTBOX
-// =====================================================
-function openLightbox(src, alt){
-  if(!lightbox || !lightboxImg) return;
-  lightboxImg.src = src;
-  lightboxImg.alt = alt || "";
-  lightbox.classList.remove("hidden");
-  lightbox.setAttribute("aria-hidden", "false");
-}
-
-function closeLightbox(){
-  if(!lightbox || !lightboxImg) return;
-  lightbox.classList.add("hidden");
-  lightbox.setAttribute("aria-hidden", "true");
-  lightboxImg.src = "";
-  lightboxImg.alt = "";
-}
-
-function wireLightboxForReviewImages(){
-  const list = $("reviewList");
-  if(!list) return;
-
-  const imgs = list.querySelectorAll('img[data-lightbox="1"]');
-  imgs.forEach(img => {
-    img.onclick = () => openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
-  });
-}
-
-if(lightboxClose) lightboxClose.onclick = (e) => { e.stopPropagation(); closeLightbox(); };
-if(lightbox) lightbox.onclick = () => closeLightbox();
-document.addEventListener("keydown", (e) => {
-  if(e.key === "Escape") closeLightbox();
-});
-
-if(youImg){
-  youImg.style.cursor = "zoom-in";
-  youImg.onclick = () => {
-    if(youImg.src) openLightbox(youImg.src, currentPlayer?.name || "Speler");
-  };
-}
-
-if(xmasPhoto){
-  xmasPhoto.style.cursor = "zoom-in";
-  xmasPhoto.onclick = () => openLightbox("xmas.jpg", "Kerst foto");
-}
-
-// =====================================================
-// 🔁 RESTART + FILTERS + TOP
-// =====================================================
-restartBtn.onclick = () => {
-  clearTimers();
-  quizStarted = false;
-  currentPlayer = null;
-  startBtn.disabled = true;
-  [...playersEl.children].forEach(c => c.classList.remove("selected"));
-  show(playerView);
-  scrollToTop();
-};
-
-if(showWrongBtn) showWrongBtn.onclick = () => buildReviewList({ onlyWrong:true });
-if(showAllBtn)   showAllBtn.onclick   = () => buildReviewList({ onlyWrong:false });
-if(toTopBtn)     toTopBtn.onclick     = () => scrollToTop();
-
-renderPlayers();
+  list.innerHTML =
