@@ -16,236 +16,61 @@ const PLAYERS = [
 // ❓ VRAGEN
 // =====================================================
 const QUESTIONS = [
+  { vraag:"Wie is het langste?", image:"lang.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:1, uitleg:"Volgens Google is Richard slechts 1,73 m." },
+  { vraag:"Wie is het jongste?", image:"jong.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:0, uitleg:"Luuk is het laatst van ons geboren." },
+  { vraag:"Wie is het oudste?", image:"oud.jpg", antwoorden:["Luuk","Ilonka","Richard","Kaj"], correctIndex:1, uitleg:"één oma is als eerste van ons geboren. Lang geleden." },
+  { vraag:"Van wie is dit skateboard?", image:"skateboard.jpg", antwoorden:["Richard","Luuk","Ferran","Kaj"], correctIndex:2, uitleg:"Oome Ferran natuurlijk" },
+  { vraag:"Wie heeft deze kunstwerken gemaakt?", image:"tekening.jpg", antwoorden:["Richard","Luuk","Ferran","Kaj"], correctIndex:1, uitleg:"Luuk Van Gogh 👨‍🎨" },
+  { vraag:"Wat is de lievelingskleur van Oome Ferran?", image:"zwart.jpeg", antwoorden:["Blauw","Wit","Zwart","Rood"], correctIndex:2, uitleg:"🖤 dezelfde kleur waar één oma van houdt." },
+  { vraag:"Wie eet er het gezondst?", image:"koken2.jpg", antwoorden:["Kaj","Richard","Luuk","Ilonka"], correctIndex:3, uitleg:"één oma is al meer dan 6kg afgevallen en past haar broeken niet meer! 👏" },
   {
-    vraag: "Wie is het langste?",
-    image: "lang.jpg",
-    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
-    correctIndex: 1,
-    uitleg: "Volgens Google is Richard slechts 1,73 m."
-  },
-  {
-    vraag: "Wie is het jongste?",
-    image: "jong.jpg",
-    antwoorden: ["Luuk", "Ferran", "Richard", "Kaj"],
-    correctIndex: 0,
-    uitleg: "Luuk is het laatst van ons geboren."
-  },
-  {
-    vraag: "Wie is het oudste?",
-    image: "oud.jpg",
-    antwoorden: ["Luuk", "Ilonka", "Richard", "Kaj"],
-    correctIndex: 1,
-    uitleg: "één oma is als eerste van ons geboren. Lang geleden."
-  },
-  {
-    vraag: "Van wie is dit skateboard?",
-    image: "skateboard.jpg",
-    antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
-    correctIndex: 2,
-    uitleg: "Oome Ferran natuurlijk"
-  },
-  {
-    vraag: "Wie heeft deze kunstwerken gemaakt?",
-    image: "tekening.jpg",
-    antwoorden: ["Richard", "Luuk", "Ferran", "Kaj"],
-    correctIndex: 1,
-    uitleg: "Luuk Van Gogh 👨‍🎨"
-  },
-  {
-    vraag: "Wat is de lievelingskleur van Oome Ferran?",
-    image: "zwart.jpeg",
-    antwoorden: ["Blauw", "Wit", "Zwart", "Rood"],
-    correctIndex: 2,
-    uitleg: "🖤 dezelfde kleur waar één oma van houdt."
-  },
-  {
-    vraag: "Wie eet er het gezondst?",
-    image: "koken2.jpg",
-    antwoorden: ["Kaj", "Richard", "Luuk", "Ilonka"],
-    correctIndex: 3,
-    uitleg: "één oma is al meer dan 6kg afgevallen en past haar broeken niet meer! 👏"
-  },
-  {
-    vraag: "Wat voor een soort boom is een kerstboom?",
-    image: "kerstboom.jpg",
-    antwoorden: ["Spar", "Eik", "Denneboom", "Palmboom"],
-    correctIndex: 0,
-    uitleg:
-`In Nederland zijn kerstbomen meestal een spar.
+    vraag:"Wat voor een soort boom is een kerstboom?",
+    image:"kerstboom.jpg",
+    antwoorden:["Spar","Eik","Denneboom","Palmboom"],
+    correctIndex:0,
+    uitleg:`In Nederland zijn kerstbomen meestal een spar.
 
 Veel verkochte soorten:
 - Fijnspar
 - Nordmann-spar
 - Servische spar`
   },
+  { vraag:"Wat is het juiste antwoord?", image:"fruit1.jpg", antwoorden:["18","19","20","21"], correctIndex:2, uitleg:"Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20." },
+  { vraag:"Wat is de waarde van de banaan?", image:"fruit2.jpg", antwoorden:["5","6","7","8"], correctIndex:2, uitleg:"Druiven zijn 22. 22 − 15 = 7, dus de banaan is 7." },
+  { vraag:"Wat is dit?", image:"takis.jpg", antwoorden:["Doritos","Takis","Cheetos","Pringles"], correctIndex:1, uitleg:"Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen." },
+  { vraag:"Wat is dit?", image:"knikkers.jpg", antwoorden:["Kauwgomballen","IJsballetjes","Knikkers","Kralen"], correctIndex:2, uitleg:"Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen." },
+  { vraag:"Wat is dit?", image:"fidgetspinner.jpg", antwoorden:["Slinky","Voetbal","Draaiketting","Fidget spinner"], correctIndex:3, uitleg:"Fidget spinners waren ineens overal." },
+  { vraag:"Wat is dit?", image:"neopets.jpg", antwoorden:["Brainrot","Pokémon","Neopets","Club Penguin"], correctIndex:2, uitleg:"Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde." },
+  { vraag:"Hoeveel spelers staan er in één voetbalteam op het veld?", image:"voetbalteam.jpg", antwoorden:["10","11","12","13"], correctIndex:1, uitleg:"Een elftal = 11 spelers ⚽" },
+  { vraag:"Wat gebeurt er bij buitenspel?", image:"buitenspel.jpg", antwoorden:["Vrije trap","Inworp","Spel wordt afgefloten","Penalty"], correctIndex:2, uitleg:"Bij buitenspel fluit de scheidsrechter het spel af. En wat gebeurt er dan...?" },
+  { vraag:"Welke voetbalclub is dit?", image:"juventus.jpg", antwoorden:["Ajax","Juventus","FC Barcelona","Real Madrid"], correctIndex:1, uitleg:"Dit is Juventus, een van de bekendste clubs van Italië." },
+  { vraag:"Welke voetbalclub is dit?", image:"fcutrecht.jpg", antwoorden:["FC Groningen","Real Madrid","FC Utrecht","FC Barcelona"], correctIndex:2, uitleg:"Dit is FC UUUUUUUUUUtrecht 😄" },
+  { vraag:"Waar staat TOP Oss voor?", image:"toposs.jpg", antwoorden:["Trots Op Oss","Toppers Oss","Tot Ons Profijt Oss","Tot Ons Plezier Oss"], correctIndex:3, uitleg:"Leuk weetje: TOP Oss begon als TOP (1928), was FC Oss (2009–2018) en is weer TOP Oss." },
+  { vraag:"Wie is dit?", image:"creeper.jpg", antwoorden:["Mario","Sonic","Pikachu","Creeper"], correctIndex:3, uitleg:"Dit is een Creeper uit Minecraft. Pas op… 💥 Hij explodeert" },
+  { vraag:"Wie is dit?", image:"chimp.jpg", antwoorden:["Henk Zegelaar","tralalero tralala","chimpanzini bananini","Bokito"], correctIndex:2, uitleg:"Dit is ‘chimpanzini bananini’ — zo’n bekende meme/AI-afbeelding." },
+  { vraag:"Wie is dit?", image:"haai.jpg", antwoorden:["Reagea Shark","Sharktale","Tralalero tralala","Jaws"], correctIndex:2, uitleg:"Dit is ‘Tralalero tralala’ — ook zo’n bekende meme/AI-afbeelding." },
+  { vraag:"In welke film speelde hij?", image:"cars.gif", antwoorden:["Paw Patrol","Minecraft","Cars","Fast & the Furious"], correctIndex:2, uitleg:"Lightning McQueen hoort bij Cars 🏁" },
+  { vraag:"In welke film speelde deze knaap?", image:"zac.jpg", antwoorden:["Harry Potter","High School Musical","Gooise Vrouwen","Camp Rock"], correctIndex:1, uitleg:"Mama Carmen wilt deze films graag kijken. Zac Efron werd mega bekend door High School Musical." },
+  { vraag:"In welke film speelde deze man?", image:"david.jpg", antwoorden:["Dukes of Hazzard","Flodder","The Godfather","Spongebob Squarepants"], correctIndex:3, uitleg:"In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp." },
+  { vraag:"Wat wordt hier overhandigd?", image:"zwem.jpg", antwoorden:["Veterstrikdiploma","Tandenpoets diploma","Zwemdiploma","HBO Diploma"], correctIndex:2, uitleg:"Zwemdiploma A is binnen!" },
+  { vraag:"Welke oefening moest Kaj hier doen?", image:"borst.gif", antwoorden:["Rugslag","Vlinderslag","Borstcrawl","Schoolslag"], correctIndex:2, uitleg:"Borstcrawl.  Goede workout hoor!" },
+  { vraag:"Wie is dit?", image:"mosterd.jpg", antwoorden:["Messi","Ronaldo","Richard","Arjen Robben"], correctIndex:2, uitleg:"Papa (Richard) met mosterd op zijn knie 😭" },
   {
-    vraag: "Wat is het juiste antwoord?",
-    image: "fruit1.jpg",
-    antwoorden: ["18", "19", "20", "21"],
-    correctIndex: 2,
-    uitleg: "Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20."
-  },
-  {
-    vraag: "Wat is de waarde van de banaan?",
-    image: "fruit2.jpg",
-    antwoorden: ["5", "6", "7", "8"],
-    correctIndex: 2,
-    uitleg: "Druiven zijn 22. 22 − 15 = 7, dus de banaan is 7."
-  },
-  {
-    vraag: "Wat is dit?",
-    image: "takis.jpg",
-    antwoorden: ["Doritos", "Takis", "Cheetos", "Pringles"],
-    correctIndex: 1,
-    uitleg: "Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen."
-  },
-  {
-    vraag: "Wat is dit?",
-    image: "knikkers.jpg",
-    antwoorden: ["Kauwgomballen", "IJsballetjes", "Knikkers", "Kralen"],
-    correctIndex: 2,
-    uitleg: "Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen."
-  },
-  {
-    vraag: "Wat is dit?",
-    image: "fidgetspinner.jpg",
-    antwoorden: ["Slinky", "Voetbal", "Draaiketting", "Fidget spinner"],
-    correctIndex: 3,
-    uitleg: "Fidget spinners waren ineens overal."
-  },
-  {
-    vraag: "Wat is dit?",
-    image: "neopets.jpg",
-    antwoorden: ["Brainrot", "Pokémon", "Neopets", "Club Penguin"],
-    correctIndex: 2,
-    uitleg: "Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde."
-  },
-  {
-    vraag: "Hoeveel spelers staan er in één voetbalteam op het veld?",
-    image: "voetbalteam.jpg",
-    antwoorden: ["10", "11", "12", "13"],
-    correctIndex: 1,
-    uitleg: "Een elftal = 11 spelers ⚽"
-  },
-  {
-    vraag: "Wat gebeurt er bij buitenspel?",
-    image: "buitenspel.jpg",
-    antwoorden: ["Vrije trap", "Inworp", "Spel wordt afgefloten", "Penalty"],
-    correctIndex: 2,
-    uitleg: "Bij buitenspel fluit de scheidsrechter het spel af. En wat gebeurt er dan...?"
-  },
-  {
-    vraag: "Welke voetbalclub is dit?",
-    image: "juventus.jpg",
-    antwoorden: ["Ajax", "Juventus", "FC Barcelona", "Real Madrid"],
-    correctIndex: 1,
-    uitleg: "Dit is Juventus, een van de bekendste clubs van Italië."
-  },
-  {
-    vraag: "Welke voetbalclub is dit?",
-    image: "fcutrecht.jpg",
-    antwoorden: ["FC Groningen", "Real Madrid", "FC Utrecht", "FC Barcelona"],
-    correctIndex: 2,
-    uitleg: "Dit is FC UUUUUUUUUUtrecht 😄"
-  },
-  {
-    vraag: "Waar staat TOP Oss voor?",
-    image: "toposs.jpg",
-    antwoorden: ["Trots Op Oss", "Toppers Oss", "Tot Ons Profijt Oss", "Tot Ons Plezier Oss"],
-    correctIndex: 3,
-    uitleg: "Leuk weetje: TOP Oss begon als TOP (1928), was FC Oss (2009–2018) en is weer TOP Oss."
-  },
-  {
-    vraag: "Wie is dit?",
-    image: "creeper.jpg",
-    antwoorden: ["Mario", "Sonic", "Pikachu", "Creeper"],
-    correctIndex: 3,
-    uitleg: "Dit is een Creeper uit Minecraft. Pas op… 💥 Hij explodeert"
-  },
-  {
-    vraag: "Wie is dit?",
-    image: "chimp.jpg",
-    antwoorden: ["Henk Zegelaar", "tralalero tralala", "chimpanzini bananini", "Bokito"],
-    correctIndex: 2,
-    uitleg: "Dit is ‘chimpanzini bananini’ — zo’n bekende meme/AI-afbeelding."
-  },
-  {
-    vraag: "Wie is dit?",
-    image: "haai.jpg",
-    antwoorden: ["Reagea Shark", "Sharktale", "Tralalero tralala", "Jaws"],
-    correctIndex: 2,
-    uitleg: "Dit is ‘Tralalero tralala’ — ook zo’n bekende meme/AI-afbeelding."
-  },
-  {
-    vraag: "In welke film speelde hij?",
-    image: "cars.gif",
-    antwoorden: ["Paw Patrol", "Minecraft", "Cars", "Fast & the Furious"],
-    correctIndex: 2,
-    uitleg: "Lightning McQueen hoort bij Cars 🏁"
-  },
-  {
-    vraag: "In welke film speelde deze knaap?",
-    image: "zac.jpg",
-    antwoorden: ["Harry Potter", "High School Musical", "Gooise Vrouwen", "Camp Rock"],
-    correctIndex: 1,
-    uitleg: "Mama Carmen wilt deze films graag kijken. Zac Efron werd mega bekend door High School Musical."
-  },
-  {
-    vraag: "In welke film speelde deze man?",
-    image: "david.jpg",
-    antwoorden: ["Dukes of Hazzard", "Flodder", "The Godfather", "Spongebob Squarepants"],
-    correctIndex: 3,
-    uitleg: "In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp."
-  },
-  {
-    vraag: "Wat wordt hier overhandigd?",
-    image: "zwem.jpg",
-    antwoorden: ["Veterstrikdiploma", "Tandenpoets diploma", "Zwemdiploma", "HBO Diploma"],
-    correctIndex: 2,
-    uitleg: "Zwemdiploma A is binnen!"
-  },
-  {
-    vraag: "Welke oefening moest Kaj hier doen?",
-    image: "borst.gif",
-    antwoorden: ["Rugslag", "Vlinderslag", "Borstcrawl", "Schoolslag"],
-    correctIndex: 2,
-    uitleg: "Borstcrawl.  Goede workout hoor!"
-  },
-  {
-    vraag: "Wie is dit?",
-    image: "mosterd.jpg",
-    antwoorden: ["Messi", "Ronaldo", "Richard", "Arjen Robben"],
-    correctIndex: 2,
-    uitleg: "Papa (Richard) met mosterd op zijn knie 😭"
-  },
-  {
-    vraag: "Wanneer scoort Papa Richard de meeste goals?",
-    image: "score.jpg",
-    antwoorden: [
+    vraag:"Wanneer scoort Papa Richard de meeste goals?",
+    image:"score.jpg",
+    antwoorden:[
       "Als hij voor de wedstrijd chocola heeft gegeten",
       "Als hij voor de wedstrijd geen chocola heeft gegeten",
       "Als mama Carmen komt toeschouwen",
       "Als mama Carmen thuis blijft"
     ],
-    correctIndex: 3,
-    uitleg: ` Uit een verslag van DTV Nieuws: 'Carmen, blijf thuis!'
+    correctIndex:3,
+    uitleg:`Uit een verslag van DTV Nieuws: 'Carmen, blijf thuis!'
 
 Carmen, de vrouw van Van der Venne, was niet bij de wedstrijd aanwezig omdat hun kindje ziek thuis zat. De interviewer concludeerde dat de middenvelder vaker tot score komt als zij er niet bij is. Dus is het advies van Van der Venne aan haar: 'Blijf thuis!'`
   },
-  {
-    vraag: "Wie is dit?",
-    image: "eenoma.jpg",
-    antwoorden: ["een papa", "een opa", "één oma", "een broer"],
-    correctIndex: 2,
-    uitleg: "Een oma kan goed salsa dansen 💃"
-  },
-  {
-    vraag: "Wie is dit?",
-    image: "sleutels.jpg",
-    antwoorden: ["Carmen", "Luuk", "Richard", "Ferran"],
-    correctIndex: 3,
-    uitleg: "Sleutels, tekeningen, handschoenen… altijd 😅 Jullie moeten mij niet zo aflijden!"
-  },
+  { vraag:"Wie is dit?", image:"eenoma.jpg", antwoorden:["een papa","een opa","één oma","een broer"], correctIndex:2, uitleg:"Een oma kan goed salsa dansen 💃" },
+  { vraag:"Wie is dit?", image:"sleutels.jpg", antwoorden:["Carmen","Luuk","Richard","Ferran"], correctIndex:3, uitleg:"Sleutels, tekeningen, handschoenen… altijd 😅 Jullie moeten mij niet zo aflijden!" },
 ];
 
 // =====================================================
@@ -278,12 +103,14 @@ function getStillPhoto(photoPath){
 }
 
 // =====================================================
-// 🎯 SPELER-REGELS
+// 🎯 REGELS (JOUW NIEUWE WENSEN)
 // =====================================================
-const NO_CHANGE_PLAYER = "Kaj";                 // Kaj mag NIET wijzigen na keuze
-const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // timers (mag blijven)
-const ANSWER_LOCK_SECONDS = 0;
-const NEXT_LOCK_SECONDS   = 5;
+const NO_CHANGE_PLAYER = "Kaj";   // Kaj mag NIET wijzigen na keuze
+const FERRAN = "Ferran";
+
+// ✅ Iedereen behalve Ferran krijgt "VOLGENDE" lock
+const TIMED_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
+const NEXT_LOCK_SECONDS = 5;
 
 function isTimedPlayer(){
   return TIMED_PLAYERS.has(currentPlayer?.name || "");
@@ -292,52 +119,18 @@ function isNoChangePlayer(){
   return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
 }
 
-// =====================================================
-// ✅ KAJ: INVISIBLE -> VISIBLE (BULLETPROOF)
-// =====================================================
-const FADE_PLAYER = "Kaj";
-const KAJ_FADE_DURATION_MS = 17000;
-const KAJ_FADE_START_DELAY_MS = 900; // bv 1500ms (pas aan)
+// ✅ Fade-in voor iedereen behalve Ferran
+const FADE_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
+const FADE_DURATION_MS = 7000;
 
-function isFadePlayer(){
-  return (currentPlayer?.name || "") === FADE_PLAYER;
+// ✅ Kaj krijgt extra start-delay voordat fade begint
+const KAJ_START_DELAY_MS = 1500;
+
+function shouldFade(){
+  return FADE_PLAYERS.has(currentPlayer?.name || "");
 }
-
-function kajMakeInvisibleNow(){
-  if(!qImgEl) return;
-
-  // reset
-  qImgEl.classList.remove("kaj-fade", "is-visible");
-
-  if(!isFadePlayer()){
-    qImgEl.style.transition = "";
-    qImgEl.style.opacity = "";
-    return;
-  }
-
-  // set invisible BEFORE paint
-  qImgEl.classList.add("kaj-fade");
-  qImgEl.style.transition = "none";
-  qImgEl.style.opacity = "0";
-  void qImgEl.offsetWidth;
-}
-
-function kajFadeToVisible(){
-  if(!qImgEl) return;
-  if(!isFadePlayer()) return;
-
-  // start delay vóór de fade
-  setTimeout(() => {
-    // kan intussen naar andere vraag zijn gegaan → check opnieuw
-    if(!qImgEl || !isFadePlayer()) return;
-
-    qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
-
-    requestAnimationFrame(() => {
-      qImgEl.classList.add("is-visible");
-      qImgEl.style.opacity = "1";
-    });
-  }, KAJ_FADE_START_DELAY_MS);
+function getFadeStartDelay(){
+  return (currentPlayer?.name || "") === "Kaj" ? KAJ_START_DELAY_MS : 0;
 }
 
 // =====================================================
@@ -395,9 +188,11 @@ let state = QUESTIONS.map(() => ({
 // ⏱️ TIMER HANDLES
 // =====================================================
 let nextLockInterval = null;
+let fadeTimeout = null;
 
 function clearTimers(){
   if(nextLockInterval){ clearInterval(nextLockInterval); nextLockInterval = null; }
+  if(fadeTimeout){ clearTimeout(fadeTimeout); fadeTimeout = null; }
   setNextLabel();
 }
 
@@ -438,6 +233,49 @@ function applyNextLockIfNeeded(){
       nextBtn.disabled = false;
     }
   }
+}
+
+// =====================================================
+// ✅ FADE-IN LOGIC (voor iedereen behalve Ferran)
+// =====================================================
+function fadeMakeInvisibleNow(){
+  if(!qImgEl) return;
+
+  // reset
+  qImgEl.classList.remove("fade-init");
+  qImgEl.style.transition = "";
+  qImgEl.style.opacity = "";
+
+  if(!shouldFade()){
+    return; // Ferran -> direct zichtbaar
+  }
+
+  qImgEl.classList.add("fade-init");
+  qImgEl.style.transition = "none";
+  qImgEl.style.opacity = "0";
+  void qImgEl.offsetWidth;
+}
+
+function fadeToVisible(){
+  if(!qImgEl) return;
+  if(!shouldFade()) return;
+
+  qImgEl.style.transition = `opacity ${FADE_DURATION_MS}ms linear`;
+  requestAnimationFrame(() => {
+    qImgEl.style.opacity = "1";
+  });
+}
+
+function scheduleFadeAfterStartDelay(){
+  if(!shouldFade()) return;
+
+  const delay = getFadeStartDelay();
+  if(delay <= 0){
+    fadeToVisible();
+    return;
+  }
+  // Kaj: even wachten voordat fade begint
+  fadeTimeout = setTimeout(() => fadeToVisible(), delay);
 }
 
 // =====================================================
@@ -507,20 +345,19 @@ function renderQuestion(){
   qNrEl.textContent = `Vraag ${currentIndex + 1}`;
   qTextEl.textContent = q.vraag;
 
-  // ✅ Kaj: invisible first, then ALWAYS fade to visible
-  kajMakeInvisibleNow();
+  // ✅ Fade: eerst onzichtbaar (behalve Ferran), daarna zichtbaar (Kaj met delay)
+  fadeMakeInvisibleNow();
 
-  // avoid stacking handlers
+  // onload reset
   qImgEl.onload = null;
-
   qImgEl.src = q.image || "";
   qImgEl.alt = q.vraag;
 
-  // fade when loaded
-  qImgEl.onload = () => kajFadeToVisible();
+  // Start fade wanneer image klaar is
+  qImgEl.onload = () => scheduleFadeAfterStartDelay();
 
-  // fallback (cached images / weird browsers)
-  setTimeout(() => kajFadeToVisible(), 50);
+  // fallback (cached images)
+  setTimeout(() => scheduleFadeAfterStartDelay(), 50);
 
   answersEl.innerHTML = "";
   feedbackEl.classList.add("hidden");
@@ -550,6 +387,7 @@ function pickAnswer(pickedIndex){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
 
+  // 🔒 Kaj: zodra gekozen -> niet meer wijzigen
   if(isNoChangePlayer() && s.answered) return;
 
   const isCorrect = pickedIndex === q.correctIndex;
@@ -558,6 +396,7 @@ function pickAnswer(pickedIndex){
   s.pickedIndex = pickedIndex;
   s.correct = isCorrect;
 
+  // ✅ Iedereen behalve Ferran: na antwoord "VOLGENDE" 5 sec lock
   if(isTimedPlayer() && !s.nextReadyAt){
     s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
   }
@@ -759,5 +598,4 @@ if(showWrongBtn) showWrongBtn.onclick = () => buildReviewList({ onlyWrong:true }
 if(showAllBtn)   showAllBtn.onclick   = () => buildReviewList({ onlyWrong:false });
 if(toTopBtn)     toTopBtn.onclick     = () => scrollToTop();
 
-// init
 renderPlayers();
