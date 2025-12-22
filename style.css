@@ -1,3 +1,5 @@
+
+/* style.css */
 :root{
   --bg:#08121f;
   --card:#0f1d33;
@@ -53,22 +55,6 @@ body{
   overflow:hidden;
 }
 
-/* HEADER */
-.topbar{
-  padding:20px;
-  text-align:center;
-  border-bottom:1px solid #ffffff22;
-}
-.title{
-  margin:0;
-  font-size:36px;
-  line-height:1.2;
-}
-.title span{
-  font-size:18px;
-  opacity:.85;
-}
-
 /* VIEWS */
 .view{
   display:none;
@@ -87,6 +73,12 @@ body{
   margin-top:18px;
   font-size:18px;
   opacity:.95;
+}
+
+.tinyNote{
+  margin-top:12px;
+  font-size:14px;
+  opacity:.85;
 }
 
 /* FAMILY FOTO (KLEINER) */
@@ -171,6 +163,7 @@ body{
   object-fit:cover;
   border-radius:50%;
   border:2px solid rgba(255,255,255,0.30);
+  cursor: zoom-in;
 }
 .youMeta{text-align:left}
 .youLabel{font-size:14px;opacity:.85}
@@ -203,10 +196,21 @@ body{
   align-items:center;
   min-height:240px;
 }
+
+/* Vraag-afbeelding */
 .imgwrap img{
   max-width:100%;
   height:auto;
   border-radius:18px;
+}
+
+/* ✅ KAJ: fade-in effect (wordt via JS aangezet met class "kaj-fade") */
+#qImg.kaj-fade{
+  opacity: 0.08;               /* start bijna onzichtbaar */
+  transition: opacity 7.5s linear; /* langzaam zichtbaar */
+}
+#qImg.kaj-fade.is-visible{
+  opacity: 1;
 }
 
 /* ANSWERS */
@@ -248,19 +252,6 @@ body{
   background: rgba(40,209,124,.18);
   border-color: rgba(40,209,124,.70);
 }
-
-.timerNote{
-  margin: 0 0 12px;
-  font-size: 16px;
-  opacity: .9;
-  text-align: center;
-}
-
-/* profielfoto klik hint */
-.youCard img{
-  cursor: zoom-in;
-}
-
 
 /* FEEDBACK */
 .feedback{
@@ -344,15 +335,6 @@ button:disabled{opacity:.55; cursor:not-allowed}
   display:block;
   margin: 0 auto 14px;
 }
-.xmasActions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  justify-content:center;
-  align-items:center;
-  margin-top: 6px;
-  margin-bottom: 10px;
-}
 
 .diplomaWrap{
   max-width: 980px;
@@ -410,7 +392,7 @@ button:disabled{opacity:.55; cursor:not-allowed}
   gap:12px;
   flex-wrap:wrap;
   margin: 8px 0 14px;
-  padding-bottom: 10px; /* extra ruimte onder Alles/Alleen fout */
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(255,255,255,0.10);
 }
 .reviewActions{
@@ -486,7 +468,7 @@ button:disabled{opacity:.55; cursor:not-allowed}
   display:flex;
   justify-content:center;
   margin-top: 16px;
-  gap: 18px; /* meer ruimte tussen Naar boven en Opnieuw */
+  gap: 18px;
 }
 
 /* LIGHTBOX */
