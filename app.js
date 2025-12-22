@@ -22,11 +22,11 @@ const QUESTIONS = [
   { vraag:"Van wie is dit skateboard?", image:"skateboard.jpg", antwoorden:["Richard","Luuk","Ferran","Kaj"], correctIndex:2, uitleg:"Oome Ferran natuurlijk" },
   { vraag:"Wie heeft deze kunstwerken gemaakt?", image:"tekening.jpg", antwoorden:["Richard","Luuk","Ferran","Kaj"], correctIndex:1, uitleg:"Luuk Van Gogh 👨‍🎨" },
   { vraag:"Wat is de lievelingskleur van Oome Ferran?", image:"zwart.jpeg", antwoorden:["Blauw","Wit","Zwart","Rood"], correctIndex:2, uitleg:"🖤 dezelfde kleur waar één oma van houdt." },
-  { vraag:"Wie eet er het gezondst?", image:"koken2.jpg", antwoorden:["Kaj","Richard","Luuk","Ilonka"], correctIndex:3, uitleg:"één oma is al meer dan 6kg afgevallen en past haar broeken niet meer! 👏" },
+  { vraag:"Wie eet het gezondst?", image:"koken2.jpg", antwoorden:["Kaj","Richard","Luuk","Ilonka"], correctIndex:3, uitleg:"één oma is al meer dan 6kg afgevallen en past haar broeken niet meer! 👏" },
   {
     vraag:"Wat voor een soort boom is een kerstboom?",
     image:"kerstboom.jpg",
-    antwoorden:["Spar","Eik","Denneboom","Palmboom"],
+    antwoorden:["Spar","Palmboom","Eik","Denneboom"],
     correctIndex:0,
     uitleg:`In Nederland zijn kerstbomen meestal een spar.
 
@@ -35,12 +35,13 @@ Veel verkochte soorten:
 - Nordmann-spar
 - Servische spar`
   },
-  { vraag:"Wat is het juiste antwoord?", image:"fruit1.jpg", antwoorden:["18","19","20","21"], correctIndex:2, uitleg:"Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20." },
   { vraag:"Wat is de waarde van de banaan?", image:"fruit2.jpg", antwoorden:["5","6","7","8"], correctIndex:2, uitleg:"Druiven zijn 22. 22 − 15 = 7, dus de banaan is 7." },
-  { vraag:"Wat is dit?", image:"takis.jpg", antwoorden:["Doritos","Takis","Cheetos","Pringles"], correctIndex:1, uitleg:"Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen." },
-  { vraag:"Wat is dit?", image:"knikkers.jpg", antwoorden:["Kauwgomballen","IJsballetjes","Knikkers","Kralen"], correctIndex:2, uitleg:"Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen." },
+  { vraag:"Wat is het juiste antwoord?", image:"fruit1.jpg", antwoorden:["18","19","20","21"], correctIndex:2, uitleg:"Uit de sommen volgt: sinaasappel = 9 en ananas = 11. Samen is dat 20." },
+  
+  { vraag:"Wat zijn dit?", image:"takis.jpg", antwoorden:["Doritos","Takis","Cheetos","Pringles"], correctIndex:1, uitleg:"Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen." },
+  { vraag:"Wat zijn dit?", image:"knikkers.jpg", antwoorden:["Kauwgomballen","IJsballetjes","Knikkers","Kralen"], correctIndex:2, uitleg:"Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen." },
   { vraag:"Wat is dit?", image:"fidgetspinner.jpg", antwoorden:["Slinky","Voetbal","Draaiketting","Fidget spinner"], correctIndex:3, uitleg:"Fidget spinners waren ineens overal." },
-  { vraag:"Wat is dit?", image:"neopets.jpg", antwoorden:["Brainrot","Pokémon","Neopets","Club Penguin"], correctIndex:2, uitleg:"Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde." },
+  { vraag:"Waar komen deze wezens in voor?", image:"neopets.jpg", antwoorden:["Brainrot","Pokémon","Neopets","Club Penguin"], correctIndex:2, uitleg:"Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde." },
   { vraag:"Hoeveel spelers staan er in één voetbalteam op het veld?", image:"voetbalteam.jpg", antwoorden:["10","11","12","13"], correctIndex:1, uitleg:"Een elftal = 11 spelers ⚽" },
   { vraag:"Wat gebeurt er bij buitenspel?", image:"buitenspel.jpg", antwoorden:["Vrije trap","Inworp","Spel wordt afgefloten","Penalty"], correctIndex:2, uitleg:"Bij buitenspel fluit de scheidsrechter het spel af. En wat gebeurt er dan...?" },
   { vraag:"Welke voetbalclub is dit?", image:"juventus.jpg", antwoorden:["Ajax","Juventus","FC Barcelona","Real Madrid"], correctIndex:1, uitleg:"Dit is Juventus, een van de bekendste clubs van Italië." },
@@ -50,10 +51,10 @@ Veel verkochte soorten:
   { vraag:"Wie is dit?", image:"chimp.jpg", antwoorden:["Henk Zegelaar","tralalero tralala","chimpanzini bananini","Bokito"], correctIndex:2, uitleg:"Dit is ‘chimpanzini bananini’ — zo’n bekende meme/AI-afbeelding." },
   { vraag:"Wie is dit?", image:"haai.jpg", antwoorden:["Reagea Shark","Sharktale","Tralalero tralala","Jaws"], correctIndex:2, uitleg:"Dit is ‘Tralalero tralala’ — ook zo’n bekende meme/AI-afbeelding." },
   { vraag:"In welke film speelde hij?", image:"cars.gif", antwoorden:["Paw Patrol","Minecraft","Cars","Fast & the Furious"], correctIndex:2, uitleg:"Lightning McQueen hoort bij Cars 🏁" },
-  { vraag:"In welke film speelde deze knaap?", image:"zac.jpg", antwoorden:["Harry Potter","High School Musical","Gooise Vrouwen","Camp Rock"], correctIndex:1, uitleg:"Mama Carmen wilt deze films graag kijken. Zac Efron werd mega bekend door High School Musical." },
-  { vraag:"In welke film speelde deze man?", image:"david.jpg", antwoorden:["Dukes of Hazzard","Flodder","The Godfather","Spongebob Squarepants"], correctIndex:3, uitleg:"In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp." },
+  { vraag:"In welke film speelde hij?", image:"zac.jpg", antwoorden:["Harry Potter","High School Musical","Gooise Vrouwen","Camp Rock"], correctIndex:1, uitleg:"Mama Carmen wilt deze films graag kijken. Zac Efron werd mega bekend door High School Musical." },
+  { vraag:"In welke film speelde hij?", image:"david.jpg", antwoorden:["Dukes of Hazzard","Flodder","The Godfather","Spongebob Squarepants"], correctIndex:3, uitleg:"In de eerste SpongeBob-film komt David Hasselhoff (als zichzelf) te hulp." },
   { vraag:"Wat wordt hier overhandigd?", image:"zwem.jpg", antwoorden:["Veterstrikdiploma","Tandenpoets diploma","Zwemdiploma","HBO Diploma"], correctIndex:2, uitleg:"Zwemdiploma A is binnen!" },
-  { vraag:"Welke oefening moest Kaj hier doen?", image:"borst.gif", antwoorden:["Rugslag","Vlinderslag","Borstcrawl","Schoolslag"], correctIndex:2, uitleg:"Borstcrawl.  Goede workout hoor!" },
+  { vraag:"Welke oefening doet Kaj hier?", image:"borst.gif", antwoorden:["Rugslag","Vlinderslag","Borstcrawl","Schoolslag"], correctIndex:2, uitleg:"Borstcrawl.  Goede workout hoor!" },
   { vraag:"Wie is dit?", image:"mosterd.jpg", antwoorden:["Messi","Ronaldo","Richard","Arjen Robben"], correctIndex:2, uitleg:"Papa (Richard) met mosterd op zijn knie 😭" },
   {
     vraag:"Wanneer scoort Papa Richard de meeste goals?",
