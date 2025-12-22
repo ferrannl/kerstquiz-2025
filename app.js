@@ -519,4 +519,102 @@ function buildReviewList({ onlyWrong }){
   const list = $("reviewList");
   if(!list) return;
 
-  list.innerHTML =
+  list.innerHTML = "";
+
+  QUESTIONS.forEach((q, i) => {
+    const s = state[i];
+    const isWrong = s.answered && !s.correct;
+    if(onlyWrong && !isWrong) return;
+
+    const correct = q.antwoorden[q.correctIndex];
+
+    const badge = s.answered
+      ? (s.correct ? `<span class="badge good">✅ Goed</span>` : `<span class="badge bad">❌ Fout</span>`)
+      : `<span class="badge">Niet beantwoord</span>`;
+
+    const row = document.createElement("div");
+    row.className = "reviewRow";
+    row.innerHTML = `
+      <div class="reviewThumb">
+        <img data-lightbox="1" src="${q.image || ""}" alt="Vraag ${i+1}">
+      </div>
+      <div class="reviewInfo">
+        <h4>${i+1}. ${q.vraag}</h4>
+        <div class="reviewMeta">
+          ${badge}
+          <span><b>Juiste antwoord:</b> ${correct}</span>
+        </div>
+        ${q.uitleg ? `<div class="smallNote" style="margin:8px 0 0; opacity:.95;"><b>Uitleg:</b> ${q.uitleg}</div>` : ""}
+      </div>
+    `;
+    list.appendChild(row);
+  });
+
+  wireLightboxForReviewImages();
+}
+
+// =====================================================
+// 🔍 LIGHTBOX
+// =====================================================
+function openLightbox(src, alt){
+  if(!lightbox || !lightboxImg) return;
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || "";
+  lightbox.classList.remove("hidden");
+  lightbox.setAttribute("aria-hidden", "false");
+}
+
+function closeLightbox(){
+  if(!lightbox || !lightboxImg) return;
+  lightbox.classList.add("hidden");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImg.src = "";
+  lightboxImg.alt = "";
+}
+
+function wireLightboxForReviewImages(){
+  const list = $("reviewList");
+  if(!list) return;
+
+  const imgs = list.querySelectorAll('img[data-lightbox="1"]');
+  imgs.forEach(img => {
+    img.onclick = () => openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
+  });
+}
+
+if(lightboxClose) lightboxClose.onclick = (e) => { e.stopPropagation(); closeLightbox(); };
+if(lightbox) lightbox.onclick = () => closeLightbox();
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeLightbox();
+});
+
+if(youImg){
+  youImg.style.cursor = "zoom-in";
+  youImg.onclick = () => {
+    if(youImg.src) openLightbox(youImg.src, currentPlayer?.name || "Speler");
+  };
+}
+
+if(xmasPhoto){
+  xmasPhoto.style.cursor = "zoom-in";
+  xmasPhoto.onclick = () => openLightbox("xmas.jpg", "Kerst foto");
+}
+
+// =====================================================
+// 🔁 RESTART + FILTERS + TOP
+// =====================================================
+restartBtn.onclick = () => {
+  clearTimers();
+  quizStarted = false;
+  currentPlayer = null;
+  startBtn.disabled = true;
+  [...playersEl.children].forEach(c => c.classList.remove("selected"));
+  show(playerView);
+  scrollToTop();
+};
+
+if(showWrongBtn) showWrongBtn.onclick = () => buildReviewList({ onlyWrong:true });
+if(showAllBtn)   showAllBtn.onclick   = () => buildReviewList({ onlyWrong:false });
+if(toTopBtn)     toTopBtn.onclick     = () => scrollToTop();
+
+renderPlayers();
