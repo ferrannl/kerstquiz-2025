@@ -281,7 +281,7 @@ function getStillPhoto(photoPath){
 // 🎯 SPELER-REGELS
 // =====================================================
 const NO_CHANGE_PLAYER = "Kaj";                 // Kaj mag NIET wijzigen na keuze
-const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // timers (laat staan als je die nog gebruikt)
+const TIMED_PLAYERS = new Set(["Kaj","Luuk"]);  // timers (mag blijven)
 const ANSWER_LOCK_SECONDS = 0;
 const NEXT_LOCK_SECONDS   = 5;
 
@@ -292,34 +292,45 @@ function isNoChangePlayer(){
   return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
 }
 
-// ✅ Fade-in instellingen voor Kaj (vraag-afbeelding)
+// ✅ Kaj-only fade-in settings
 const FADE_PLAYER = "Kaj";
-const KAJ_FADE_DURATION_MS   = 7500;     // hoe lang tot volledig zichtbaar
+const KAJ_FADE_DURATION_MS = 7000; // pas aan als je wil
 
 function isFadePlayer(){
   return (currentPlayer?.name || "") === FADE_PLAYER;
 }
 
-function applyKajFadeToQuestionImage(){
+function prepareKajFadeBeforePaint(){
   if(!qImgEl) return;
 
-  // reset (zodat terug/volgende opnieuw fade-in doet)
+  // Remove old state
   qImgEl.classList.remove("kaj-fade", "is-visible");
-  qImgEl.style.transition = "";
-  qImgEl.style.opacity = "";
 
-  if(!isFadePlayer()) return;
+  if(!isFadePlayer()) {
+    // normal for others
+    qImgEl.style.transition = "";
+    qImgEl.style.opacity = "";
+    return;
+  }
 
-  // fade-in: start 0 -> naar 1
+  // IMPORTANT: set invisible BEFORE src paints
   qImgEl.classList.add("kaj-fade");
-  qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
+  qImgEl.style.transition = "none";
   qImgEl.style.opacity = "0";
 
-  // force reflow
+  // force apply opacity=0 immediately
   void qImgEl.offsetWidth;
+}
+
+function runKajFadeInAfterLoad(){
+  if(!qImgEl) return;
+  if(!isFadePlayer()) return;
+
+  // animate to visible
+  qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
 
   requestAnimationFrame(() => {
-    qImgEl.classList.add("is-visible"); // CSS zet opacity:1
+    qImgEl.classList.add("is-visible"); // CSS opacity:1
   });
 }
 
@@ -490,14 +501,15 @@ function renderQuestion(){
   qNrEl.textContent = `Vraag ${currentIndex + 1}`;
   qTextEl.textContent = q.vraag;
 
-  // set image
+  // ✅ Kaj: force invisible BEFORE image paints, then fade to visible after load
+  prepareKajFadeBeforePaint();
+
+  qImgEl.onload = () => runKajFadeInAfterLoad();
   qImgEl.src = q.image || "";
   qImgEl.alt = q.vraag;
 
-  // ✅ Kaj: langzaam zichtbaar worden (fade-in) zodra afbeelding laadt
-  qImgEl.onload = () => applyKajFadeToQuestionImage();
-  // fallback (cached images)
-  requestAnimationFrame(() => applyKajFadeToQuestionImage());
+  // fallback for cached images
+  setTimeout(() => runKajFadeInAfterLoad(), 0);
 
   answersEl.innerHTML = "";
   feedbackEl.classList.add("hidden");
