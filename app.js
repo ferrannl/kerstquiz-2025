@@ -16,9 +16,10 @@ const PLAYERS = [
 // ❓ VRAGEN
 // =====================================================
 const QUESTIONS = [
-  { vraag:"Wie is het langste?", image:"lang.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:1, uitleg:"Volgens Google is Richard slechts 1,73 m." },
+  
   { vraag:"Wie is het jongste?", image:"jong.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:0, uitleg:"Luuk is het laatst van ons geboren." },
-  { vraag:"Wie is het oudste?", image:"oud.jpg", antwoorden:["Luuk","Ilonka","Richard","Kaj"], correctIndex:1, uitleg:"één oma is als eerste van ons geboren. Lang geleden." },
+  { vraag:"Wie is het langste?", image:"lang.jpg", antwoorden:["Luuk","Ferran","Richard","Kaj"], correctIndex:1, uitleg:"Volgens Google is Richard slechts 1,73 m." },
+  { vraag:"Wie is het oudste?", image:"oud.jpg", antwoorden:["Carmen","Ilonka","Richard","Ferran"], correctIndex:1, uitleg:"één oma is als eerste van ons geboren. Lang, lang geleden." },
   { vraag:"Van wie is dit skateboard?", image:"skateboard.jpg", antwoorden:["Richard","Luuk","Ferran","Kaj"], correctIndex:2, uitleg:"Oome Ferran natuurlijk" },
   { vraag:"Wie heeft deze kunstwerken gemaakt?", image:"tekening.jpg", antwoorden:["Richard","Luuk","Ferran","Kaj"], correctIndex:1, uitleg:"Luuk Van Gogh 👨‍🎨" },
   { vraag:"Wat is de lievelingskleur van Oome Ferran?", image:"zwart.jpeg", antwoorden:["Blauw","Wit","Zwart","Rood"], correctIndex:2, uitleg:"🖤 dezelfde kleur waar één oma van houdt." },
@@ -41,7 +42,7 @@ Veel verkochte soorten:
   { vraag:"Wat zijn dit?", image:"takis.jpg", antwoorden:["Doritos","Takis","Cheetos","Pringles"], correctIndex:1, uitleg:"Takis zijn pittige snacks, oome Ferran wilt ze al lang proberen." },
   { vraag:"Wat zijn dit?", image:"knikkers.jpg", antwoorden:["Kauwgomballen","IJsballetjes","Knikkers","Kralen"], correctIndex:2, uitleg:"Klassiek speelgoed, (helaas) nooit meer terug in de trend gekomen." },
   { vraag:"Wat is dit?", image:"fidgetspinner.jpg", antwoorden:["Slinky","Voetbal","Draaiketting","Fidget spinner"], correctIndex:3, uitleg:"Fidget spinners waren ineens overal." },
-  { vraag:"Waar komen deze wezens in voor?", image:"neopets.jpg", antwoorden:["Brainrot","Pokémon","Neopets","Club Penguin"], correctIndex:2, uitleg:"Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde." },
+  { vraag:"Waar zijn deze wezens van?", image:"neopets.jpg", antwoorden:["Brainrot","Pokémon","Neopets","Club Penguin"], correctIndex:2, uitleg:"Mama Carmen vond dit geweldig. Neopets was een populaire online game waarin je digitale huisdieren verzorgde." },
   { vraag:"Hoeveel spelers staan er in één voetbalteam op het veld?", image:"voetbalteam.jpg", antwoorden:["10","11","12","13"], correctIndex:1, uitleg:"Een elftal = 11 spelers ⚽" },
   { vraag:"Wat gebeurt er bij buitenspel?", image:"buitenspel.jpg", antwoorden:["Vrije trap","Inworp","Spel wordt afgefloten","Penalty"], correctIndex:2, uitleg:"Bij buitenspel fluit de scheidsrechter het spel af. En wat gebeurt er dan...?" },
   { vraag:"Welke voetbalclub is dit?", image:"juventus.jpg", antwoorden:["Ajax","Juventus","FC Barcelona","Real Madrid"], correctIndex:1, uitleg:"Dit is Juventus, een van de bekendste clubs van Italië." },
