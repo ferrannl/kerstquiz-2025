@@ -297,6 +297,7 @@ function isNoChangePlayer(){
 // =====================================================
 const FADE_PLAYER = "Kaj";
 const KAJ_FADE_DURATION_MS = 17000;
+const KAJ_FADE_START_DELAY_MS = 900; // bv 1500ms (pas aan)
 
 function isFadePlayer(){
   return (currentPlayer?.name || "") === FADE_PLAYER;
@@ -325,12 +326,18 @@ function kajFadeToVisible(){
   if(!qImgEl) return;
   if(!isFadePlayer()) return;
 
-  qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
+  // start delay vóór de fade
+  setTimeout(() => {
+    // kan intussen naar andere vraag zijn gegaan → check opnieuw
+    if(!qImgEl || !isFadePlayer()) return;
 
-  requestAnimationFrame(() => {
-    qImgEl.classList.add("is-visible"); // CSS says opacity:1
-    qImgEl.style.opacity = "1";         // inline makes it ALWAYS visible
-  });
+    qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
+
+    requestAnimationFrame(() => {
+      qImgEl.classList.add("is-visible");
+      qImgEl.style.opacity = "1";
+    });
+  }, KAJ_FADE_START_DELAY_MS);
 }
 
 // =====================================================
