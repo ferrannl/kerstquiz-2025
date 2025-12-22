@@ -1,4 +1,3 @@
-
 // app.js
 
 // =====================================================
@@ -295,7 +294,6 @@ function isNoChangePlayer(){
 
 // ✅ Fade-in instellingen voor Kaj (vraag-afbeelding)
 const FADE_PLAYER = "Kaj";
-const KAJ_FADE_START_OPACITY = 0.08;     // hoe doorzichtig start (0 = onzichtbaar, 1 = zichtbaar)
 const KAJ_FADE_DURATION_MS   = 7500;     // hoe lang tot volledig zichtbaar
 
 function isFadePlayer(){
@@ -496,9 +494,9 @@ function renderQuestion(){
   qImgEl.src = q.image || "";
   qImgEl.alt = q.vraag;
 
-  // ✅ Kaj: langzaam zichtbaar worden (start zodra de afbeelding laadt)
+  // ✅ Kaj: langzaam zichtbaar worden (fade-in) zodra afbeelding laadt
   qImgEl.onload = () => applyKajFadeToQuestionImage();
-  // fallback: als browser image al cached en onload soms niet (zeker mobiel)
+  // fallback (cached images)
   requestAnimationFrame(() => applyKajFadeToQuestionImage());
 
   answersEl.innerHTML = "";
