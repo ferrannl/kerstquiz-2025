@@ -107,25 +107,14 @@ function getStillPhoto(photoPath){
 // =====================================================
 // 🎯 REGELS
 // =====================================================
-const NO_CHANGE_PLAYER = "Kaj"; // Kaj mag NIET wijzigen na keuze
+const NO_CHANGE_PLAYER = "Kaj";
 const FERRAN = "Ferran";
 
-// ✅ Iedereen behalve Ferran krijgt "VOLGENDE" lock
+// Timed = iedereen behalve Ferran
 const TIMED_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
 
-// ⏱️ duur lock (je vroeg 5–6 sec -> ik zet 'm op 6)
-const NEXT_LOCK_SECONDS = 6;
-
-// ✅ Kaj: knop niet tonen tijdens lock
-const HIDE_NEXT_BUTTON_FOR = new Set(["Kaj"]);
-
-// ✅ Countdown tekst alleen tonen voor spelers die NIET hidden-next zijn
-function shouldHideNextButton(){
-  return HIDE_NEXT_BUTTON_FOR.has(currentPlayer?.name || "");
-}
-function shouldShowCountdown(){
-  return isTimedPlayer() && !shouldHideNextButton(); // Kaj: geen countdown, want knop is weg
-}
+const DEFAULT_LOCK_SECONDS = 5; // iedereen (timed)
+const KAJ_LOCK_SECONDS = 15;    // Kaj
 
 function isTimedPlayer(){
   return TIMED_PLAYERS.has(currentPlayer?.name || "");
@@ -133,12 +122,23 @@ function isTimedPlayer(){
 function isNoChangePlayer(){
   return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
 }
+function getLockSecondsForPlayer(){
+  const name = currentPlayer?.name || "";
+  if(!isTimedPlayer()) return 0;
+  if(name === "Kaj") return KAJ_LOCK_SECONDS;
+  return DEFAULT_LOCK_SECONDS;
+}
 
-// ✅ Fade-in voor iedereen behalve Ferran
+// ✅ we verbergen de knop tijdens lock voor iedereen die timed is
+function shouldHideNextButtonDuringLock(){
+  return isTimedPlayer(); // Ferran false
+}
+
+// =====================================================
+// ✅ FADE-IN
+// =====================================================
 const FADE_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
 const FADE_DURATION_MS = 7700;
-
-// ✅ Kaj krijgt extra start-delay voordat fade begint
 const KAJ_START_DELAY_MS = 2700;
 
 function shouldFade(){
@@ -200,40 +200,37 @@ let state = QUESTIONS.map(() => ({
 }));
 
 // =====================================================
-// ⏱️ TIMER HANDLES
+// ⏱️ TIMERS
 // =====================================================
 let nextLockInterval = null;
 let fadeTimeout = null;
 
 function showNextButton(){
   if(!nextBtn) return;
-  nextBtn.style.display = "";      // terug naar css default
-  nextBtn.style.visibility = "";   // just in case
+  nextBtn.style.display = "";
+  nextBtn.style.visibility = "";
 }
 
 function hideNextButton(){
   if(!nextBtn) return;
-  nextBtn.style.display = "none"; // echt weg
+  nextBtn.style.display = "none";
 }
 
 function clearTimers(){
   if(nextLockInterval){ clearInterval(nextLockInterval); nextLockInterval = null; }
   if(fadeTimeout){ clearTimeout(fadeTimeout); fadeTimeout = null; }
-
-  // bij elke render/reset: knop weer normaal tonen
   showNextButton();
   setNextLabel();
 }
 
-// ✅ Lock: Kaj -> knop verbergen; anderen -> countdown op knop
+// ✅ Lock: knop is weg tijdens lock (5s voor iedereen, 15s Kaj)
 function startNextLock(targetTimeMs){
   clearInterval(nextLockInterval);
 
   const tick = () => {
     const ms = targetTimeMs - Date.now();
-    const sec = Math.max(0, Math.ceil(ms / 1000));
 
-    if(sec <= 0){
+    if(ms <= 0){
       clearInterval(nextLockInterval);
       nextLockInterval = null;
 
@@ -243,21 +240,12 @@ function startNextLock(targetTimeMs){
       return;
     }
 
-    // tijdens lock altijd disabled
     nextBtn.disabled = true;
 
-    // Kaj: knop weg zolang lock loopt
-    if(shouldHideNextButton()){
+    if(shouldHideNextButtonDuringLock()){
       hideNextButton();
-      return;
-    }
-
-    // anderen: knop zichtbaar + countdown tekst
-    showNextButton();
-    if(shouldShowCountdown()){
-      const base = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
-      nextBtn.textContent = `${base} (${sec}s)`;
     } else {
+      showNextButton();
       setNextLabel();
     }
   };
@@ -272,7 +260,8 @@ function applyNextLockIfNeeded(){
 
   if(s.answered){
     if(!s.nextReadyAt){
-      s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
+      const lockSeconds = getLockSecondsForPlayer();
+      s.nextReadyAt = Date.now() + (lockSeconds * 1000);
     }
     if(s.nextReadyAt > Date.now()){
       startNextLock(s.nextReadyAt);
@@ -407,7 +396,6 @@ function renderQuestion(){
   backBtn.disabled = (currentIndex === 0);
   setNextLabel();
 
-  // baseline: next alleen aan als beantwoord, lock kan 'm daarna weer verbergen/disable-en
   nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
@@ -439,16 +427,17 @@ function pickAnswer(pickedIndex){
   s.pickedIndex = pickedIndex;
   s.correct = isCorrect;
 
-  // ✅ lock start
+  // ✅ lock start (5s iedereen, 15s Kaj)
   if(isTimedPlayer() && !s.nextReadyAt){
-    s.nextReadyAt = Date.now() + (NEXT_LOCK_SECONDS * 1000);
+    const lockSeconds = getLockSecondsForPlayer();
+    s.nextReadyAt = Date.now() + (lockSeconds * 1000);
   }
 
   paintAnsweredState();
   showFeedback(isCorrect, q);
 
   if(isTimedPlayer()){
-    applyNextLockIfNeeded(); // Kaj -> knop verdwijnt nu
+    applyNextLockIfNeeded(); // knop verdwijnt tijdens lock
   }else{
     showNextButton();
     nextBtn.disabled = false;
