@@ -292,45 +292,44 @@ function isNoChangePlayer(){
   return (currentPlayer?.name || "") === NO_CHANGE_PLAYER;
 }
 
-// ✅ Kaj-only fade-in settings
+// =====================================================
+// ✅ KAJ: INVISIBLE -> VISIBLE (BULLETPROOF)
+// =====================================================
 const FADE_PLAYER = "Kaj";
-const KAJ_FADE_DURATION_MS = 7000; // pas aan als je wil
+const KAJ_FADE_DURATION_MS = 7000;
 
 function isFadePlayer(){
   return (currentPlayer?.name || "") === FADE_PLAYER;
 }
 
-function prepareKajFadeBeforePaint(){
+function kajMakeInvisibleNow(){
   if(!qImgEl) return;
 
-  // Remove old state
+  // reset
   qImgEl.classList.remove("kaj-fade", "is-visible");
 
-  if(!isFadePlayer()) {
-    // normal for others
+  if(!isFadePlayer()){
     qImgEl.style.transition = "";
     qImgEl.style.opacity = "";
     return;
   }
 
-  // IMPORTANT: set invisible BEFORE src paints
+  // set invisible BEFORE paint
   qImgEl.classList.add("kaj-fade");
   qImgEl.style.transition = "none";
   qImgEl.style.opacity = "0";
-
-  // force apply opacity=0 immediately
   void qImgEl.offsetWidth;
 }
 
-function runKajFadeInAfterLoad(){
+function kajFadeToVisible(){
   if(!qImgEl) return;
   if(!isFadePlayer()) return;
 
-  // animate to visible
   qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
 
   requestAnimationFrame(() => {
-    qImgEl.classList.add("is-visible"); // CSS opacity:1
+    qImgEl.classList.add("is-visible"); // CSS says opacity:1
+    qImgEl.style.opacity = "1";         // inline makes it ALWAYS visible
   });
 }
 
@@ -501,15 +500,20 @@ function renderQuestion(){
   qNrEl.textContent = `Vraag ${currentIndex + 1}`;
   qTextEl.textContent = q.vraag;
 
-  // ✅ Kaj: force invisible BEFORE image paints, then fade to visible after load
-  prepareKajFadeBeforePaint();
+  // ✅ Kaj: invisible first, then ALWAYS fade to visible
+  kajMakeInvisibleNow();
 
-  qImgEl.onload = () => runKajFadeInAfterLoad();
+  // avoid stacking handlers
+  qImgEl.onload = null;
+
   qImgEl.src = q.image || "";
   qImgEl.alt = q.vraag;
 
-  // fallback for cached images
-  setTimeout(() => runKajFadeInAfterLoad(), 0);
+  // fade when loaded
+  qImgEl.onload = () => kajFadeToVisible();
+
+  // fallback (cached images / weird browsers)
+  setTimeout(() => kajFadeToVisible(), 50);
 
   answersEl.innerHTML = "";
   feedbackEl.classList.add("hidden");
@@ -517,7 +521,6 @@ function renderQuestion(){
   backBtn.disabled = (currentIndex === 0);
   setNextLabel();
 
-  // "VOLGENDE" pas na antwoord
   nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
@@ -540,7 +543,6 @@ function pickAnswer(pickedIndex){
   const q = QUESTIONS[currentIndex];
   const s = state[currentIndex];
 
-  // 🔒 Voor Kaj: zodra hij iets gekozen heeft -> nooit meer wijzigen
   if(isNoChangePlayer() && s.answered) return;
 
   const isCorrect = pickedIndex === q.correctIndex;
@@ -721,7 +723,6 @@ document.addEventListener("keydown", (e) => {
   if(e.key === "Escape") closeLightbox();
 });
 
-// Klik op jouw profielfoto (in quiz) -> vergroot
 if(youImg){
   youImg.style.cursor = "zoom-in";
   youImg.onclick = () => {
@@ -729,7 +730,6 @@ if(youImg){
   };
 }
 
-// xmas foto klikbaar
 if(xmasPhoto){
   xmasPhoto.style.cursor = "zoom-in";
   xmasPhoto.onclick = () => openLightbox("xmas.jpg", "Kerst foto");
