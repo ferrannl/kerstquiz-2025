@@ -305,24 +305,23 @@ function isFadePlayer(){
 function applyKajFadeToQuestionImage(){
   if(!qImgEl) return;
 
-  // reset altijd eerst (zodat "Terug/Volgende" opnieuw werkt)
+  // reset (zodat terug/volgende opnieuw fade-in doet)
   qImgEl.classList.remove("kaj-fade", "is-visible");
   qImgEl.style.transition = "";
   qImgEl.style.opacity = "";
 
   if(!isFadePlayer()) return;
 
-  // Zet de startwaarden, en trigger daarna de transition naar zichtbaar
+  // fade-in: start 0 -> naar 1
   qImgEl.classList.add("kaj-fade");
-  qImgEl.style.opacity = String(KAJ_FADE_START_OPACITY);
   qImgEl.style.transition = `opacity ${KAJ_FADE_DURATION_MS}ms linear`;
+  qImgEl.style.opacity = "0";
 
-  // Force reflow zodat browser de start-opacity pakt
+  // force reflow
   void qImgEl.offsetWidth;
 
-  // volgende frame -> zichtbaar
   requestAnimationFrame(() => {
-    qImgEl.classList.add("is-visible");
+    qImgEl.classList.add("is-visible"); // CSS zet opacity:1
   });
 }
 
