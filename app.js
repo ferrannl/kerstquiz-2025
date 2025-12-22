@@ -296,7 +296,7 @@ function isNoChangePlayer(){
 // ✅ KAJ: INVISIBLE -> VISIBLE (BULLETPROOF)
 // =====================================================
 const FADE_PLAYER = "Kaj";
-const KAJ_FADE_DURATION_MS = 7000;
+const KAJ_FADE_DURATION_MS = 17000;
 
 function isFadePlayer(){
   return (currentPlayer?.name || "") === FADE_PLAYER;
