@@ -204,14 +204,10 @@ body{
   border-radius:18px;
 }
 
-/* ✅ KAJ: fade-in (invisible -> visible)
-   Let op: transition wordt bewust in JS gezet om "fade-out flicker" te voorkomen */
-#qImg.kaj-fade{
-  opacity: 0;
-}
-#qImg.kaj-fade.is-visible{
-  opacity: 1;
-}
+/* ✅ KAJ: fade-in classes
+   (opacity wordt via JS gestuurd; CSS geeft alleen richting) */
+#qImg.kaj-fade{ opacity: 0; }
+#qImg.kaj-fade.is-visible{ opacity: 1; }
 
 /* ANSWERS */
 #answers{
