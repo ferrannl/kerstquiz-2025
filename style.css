@@ -206,11 +206,11 @@ body{
 
 /* ✅ KAJ: fade-in (onzichtbaar -> zichtbaar) */
 #qImg.kaj-fade{
-  opacity: 0;                         /* start onzichtbaar */
-  transition: opacity 7.5s linear;    /* duur aanpassen als je wil */
+  opacity: 0;                        /* start onzichtbaar */
+  transition: opacity 7.5s linear;   /* duur aanpassen als je wil */
 }
 #qImg.kaj-fade.is-visible{
-  opacity: 1;                         /* wordt zichtbaar */
+  opacity: 1;                        /* wordt zichtbaar */
 }
 
 /* ANSWERS */
