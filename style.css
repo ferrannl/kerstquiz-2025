@@ -297,6 +297,7 @@ button, .btnGhost{
   background:linear-gradient(135deg,var(--accent),#ff6b7a);
   color:white;
   font-weight:800;
+  transition: opacity 220ms ease;
 }
 .btnGhost{
   background:rgba(255,255,255,0.08);
@@ -304,6 +305,12 @@ button, .btnGhost{
   border:1px solid rgba(255,255,255,0.14);
 }
 button:disabled{opacity:.55; cursor:not-allowed}
+
+/* ✅ Doorzichtig (maar zichtbaar) voor timed spelers vóór/ tijdens countdown */
+#nextBtn.ghosted{
+  opacity: .22 !important;
+  cursor: not-allowed !important;
+}
 
 /* RESULT */
 .xmasHero{
