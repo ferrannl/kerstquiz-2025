@@ -129,9 +129,10 @@ function getLockSecondsForPlayer(){
   return DEFAULT_LOCK_SECONDS;
 }
 
-// ✅ we verbergen de knop tijdens lock voor iedereen die timed is
-function shouldHideNextButtonDuringLock(){
-  return isTimedPlayer(); // Ferran false
+// Kaj: next nooit zichtbaar tot lock klaar is (na beantwoorden)
+// Anderen (timed): next altijd zichtbaar maar "doorzichtig + disabled" tot lock klaar is
+function shouldHideNextButtonCompletely(){
+  return isNoChangePlayer(); // alleen Kaj
 }
 
 // =====================================================
@@ -205,71 +206,148 @@ let state = QUESTIONS.map(() => ({
 let nextLockInterval = null;
 let fadeTimeout = null;
 
+// ---- Next button visuals ----
 function showNextButton(){
   if(!nextBtn) return;
   nextBtn.style.display = "";
   nextBtn.style.visibility = "";
 }
-
 function hideNextButton(){
   if(!nextBtn) return;
   nextBtn.style.display = "none";
+}
+function setNextGhosted(ghosted){
+  if(!nextBtn) return;
+  nextBtn.classList.toggle("ghosted", !!ghosted);
+}
+
+// Ferran (admin): altijd normaal + klikbaar
+function applyPreAnswerNextState(){
+  if(!nextBtn) return;
+
+  // Ferran: direct
+  if(!isTimedPlayer()){
+    showNextButton();
+    setNextGhosted(false);
+    nextBtn.disabled = false;        // admin
+    setNextLabel();
+    return;
+  }
+
+  // Kaj: verberg altijd totdat lock klaar is (na beantwoorden)
+  if(shouldHideNextButtonCompletely()){
+    hideNextButton();
+    nextBtn.disabled = true;
+    setNextGhosted(false);
+    setNextLabel();
+    return;
+  }
+
+  // Andere spelers: zichtbaar maar doorzichtig en niet klikbaar
+  showNextButton();
+  setNextGhosted(true);
+  nextBtn.disabled = true;
+  setNextLabel();
 }
 
 function clearTimers(){
   if(nextLockInterval){ clearInterval(nextLockInterval); nextLockInterval = null; }
   if(fadeTimeout){ clearTimeout(fadeTimeout); fadeTimeout = null; }
   showNextButton();
+  setNextGhosted(false);
+  nextBtn.disabled = true; // renderQuestion zet hem goed
   setNextLabel();
 }
 
-// ✅ Lock: knop is weg tijdens lock (5s voor iedereen, 15s Kaj)
+// ✅ Lock gedrag:
+// - Kaj: next is onzichtbaar tijdens lock, pas na lock zichtbaar + klikbaar
+// - Andere timed: next zichtbaar maar ghosted + disabled, met countdown 5..4..3..
+// - Ferran: geen lock
 function startNextLock(targetTimeMs){
   clearInterval(nextLockInterval);
 
   const tick = () => {
-    const ms = targetTimeMs - Date.now();
+    const msLeft = targetTimeMs - Date.now();
+    const secLeft = Math.max(0, Math.ceil(msLeft / 1000));
 
-    if(ms <= 0){
-      clearInterval(nextLockInterval);
-      nextLockInterval = null;
-
+    // Ferran: no-op
+    if(!isTimedPlayer()){
       showNextButton();
-      setNextLabel();
+      setNextGhosted(false);
       nextBtn.disabled = false;
+      setNextLabel();
       return;
     }
 
+    // Klaar
+    if(msLeft <= 0){
+      clearInterval(nextLockInterval);
+      nextLockInterval = null;
+
+      // Kaj: nu pas zichtbaar
+      showNextButton();
+      setNextGhosted(false);
+      nextBtn.disabled = false;
+      setNextLabel();
+      return;
+    }
+
+    // Tijdens lock
     nextBtn.disabled = true;
 
-    if(shouldHideNextButtonDuringLock()){
+    if(shouldHideNextButtonCompletely()){
+      // Kaj: volledig verbergen
       hideNextButton();
-    } else {
-      showNextButton();
+      setNextGhosted(false);
       setNextLabel();
+      return;
     }
+
+    // Andere timed spelers: ghosted + countdown op knop
+    showNextButton();
+    setNextGhosted(true);
+
+    const base = (currentIndex === QUESTIONS.length - 1) ? "RESULTAAT" : "VOLGENDE";
+    nextBtn.textContent = `${base} (${secLeft})`;
   };
 
   tick();
-  nextLockInterval = setInterval(tick, 250);
+  nextLockInterval = setInterval(tick, 200);
 }
 
 function applyNextLockIfNeeded(){
   const s = state[currentIndex];
-  if(!isTimedPlayer()) return;
 
-  if(s.answered){
-    if(!s.nextReadyAt){
-      const lockSeconds = getLockSecondsForPlayer();
-      s.nextReadyAt = Date.now() + (lockSeconds * 1000);
-    }
-    if(s.nextReadyAt > Date.now()){
-      startNextLock(s.nextReadyAt);
-    }else{
-      showNextButton();
-      setNextLabel();
-      nextBtn.disabled = false;
-    }
+  // Ferran: altijd
+  if(!isTimedPlayer()){
+    showNextButton();
+    setNextGhosted(false);
+    nextBtn.disabled = false;
+    setNextLabel();
+    return;
+  }
+
+  // Timed spelers:
+  if(!s.answered){
+    // vóór beantwoorden: Kaj = hidden, rest = ghosted disabled
+    applyPreAnswerNextState();
+    return;
+  }
+
+  // Na beantwoorden:
+  if(!s.nextReadyAt){
+    const lockSeconds = getLockSecondsForPlayer();
+    s.nextReadyAt = Date.now() + (lockSeconds * 1000);
+  }
+
+  if(s.nextReadyAt > Date.now()){
+    startNextLock(s.nextReadyAt);
+  } else {
+    // Klaar met lock
+    showNextButton();
+    setNextGhosted(false);
+    nextBtn.disabled = false;
+    setNextLabel();
   }
 }
 
@@ -394,9 +472,6 @@ function renderQuestion(){
   feedbackEl.classList.add("hidden");
 
   backBtn.disabled = (currentIndex === 0);
-  setNextLabel();
-
-  nextBtn.disabled = !s.answered;
 
   q.antwoorden.forEach((txt, idx) => {
     const b = document.createElement("button");
@@ -411,6 +486,7 @@ function renderQuestion(){
     showFeedback(s.correct, q);
   }
 
+  // ✅ Next behavior per speler (Kaj hidden, others ghosted, Ferran free)
   applyNextLockIfNeeded();
 }
 
@@ -427,7 +503,7 @@ function pickAnswer(pickedIndex){
   s.pickedIndex = pickedIndex;
   s.correct = isCorrect;
 
-  // ✅ lock start (5s iedereen, 15s Kaj)
+  // ✅ lock start (5s iedereen, 15s Kaj) - alleen timed
   if(isTimedPlayer() && !s.nextReadyAt){
     const lockSeconds = getLockSecondsForPlayer();
     s.nextReadyAt = Date.now() + (lockSeconds * 1000);
@@ -436,13 +512,8 @@ function pickAnswer(pickedIndex){
   paintAnsweredState();
   showFeedback(isCorrect, q);
 
-  if(isTimedPlayer()){
-    applyNextLockIfNeeded(); // knop verdwijnt tijdens lock
-  }else{
-    showNextButton();
-    nextBtn.disabled = false;
-    setNextLabel();
-  }
+  // ✅ Update next button behavior immediately after answering
+  applyNextLockIfNeeded();
 }
 
 function paintAnsweredState(){
@@ -488,8 +559,7 @@ backBtn.onclick = () => {
 
 nextBtn.onclick = () => {
   const s = state[currentIndex];
-  if(!s.answered) return;
-
+  if(!s.answered && isTimedPlayer()) return; // timed moet eerst antwoorden
   if(isTimedPlayer() && s.nextReadyAt && s.nextReadyAt > Date.now()) return;
 
   if(currentIndex < QUESTIONS.length - 1){
