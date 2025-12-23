@@ -114,7 +114,7 @@ const FERRAN = "Ferran";
 const TIMED_PLAYERS = new Set(PLAYERS.map(p => p.name).filter(n => n !== FERRAN));
 
 const DEFAULT_LOCK_SECONDS = 5; // iedereen (timed)
-const KAJ_LOCK_SECONDS = 15;    // Kaj
+const KAJ_LOCK_SECONDS = 8;    // Kaj
 
 function isTimedPlayer(){
   return TIMED_PLAYERS.has(currentPlayer?.name || "");
